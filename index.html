@@ -3,66 +3,93 @@
 <head>
   <meta charset="UTF-8">
   <title>Betting Tips & Reviews</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       background: #f5f5f5;
       color: #333;
+      font-size: 18px;
+      line-height: 1.6;
     }
     header {
-      background: #222;
-      padding: 15px;
+      background: url('https://images.unsplash.com/photo-1600703562027-8c8530a8d0d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
       color: #fff;
       text-align: center;
+      padding: 100px 20px;
+    }
+    header h1 {
+      font-size: 48px;
+      margin: 0 0 20px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    }
+    header p {
+      font-size: 22px;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+    }
+    header .btn {
+      background: #28a745;
+      padding: 14px 24px;
+      font-size: 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+    }
+    header .btn:hover {
+      background: #218838;
     }
     nav {
       display: flex;
       justify-content: center;
-      gap: 20px;
-      margin-top: 10px;
+      gap: 25px;
+      background: #222;
+      padding: 15px;
+      position: sticky;
+      top: 0;
     }
     nav button {
-      background: #28a745;
+      background: none;
       border: none;
       color: white;
-      padding: 10px 16px;
-      border-radius: 4px;
+      font-size: 18px;
+      font-weight: 600;
       cursor: pointer;
-      font-size: 15px;
     }
     nav button:hover {
-      background: #218838;
+      color: #28a745;
     }
     #content {
-      padding: 20px;
-      max-width: 900px;
+      padding: 40px 20px;
+      max-width: 1000px;
       margin: auto;
     }
     .review, .match {
       background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 15px;
-      margin-bottom: 15px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .match h3 {
-      margin: 0 0 10px 0;
+    .match h3, .review h3 {
+      margin: 0 0 15px;
     }
     .form {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 8px;
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 10px;
     }
     .btn {
       display: inline-block;
-      padding: 8px 12px;
+      padding: 10px 16px;
       background: #007bff;
       color: white;
       text-decoration: none;
-      border-radius: 4px;
+      border-radius: 5px;
       font-weight: bold;
+      margin-top: 10px;
     }
     .btn:hover {
       background: #0056b3;
@@ -72,17 +99,19 @@
 <body>
   <header>
     <h1>⚽ Betting Tips & Bookmaker Reviews</h1>
-    <nav>
-      <button onclick="showPage('home')">Home</button>
-      <button onclick="showPage('reviews')">Bookmaker Reviews</button>
-      <button onclick="showPage('predictions')">Match Predictions</button>
-    </nav>
+    <p>Daily predictions, bookmaker ratings and betting insights – all in one place.</p>
+    <a href="#" onclick="showPage('predictions')" class="btn">See Today’s Predictions</a>
   </header>
+
+  <nav>
+    <button onclick="showPage('home')">Home</button>
+    <button onclick="showPage('reviews')">Bookmaker Reviews</button>
+    <button onclick="showPage('predictions')">Match Predictions</button>
+  </nav>
 
   <div id="content"></div>
 
   <script>
-    // Demo reviews
     const reviews = [
       {
         name: "Bet365",
@@ -98,7 +127,6 @@
       }
     ];
 
-    // Demo predictions
     const matches = [
       {
         home: "Real Madrid",
@@ -118,15 +146,14 @@
       }
     ];
 
-    // Page rendering
     function showPage(page) {
       const container = document.getElementById("content");
 
       if (page === "home") {
         container.innerHTML = `
           <h2>Welcome to Betting Tips</h2>
-          <p>Get the latest football match predictions and honest bookmaker reviews.</p>
-          <a href="#" onclick="showPage('predictions')" class="btn">See Today’s Predictions</a>
+          <p>Get the latest football match predictions and honest bookmaker reviews. 
+          Our experts analyze form, odds, and statistics to bring you the most reliable betting advice.</p>
         `;
       }
 
@@ -157,7 +184,6 @@
       }
     }
 
-    // Default page
     showPage("home");
   </script>
 </body>
