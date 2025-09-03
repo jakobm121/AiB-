@@ -1,0 +1,37 @@
+{
+  "stavnice": [
+    {
+      "ime": "Bet365",
+      "logo": "images/bet365-logo.png",
+      "bonus": "100% do 100€",
+      "kvote": "Visoke, posebej na nogomet",
+      "aplikacija": "Android & iOS, enostavna",
+      "varnost": "UKGC, varno",
+      "placila": "Visa, Mastercard, Skrill, Neteller",
+      "funkcije": "Live stav, cash-out, multi-bet",
+      "affiliate": "https://affiliate-link-do-bet365.com"
+    },
+    {
+      "ime": "1xBet",
+      "logo": "images/1xbet-logo.png",
+      "bonus": "100% do 200€",
+      "kvote": "Konkurenčne, veliko posebnih stav",
+      "aplikacija": "Android & iOS",
+      "varnost": "Curacao, varno",
+      "placila": "Visa, Mastercard, crypto, Skrill",
+      "funkcije": "Live stav, casino, virtualne igre",
+      "affiliate": "https://affiliate-link-do-1xbet.com"
+    },
+    {
+      "ime": "Unibet",
+      "logo": "images/unibet-logo.png",
+      "bonus": "50% do 100€",
+      "kvote": "Stabilne, zanesljive",
+      "aplikacija": "Android & iOS, enostavna",
+      "varnost": "Malta Gaming Authority",
+      "placila": "Visa, Mastercard, PayPal",
+      "funkcije": "Cash-out, live streaming, virtualne stave",
+      "affiliate": "https://affiliate-link-do-unibet.com"
+    }
+  ]
+}
