@@ -1,0 +1,20 @@
+{
+  "analize": [
+    {
+      "sport": "Nogomet",
+      "tekma": "Real Madrid vs Barcelona",
+      "rezultati": [2,1,3,0,2],
+      "formaDomaci": 0.7,
+      "formaGostje": 0.6,
+      "affiliate": "https://affiliate-link-do-stavnice.com"
+    },
+    {
+      "sport": "Košarka",
+      "tekma": "Lakers vs Celtics",
+      "rezultati": [110, 105, 115, 120, 108],
+      "formaDomaci": 0.65,
+      "formaGostje": 0.55,
+      "affiliate": "https://affiliate-link-do-stavnice.com"
+    }
+  ]
+}
