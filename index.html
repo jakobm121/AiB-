@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Betting Tips & Reviews</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       margin: 0;
@@ -17,7 +18,7 @@
       min-height: 100vh;
     }
     header {
-      background: url('banner.jpg.PNG') center/cover no-repeat;
+      background: url('banner.PNG') center/cover no-repeat;
       color: #fff;
       text-align: center;
       padding: 140px 20px;
@@ -34,7 +35,7 @@
     }
     header .btn {
       background: #28a745;
-      padding: 18px 34px; /* večji CTA */
+      padding: 18px 34px;
       font-size: 20px;
       border-radius: 8px;
       text-decoration: none;
@@ -58,7 +59,7 @@
       background: none;
       border: none;
       color: white;
-      font-size: 20px; /* večji gumbi */
+      font-size: 20px;
       font-weight: 700;
       cursor: pointer;
       padding: 10px 20px;
@@ -69,37 +70,33 @@
     #content {
       flex: 1;
       padding: 40px 20px;
-      max-width: 1000px;
+      max-width: 1100px;
       margin: auto;
     }
-    .review, .match {
+    .review, .analysis {
       background: #fff;
       border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .match h3, .review h3 {
+    .analysis h3 {
       margin: 0 0 15px;
+      font-size: 26px;
+      color: #222;
     }
-    .form {
-      font-size: 15px;
-      color: #555;
-      margin-bottom: 10px;
-    }
-    .btn {
-      display: inline-block;
-      padding: 14px 22px; /* večji gumbi */
-      background: #007bff;
+    .tip-box {
+      background: #28a745;
       color: white;
-      text-decoration: none;
+      padding: 15px;
       border-radius: 6px;
-      font-weight: bold;
       font-size: 18px;
-      margin-top: 10px;
+      font-weight: bold;
+      margin-top: 20px;
     }
-    .btn:hover {
-      background: #0056b3;
+    canvas {
+      margin: 20px 0;
+      max-width: 100%;
     }
     footer {
       background: #222;
@@ -123,9 +120,9 @@
 </head>
 <body>
   <header>
-    <h1> AI Betting Tips & Bookmaker Reviews</h1>
+    <h1>⚽ Betting Tips & Bookmaker Reviews</h1>
     <p>Daily match predictions and trusted bookmaker reviews</p>
-    <a href="#" onclick="showPage('predictions')" class="btn">See Last Predictions</a>
+    <a href="#" onclick="showPage('predictions')" class="btn">See Today’s Predictions</a>
   </header>
 
   <nav>
@@ -138,9 +135,10 @@
 
   <footer>
     <p>© 2025 Betting Tips & Reviews. All rights reserved.</p>
-    <p>Contact: <a href="mailto:magic.betting@gmail.com">info@aiTips.com</a></p>
+    <p>Contact: <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
   </footer>
 
+  <script src="analyses.js"></script>
   <script>
     const reviews = [
       {
@@ -154,25 +152,6 @@
         rating: "⭐️⭐️⭐️⭐️",
         text: "Wide range of markets, fast payouts, and a generous welcome bonus.",
         link: "https://your-affiliate-link.com/1xbet"
-      }
-    ];
-
-    const matches = [
-      {
-        home: "Real Madrid",
-        away: "Barcelona",
-        date: "2025-09-05 20:45",
-        odds: { home: 1.9, draw: 3.3, away: 3.7 },
-        formHome: ["W","W","D","L","W"],
-        formAway: ["L","W","D","L","W"]
-      },
-      {
-        home: "Manchester City",
-        away: "Liverpool",
-        date: "2025-09-06 21:00",
-        odds: { home: 1.8, draw: 3.4, away: 3.9 },
-        formHome: ["W","W","W","D","W"],
-        formAway: ["D","W","L","W","D"]
       }
     ];
 
@@ -200,17 +179,36 @@
 
       if (page === "predictions") {
         container.innerHTML = "<h2>Today’s Match Predictions</h2>" +
-          matches.map(m => `
-            <div class="match">
+          analyses.map((m, i) => `
+            <div class="analysis">
               <h3>${m.home} vs ${m.away}</h3>
-              <p>📅 ${m.date}</p>
-              <p>⚽ Odds: ${m.home} (${m.odds.home}) | Draw (${m.odds.draw}) | ${m.away} (${m.odds.away})</p>
-              <div class="form"><b>${m.home} form:</b> ${m.formHome.join(", ")}</div>
-              <div class="form"><b>${m.away} form:</b> ${m.formAway.join(", ")}</div>
-              <p><b>Analysis:</b> ${m.home} won ${m.formHome.filter(r=>r==="W").length} of their last 5 games, while ${m.away} only ${m.formAway.filter(r=>r==="W").length}. ${m.home} looks slightly stronger here.</p>
-              <a href="https://your-affiliate-link.com" target="_blank" class="btn">Bet Now</a>
+              <p>📅 ${m.date} | ${m.competition}</p>
+              <p>${m.analysis}</p>
+              <canvas id="chart-${i}" height="120"></canvas>
+              <div class="tip-box">💡 Tip: ${m.tip} @ ${m.odds}</div>
             </div>
           `).join("");
+
+        // Narišemo grafe za vsako analizo
+        analyses.forEach((m, i) => {
+          const ctx = document.getElementById(`chart-${i}`).getContext('2d');
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: [m.home, m.away],
+              datasets: [{
+                label: 'Win % (last 5 matches)',
+                data: [m.winRateHome, m.winRateAway],
+                backgroundColor: ['#007bff', '#dc3545']
+              }]
+            },
+            options: {
+              scales: {
+                y: { beginAtZero: true, max: 100 }
+              }
+            }
+          });
+        });
       }
     }
 
