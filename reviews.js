@@ -4,7 +4,7 @@ const reviews = [
     rating: "⭐️⭐️⭐️⭐️",
     text: "Wide range of markets, live betting, fast payouts, and a generous welcome bonus.",
     link: "https://your-affiliate-link.com/1xbet",
-    logo: "logos/1xbet.png"
+    logo: "1xbet.jpg"
   },
   {
     name: "Sportaza",
