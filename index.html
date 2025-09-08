@@ -40,6 +40,7 @@
     nav button:hover { color: #28a745; }
     #content { flex: 1; padding: 40px 20px; max-width: 1100px; margin: auto; }
 
+    /* Analyses */
     .analysis {
       background: #fff; border-radius: 8px; padding: 25px; margin-bottom: 25px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -58,6 +59,33 @@
     }
     .confidence { margin-top: 10px; font-size: 16px; font-weight: normal; color: #ccc; }
     canvas { margin: 20px 0; max-width: 100%; }
+
+    /* Reviews */
+    .reviews-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+    .review-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .review-card:hover { transform: translateY(-5px); }
+    .review-card h3 { margin: 0; font-size: 22px; font-weight: 700; }
+    .stars { color: #ffc107; margin: 8px 0 12px; font-size: 18px; }
+    .bonus {
+      background: #28a745; color: white; padding: 6px 12px; border-radius: 5px;
+      display: inline-block; margin-bottom: 15px; font-weight: 600;
+    }
+    .review-card p { flex-grow: 1; font-size: 15px; color: #444; margin-bottom: 15px; }
+
     footer {
       background: #222; color: #ddd; text-align: center; padding: 30px 20px; margin-top: 40px;
     }
@@ -83,23 +111,34 @@
     <p>Contact: <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
   </footer>
 
+  <!-- External scripts -->
   <script src="analyses.js"></script>
-  <script>
-    const reviews = [
-      { name: "Bet365", rating: "⭐️⭐️⭐️⭐️⭐️", text: "One of the best bookmakers with live streaming and great odds.", link: "https://your-affiliate-link.com/bet365" },
-      { name: "1xBet", rating: "⭐️⭐️⭐️⭐️", text: "Wide range of markets, fast payouts, and a generous welcome bonus.", link: "https://your-affiliate-link.com/1xbet" }
-    ];
+  <script src="reviews.js"></script>
 
+  <script>
     function showPage(page) {
       const container = document.getElementById("content");
 
       if (page === "home") {
-        container.innerHTML = `<h2>Welcome to Betting Tips</h2><p>Get the latest football match predictions and honest bookmaker reviews.</p>`;
+        container.innerHTML = `
+          <h2>Welcome to Betting Tips</h2>
+          <p>Get the latest football match predictions and honest bookmaker reviews.</p>
+        `;
       }
 
       if (page === "reviews") {
         container.innerHTML = "<h2>Top Bookmaker Reviews</h2>" + 
-          reviews.map(r => `<div class="review"><h3>${r.name} ${r.rating}</h3><p>${r.text}</p><a href="${r.link}" target="_blank" class="btn">Visit ${r.name}</a></div>`).join("");
+          `<div class="reviews-container">` +
+          reviews.map(r => `
+            <div class="review-card">
+              <h3>${r.name}</h3>
+              <div class="stars">${"⭐️".repeat(r.rating)}</div>
+              <div class="bonus">${r.bonus}</div>
+              <p>${r.text}</p>
+              <a href="${r.link}" target="_blank" class="btn">Visit ${r.name}</a>
+            </div>
+          `).join("") +
+          `</div>`;
       }
 
       if (page === "predictions") {
