@@ -18,7 +18,7 @@
       min-height: 100vh;
     }
     header {
-      background: url('banner2.PNG') center/cover no-repeat;
+      background: url('banner.PNG') center/cover no-repeat;
       color: #fff;
       text-align: center;
       padding: 140px 20px;
@@ -127,17 +127,16 @@
       }
 
       if (page === "reviews") {
-        container.innerHTML = "<h2>Top Bookmaker Reviews</h2>" + 
-          `<div class="reviews-container">` +
-          reviews.map(r => `
-            <div class="review-card">
-              <h3>${r.name}</h3>
-              <div class="stars">${"⭐️".repeat(r.rating)}</div>
-              <div class="bonus">${r.bonus}</div>
-              <p>${r.text}</p>
-              <a href="${r.link}" target="_blank" class="btn">Visit ${r.name}</a>
-            </div>
-          `).join("") +
+  container.innerHTML = "<h2>Top Bookmaker Reviews</h2>" + 
+    reviews.map(r => `
+      <div class="review">
+        <img src="${r.logo}" alt="${r.name} logo" style="width:150px; margin-bottom:10px; display:block;">
+        <h3>${r.name} ${r.rating}</h3>
+        <p>${r.text}</p>
+        <a href="${r.link}" target="_blank" class="btn">Visit ${r.name}</a>
+      </div>
+    `).join("");
+}+
           `</div>`;
       }
 

@@ -5,6 +5,7 @@ const reviews = [
     bonus: "100% up to €130",
     text: "1xBet offers one of the widest selections of sports and betting markets globally. Competitive odds, live streaming, and an enormous range of payment methods make it a strong choice for experienced bettors.",
     link: "https://your-affiliate-link.com/1xbet"
+    logo: "1xbet.png"
   },
   {
     name: "Sportaza",
