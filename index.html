@@ -3,247 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Betting Tips & Reviews</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: #f5f5f5;
-      color: #333;
-      font-size: 18px;
-      line-height: 1.6;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      background: url('banner.PNG') center/cover no-repeat;
-      color: #fff;
-      text-align: center;
-      padding: 140px 20px;
-    }
-    header h1 {
-      font-size: 52px;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-    }
-    header p {
-      font-size: 22px;
-      margin-bottom: 30px;
-      text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
-    }
-    header .btn {
-      background: #28a745;
-      padding: 18px 34px;
-      font-size: 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 700;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 35px;
-      background: #222;
-      padding: 18px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    nav button {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 20px;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 10px 20px;
-    }
-    nav button:hover { color: #28a745; }
-    #content {
-      flex: 1;
-      padding: 40px 20px;
-      max-width: 1100px;
-      margin: auto;
-    }
-
-    /* Analyses */
-    .analysis {
-      background: #fff;
-      border-radius: 8px;
-      padding: 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .analysis h3 { font-size: 26px; margin-bottom: 15px; }
-    .match-info {
-      background: #f0f0f0;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      font-size: 16px;
-    }
-    .form-guide span {
-      display: inline-block;
-      margin: 2px;
-      padding: 6px 10px;
-      border-radius: 4px;
-      color: white;
-      font-weight: bold;
-    }
-    .W { background: #28a745; }
-    .D { background: #ffc107; color: black; }
-    .L { background: #dc3545; }
-    .bet-box {
-      background: #222;
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      margin-top: 25px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-    .bonus-btn {
-      display: inline-block;
-      background: #28a745;
-      color: white;
-      padding: 14px 28px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 18px;
-      text-decoration: none;
-      margin-top: 15px;
-    }
-    .bonus-btn:hover {
-      background: #218838;
-    }
-
-    /* Reviews */
-    .review {
-      background: #fff;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .review img {
-      width: 140px;
-      height: auto;
-      object-fit: contain;
-      border-radius: 6px;
-    }
-    .review-content { flex: 1; }
-    .review h3 { margin: 0 0 10px; }
-
-    footer {
-      background: #222;
-      color: #ddd;
-      text-align: center;
-      padding: 30px 20px;
-      margin-top: 40px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>⚽ Betting Tips & Bookmaker Reviews</h1>
-    <p>Daily match predictions and trusted bookmaker reviews</p>
-    <a href="#" onclick="showPage('predictions')" class="btn">See Today’s Predictions</a>
+  <header class="banner">
+    <h1>⚽ Betting Tips & Reviews</h1>
+    <p>Daily predictions & trusted bookmaker reviews</p>
+    <a href="analyses.html" class="btn">See Today’s Predictions</a>
   </header>
 
   <nav>
-    <button onclick="showPage('home')">Home</button>
-    <button onclick="showPage('reviews')">Bookmaker Reviews</button>
-    <button onclick="showPage('predictions')">Match Predictions</button>
+    <a href="index.html">Home</a>
+    <a href="reviews.html">Bookmaker Reviews</a>
+    <a href="analyses.html">Match Predictions</a>
   </nav>
 
-  <div id="content"></div>
+  <main>
+    <section class="home">
+      <h2>Welcome</h2>
+      <p>Get the latest football match predictions and honest bookmaker reviews. 
+      We combine stats, form, and expert opinion to help you place smarter bets.</p>
+    </section>
+  </main>
 
   <footer>
     <p>© 2025 Betting Tips & Reviews. All rights reserved.</p>
     <p>Contact: <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
   </footer>
-
-  <script src="analyses.js"></script>
-  <script src="reviews.js"></script>
-  <script>
-    function showPage(page) {
-      const container = document.getElementById("content");
-
-      if (page === "home") {
-        container.innerHTML = `
-          <h2>Welcome to Betting Tips</h2>
-          <p>Get the latest football match predictions and honest bookmaker reviews.</p>
-        `;
-      }
-
-      if (page === "reviews") {
-        container.innerHTML = "<h2>Top Bookmaker Reviews</h2>" + 
-          reviews.map(r => `
-            <div class="review">
-              <img src="${r.logo}" alt="${r.name} logo">
-              <div class="review-content">
-                <h3>${r.name} ${r.rating}</h3>
-                <p>${r.text}</p>
-                <a href="${r.link}" target="_blank" class="bonus-btn">Visit ${r.name}</a>
-              </div>
-            </div>
-          `).join("");
-      }
-
-      if (page === "predictions") {
-        container.innerHTML = "<h2>Today’s Match Predictions</h2>" +
-          analyses.map((m, i) => `
-            <div class="analysis">
-              <h3>${m.home} vs ${m.away}</h3>
-              <div class="match-info">📅 ${m.date} | 🏆 ${m.competition} | 🏟 Stadium: ${m.stadium}</div>
-              <p>${m.analysis}</p>
-              <h4>Form Guide</h4>
-              <div class="form-guide">
-                <b>${m.home}:</b> ${m.formHome.map(r => `<span class="${r}">${r}</span>`).join("")}
-                <br><b>${m.away}:</b> ${m.formAway.map(r => `<span class="${r}">${r}</span>`).join("")}
-              </div>
-              <canvas id="chart-${i}" height="120"></canvas>
-              <canvas id="goals-${i}" height="120"></canvas>
-              <div class="bet-box">
-                💡 Bet of the Day: ${m.tip} @ ${m.odds}
-                <br>
-                <a href="${m.affiliate}" target="_blank" class="bonus-btn">Bet Now with 100% Bonus</a>
-              </div>
-            </div>
-          `).join("");
-
-        analyses.forEach((m, i) => {
-          new Chart(document.getElementById(`chart-${i}`), {
-            type: 'bar',
-            data: {
-              labels: [m.home, m.away],
-              datasets: [{ label: 'Win % (last 5)', data: [m.winRateHome, m.winRateAway], backgroundColor: ['#007bff', '#dc3545'] }]
-            },
-            options: { scales: { y: { beginAtZero: true, max: 100 } } }
-          });
-          new Chart(document.getElementById(`goals-${i}`), {
-            type: 'bar',
-            data: {
-              labels: ['Goals Scored', 'Goals Conceded'],
-              datasets: [
-                { label: m.home, data: [m.goalsScoredHome, m.goalsConcededHome], backgroundColor: '#007bff' },
-                { label: m.away, data: [m.goalsScoredAway, m.goalsConcededAway], backgroundColor: '#dc3545' }
-              ]
-            },
-            options: { scales: { y: { beginAtZero: true } } }
-          });
-        });
-      }
-    }
-
-    showPage("home");
-  </script>
 </body>
 </html>

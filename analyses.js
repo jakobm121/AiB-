@@ -1,28 +1,38 @@
 const analyses = [
   {
-    home: "Faroe Islands",
-    away: "Croatia",
-    date: "2025-09-05 20:45",
-    competition: "World Cup Qualifiers",
-    stadium: "Tórsvøllur (Torshavn)",
+    home: "Croatia",
+    away: "Faroe Islands",
+    date: "2025-09-10",
+    competition: "UEFA Qualifiers",
+    stadium: "Zagreb Stadium",
+    analysis: "Croatia remain strong favorites despite missing a few regular starters. Their squad depth and attacking quality should be enough to dominate the Faroe Islands, who struggle defensively.",
+    formHome: ["W","W","L","D","W"],
+    formAway: ["L","L","D","L","W"],
+    winRateHome: 70,
+    winRateAway: 20,
+    goalsScoredHome: 9,
+    goalsConcededHome: 4,
+    goalsScoredAway: 3,
+    goalsConcededAway: 11,
     tip: "Croatia -1.5 Handicap",
-    odds: "1.75",
-    confidence: 8,
-    winRateHome: 20,
-    winRateAway: 60,
-    goalsScoredHome: 4,
-    goalsConcededHome: 7,
-    goalsScoredAway: 14,
-    goalsConcededAway: 4,
-    formHome: ["W","L","L","L","L"],
-    formAway: ["W","W","L","W","D"],
-    analysis: `
-      Croatia comes into this match as the clear favorite despite missing a few regular starters.  
-      <br><br>✅ They scored 12 goals in their last two matches (7–0 vs Gibraltar, 5–1 vs Czech Republic).  
-      <br>✅ Faroe Islands have only 1 win in their last 5 and struggle against top opposition.  
-      <br>✅ Croatia’s squad depth and attacking options are simply on another level.  
-      <br><br><b>Expected Scenario:</b> Croatia dominates possession, creates plenty of chances and secures a comfortable win.  
-      <br><b>Prediction:</b> Croatia should win by at least 2 goals.  
-    `
+    odds: 1.75,
+    link: "https://your-affiliate-link.com/croatia"
   }
 ];
+
+const container = document.getElementById("analyses-container");
+
+analyses.forEach((m, i) => {
+  container.innerHTML += `
+    <div class="analysis">
+      <h3>${m.home} vs ${m.away}</h3>
+      <p><b>Date:</b> ${m.date} | <b>Competition:</b> ${m.competition}</p>
+      <p>${m.analysis}</p>
+      <div class="bet-box">
+        💡 Tip: ${m.tip} @ ${m.odds}
+        <br>
+        <a href="${m.link}" target="_blank" class="btn">Bet now with 100% Bonus</a>
+      </div>
+    </div>
+  `;
+});
