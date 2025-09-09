@@ -40,32 +40,33 @@
     nav button:hover { color: #28a745; }
     #content { flex: 1; padding: 40px 20px; max-width: 1100px; margin: auto; }
 
-    /* Analyses */
+    /* Predictions */
     .analysis {
       background: #fff; border-radius: 8px; padding: 25px; margin-bottom: 25px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-    .analysis h3 { font-size: 26px; margin-bottom: 15px; }
-    .match-info {
-      background: #f0f0f0; padding: 12px; border-radius: 6px; margin-bottom: 20px; font-size: 16px;
+    .analysis h3 { font-size: 26px; margin-bottom: 10px; }
+    .match-info { color: #555; margin-bottom: 15px; font-size: 16px; }
+    .tip-box {
+      background: #222; color: white; padding: 15px; border-radius: 6px;
+      font-size: 18px; font-weight: bold; margin-bottom: 15px; text-align: center;
     }
     .hidden-details { display: none; margin-top: 15px; }
-    .toggle-btn {
-      display: inline-block; margin-top: 10px; padding: 10px 20px;
-      background: #007bff; color: #fff; border: none; border-radius: 6px; cursor: pointer;
-      font-size: 16px; font-weight: bold;
+    .action-buttons { display: flex; gap: 12px; }
+    .toggle-btn, .bet-btn {
+      flex: 1;
+      display: inline-block; padding: 12px; border-radius: 6px;
+      font-size: 16px; font-weight: bold; text-align: center; cursor: pointer;
     }
+    .toggle-btn { background: #007bff; color: #fff; border: none; }
     .toggle-btn:hover { background: #0056b3; }
+    .bet-btn { background: #28a745; color: #fff; text-decoration: none; }
+    .bet-btn:hover { background: #218838; }
 
     .form-guide span {
       display: inline-block; margin: 2px; padding: 6px 10px; border-radius: 4px; color: white; font-weight: bold;
     }
     .W { background: #28a745; } .D { background: #ffc107; color: black; } .L { background: #dc3545; }
-    .bet-box {
-      background: #222; color: white; padding: 20px; border-radius: 8px; margin-top: 25px;
-      font-size: 20px; font-weight: bold; text-align: center;
-    }
-    .confidence { margin-top: 10px; font-size: 16px; font-weight: normal; color: #ccc; }
     canvas { margin: 20px 0; max-width: 100%; }
 
     /* Reviews */
@@ -75,7 +76,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .review img {
-      width: 120px; height: auto; border-radius: 6px; flex-shrink: 0;
+      width: 140px; height: auto; border-radius: 6px; flex-shrink: 0;
     }
     .review h3 { margin: 0; font-size: 24px; }
     .review p { margin: 10px 0; font-size: 16px; }
@@ -136,8 +137,11 @@
             <div class="analysis">
               <h3>${m.home} vs ${m.away}</h3>
               <div class="match-info">📅 ${m.date} | 🏆 ${m.competition}</div>
-              <div class="bet-box">💡 Bet: ${m.tip} @ ${m.odds}<div class="confidence">Confidence: ${m.confidence}/10</div></div>
-              <button class="toggle-btn" onclick="toggleDetails(${i})">Show More</button>
+              <div class="tip-box">💡 Tip: ${m.tip} @ ${m.odds}</div>
+              <div class="action-buttons">
+                <button class="toggle-btn" onclick="toggleDetails(${i})">Show More</button>
+                <a href="${m.affiliate}" target="_blank" class="bet-btn">Bet Now</a>
+              </div>
               <div id="details-${i}" class="hidden-details">
                 <p>${m.analysis}</p>
                 <h4>Form Guide</h4>
@@ -171,7 +175,7 @@
 
     function toggleDetails(index) {
       const details = document.getElementById(`details-${index}`);
-      const button = details.previousElementSibling;
+      const button = details.previousElementSibling.querySelector('.toggle-btn');
       if (details.style.display === "block") {
         details.style.display = "none";
         button.textContent = "Show More";
