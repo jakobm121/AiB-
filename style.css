@@ -11,7 +11,7 @@ body {
 }
 
 header {
-  background: url('banner1.png') center/cover no-repeat;
+  background: url('banner.png') center/cover no-repeat;
   color: #fff;
   text-align: center;
   padding: 140px 20px;
@@ -58,9 +58,7 @@ nav a {
   padding: 10px 20px;
 }
 
-nav a:hover {
-  color: #28a745;
-}
+nav a:hover { color: #28a745; }
 
 #content {
   flex: 1;
@@ -69,7 +67,6 @@ nav a:hover {
   margin: auto;
 }
 
-/* ANALYSES */
 .analysis {
   background: #fff;
   border-radius: 8px;
@@ -111,60 +108,44 @@ nav a:hover {
   text-align: center;
 }
 
-.bet-btn {
+.bet-box .btn {
   display: inline-block;
   margin-top: 10px;
-  padding: 12px 24px;
   background: #28a745;
-  color: #fff;
-  font-weight: 700;
+  padding: 12px 24px;
   border-radius: 6px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
   text-decoration: none;
-  transition: background 0.3s;
 }
-.bet-btn:hover { background: #218838; }
 
-/* REVIEWS */
-.review {
-  background: #fff;
-  border-radius: 8px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+canvas { margin: 20px 0; max-width: 100%; }
+
+.affiliate-row {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
+  margin: 50px 0 30px;
 }
-.review img {
-  max-width: 140px;
-  border-radius: 8px;
-}
-.review h3 { margin: 0; }
 
-/* AFFILIATE BANNER */
-.affiliate-banner {
-  text-align: center;
-  margin: 60px 0 40px;
-}
-.affiliate-banner img {
+.affiliate-row img {
   max-width: 200px;
+  height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
 }
-.affiliate-banner img:hover {
+
+.affiliate-row img:hover {
   transform: scale(1.05);
 }
 
-/* FOOTER */
 footer {
   background: #222;
   color: #ddd;
   text-align: center;
   padding: 30px 20px;
-  margin-top: auto;
+  margin-top: 40px;
 }
-footer p { margin: 5px 0; font-size: 15px; }
-footer a { color: #28a745; text-decoration: none; }
-footer a:hover { text-decoration: underline; }
