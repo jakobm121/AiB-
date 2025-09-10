@@ -39,10 +39,6 @@ header .btn {
   font-weight: 700;
 }
 
-header .btn:hover {
-  background: #218838;
-}
-
 nav {
   display: flex;
   justify-content: center;
@@ -73,7 +69,8 @@ nav a:hover {
   margin: auto;
 }
 
-.card {
+/* ANALYSES */
+.analysis {
   background: #fff;
   border-radius: 8px;
   padding: 25px;
@@ -81,30 +78,93 @@ nav a:hover {
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.card h3 {
-  margin-bottom: 15px;
-}
+.analysis h3 { font-size: 26px; margin-bottom: 15px; }
 
-.btn {
-  display: inline-block;
-  padding: 14px 22px;
-  background: #007bff;
-  color: white;
-  text-decoration: none;
+.match-info {
+  background: #f0f0f0;
+  padding: 12px;
   border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.form-guide span {
+  display: inline-block;
+  margin: 2px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  color: white;
   font-weight: bold;
-  font-size: 18px;
+}
+.W { background: #28a745; }
+.D { background: #ffc107; color: black; }
+.L { background: #dc3545; }
+
+.bet-box {
+  background: #222;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.bet-btn {
+  display: inline-block;
   margin-top: 10px;
+  padding: 12px 24px;
+  background: #28a745;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.bet-btn:hover { background: #218838; }
+
+/* REVIEWS */
+.review {
+  background: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.review img {
+  max-width: 140px;
+  border-radius: 8px;
+}
+.review h3 { margin: 0; }
+
+/* AFFILIATE BANNER */
+.affiliate-banner {
+  text-align: center;
+  margin: 60px 0 40px;
+}
+.affiliate-banner img {
+  max-width: 300px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.affiliate-banner img:hover {
+  transform: scale(1.05);
 }
 
-.btn:hover {
-  background: #0056b3;
-}
-
+/* FOOTER */
 footer {
   background: #222;
   color: #ddd;
   text-align: center;
   padding: 30px 20px;
-  margin-top: 40px;
+  margin-top: auto;
 }
+footer p { margin: 5px 0; font-size: 15px; }
+footer a { color: #28a745; text-decoration: none; }
+footer a:hover { text-decoration: underline; }

@@ -5,7 +5,6 @@
   <title>Bookmaker Reviews</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <script src="reviews.js" defer></script>
 </head>
 <body>
   <header>
@@ -16,15 +15,40 @@
   <nav>
     <a href="index.html">Home</a>
     <a href="reviews.html">Bookmaker Reviews</a>
-    <a href="analyses.html">Match Predictions</a>
+    <a href="predictions.html">Match Predictions</a>
   </nav>
 
   <div id="content">
-    <!-- reviews.js bo generiral reviewe -->
+    <h2>Top Bookmaker Reviews</h2>
+  </div>
+
+  <!-- Affiliate banner -->
+  <div class="affiliate-banner">
+    <a href="https://your-affiliate-link.com/20bet" target="_blank">
+      <img src="20bet-banner.jpg" alt="20Bet Bonus Offer">
+    </a>
   </div>
 
   <footer>
     <p>© 2025 Betting Tips & Reviews. All rights reserved.</p>
   </footer>
+
+  <script src="reviews.js"></script>
+  <script>
+    const container = document.getElementById("content");
+
+    reviews.forEach(r => {
+      container.innerHTML += `
+        <div class="review">
+          <img src="${r.logo}" alt="${r.name} logo">
+          <div>
+            <h3>${r.name} ${r.rating}</h3>
+            <p>${r.text}</p>
+            <a href="${r.link}" target="_blank" class="btn">Visit ${r.name}</a>
+          </div>
+        </div>
+      `;
+    });
+  </script>
 </body>
 </html>
