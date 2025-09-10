@@ -147,7 +147,7 @@ nav a:hover {
   margin: 60px 0 40px;
 }
 .affiliate-banner img {
-  max-width: 80px;
+  max-width: 200px;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   cursor: pointer;
