@@ -1,86 +1,98 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: #f5f5f5;
+  background: #f8f9fa;
   color: #333;
   line-height: 1.6;
 }
 
-/* Hero */
-.hero {
-  background: #222 url('banner.jpg') center/cover no-repeat;
+header {
+  background: #222 url('banner.PNG') center/cover no-repeat;
   color: white;
   text-align: center;
-  padding: 120px 20px;
+  padding: 80px 20px;
 }
-.hero h1 { font-size: 48px; margin-bottom: 20px; }
-.hero p { font-size: 20px; margin-bottom: 30px; }
-.btn {
+header h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+header p {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+h2 {
+  color: #222;
+  margin-top: 40px;
+}
+
+.intro {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.top-bookmakers {
+  margin-bottom: 50px;
+}
+
+.bookmaker-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.bookmaker-card img {
+  width: 180px;
+  border-radius: 8px;
+  margin-right: 20px;
+}
+.bookmaker-content h3 {
+  margin-top: 0;
+}
+.bookmaker-content p {
+  margin: 5px 0;
+}
+.bookmaker-content .btn {
   display: inline-block;
-  padding: 14px 28px;
+  margin-top: 10px;
   background: #28a745;
   color: white;
+  padding: 10px 20px;
   text-decoration: none;
   font-weight: bold;
   border-radius: 6px;
 }
-.btn:hover { background: #218838; }
+.bookmaker-content .btn:hover {
+  background: #218838;
+}
 
-/* Why bonuses */
-.why-bonuses {
-  max-width: 1100px;
-  margin: 50px auto;
-  text-align: center;
-}
-.reasons {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-.reasons div {
-  flex: 1;
-  margin: 15px;
-  background: white;
+.other-bookmakers ul {
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  list-style: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.other-bookmakers li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+.other-bookmakers li:last-child {
+  border-bottom: none;
 }
 
-/* Bookmakers */
-.bookmakers {
-  max-width: 1100px;
-  margin: 50px auto;
-}
-.card {
-  display: flex;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  margin-bottom: 25px;
-  overflow: hidden;
-}
-.card img {
-  width: 250px;
-  object-fit: cover;
-}
-.card-body {
-  padding: 20px;
-}
-.card-body h3 { margin-top: 0; }
-
-/* Others */
-.others {
-  max-width: 1100px;
-  margin: 50px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-.others ul { list-style: none; padding: 0; }
-.others li { margin: 10px 0; }
-
-/* Footer */
 footer {
   background: #222;
   color: #ddd;
@@ -88,4 +100,19 @@ footer {
   padding: 30px 20px;
   margin-top: 40px;
 }
-footer a { color: #28a745; }
+footer a {
+  color: #28a745;
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .bookmaker-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .bookmaker-card img {
+    margin: 0 0 15px 0;
+    width: 220px;
+  }
+}
