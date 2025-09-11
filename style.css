@@ -139,3 +139,22 @@ footer a:hover { text-decoration: underline; }
 .other-bookmakers strong {
   color: #007bff;
 }
+/* ===== AFFILIATE BANNERS (HOME PAGE) ===== */
+.affiliate-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 40px 0 20px;
+}
+
+.affiliate-row img {
+  max-height: 90px;   /* 🔹 bannerji bodo podolgovati */
+  width: auto;
+  border-radius: 6px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.affiliate-row img:hover {
+  transform: scale(1.05); /* rahla animacija ob hoverju */
+}
