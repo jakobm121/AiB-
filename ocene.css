@@ -6,89 +6,79 @@ body {
   line-height: 1.6;
 }
 
-/* Hero Section */
+/* Hero */
 .hero {
-  background: linear-gradient(to right, #007bff, #28a745);
-  color: #fff;
+  background: #222 url('banner.jpg') center/cover no-repeat;
+  color: white;
   text-align: center;
-  padding: 80px 20px;
+  padding: 120px 20px;
 }
-.hero h1 {
-  font-size: 42px;
-  margin-bottom: 20px;
-}
-.hero p {
-  font-size: 20px;
-}
-
-/* Why Bonuses */
-.why-bonuses {
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-.why-bonuses h2 {
-  margin-bottom: 15px;
-  font-size: 28px;
-}
-
-/* Reviews Section */
-.reviews {
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 20px;
-}
-.reviews h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 32px;
-}
-
-.review-card {
-  background: #fff;
-  padding: 25px;
-  margin-bottom: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  text-align: center;
-}
-.review-card img {
-  max-width: 250px;
-  margin-bottom: 15px;
-}
-.review-card h3 {
-  font-size: 24px;
-  margin-bottom: 15px;
-}
-.review-card ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-  text-align: left;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.review-card ul.pros li { color: #28a745; font-weight: 600; }
-.review-card ul.cons li { color: #dc3545; font-weight: 600; }
-
-.review-card .btn {
+.hero h1 { font-size: 48px; margin-bottom: 20px; }
+.hero p { font-size: 20px; margin-bottom: 30px; }
+.btn {
   display: inline-block;
-  margin-top: 15px;
+  padding: 14px 28px;
   background: #28a745;
   color: white;
-  padding: 12px 22px;
+  text-decoration: none;
   font-weight: bold;
   border-radius: 6px;
-  text-decoration: none;
-  transition: background 0.3s ease;
 }
-.review-card .btn:hover {
-  background: #218838;
+.btn:hover { background: #218838; }
+
+/* Why bonuses */
+.why-bonuses {
+  max-width: 1100px;
+  margin: 50px auto;
+  text-align: center;
 }
+.reasons {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.reasons div {
+  flex: 1;
+  margin: 15px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Bookmakers */
+.bookmakers {
+  max-width: 1100px;
+  margin: 50px auto;
+}
+.card {
+  display: flex;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+.card img {
+  width: 250px;
+  object-fit: cover;
+}
+.card-body {
+  padding: 20px;
+}
+.card-body h3 { margin-top: 0; }
+
+/* Others */
+.others {
+  max-width: 1100px;
+  margin: 50px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+.others ul { list-style: none; padding: 0; }
+.others li { margin: 10px 0; }
 
 /* Footer */
 footer {
@@ -98,5 +88,4 @@ footer {
   padding: 30px 20px;
   margin-top: 40px;
 }
-footer a { color: #28a745; text-decoration: none; }
-footer a:hover { text-decoration: underline; }
+footer a { color: #28a745; }
