@@ -1,0 +1,37 @@
+.prediction-card {
+  background: #1e1e1e;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+.prediction-card h3 {
+  color: #00b4d8;
+  margin-bottom: 10px;
+}
+
+.prediction-card .league {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.prediction-card .bet-type {
+  background: #0077b6;
+  padding: 8px;
+  border-radius: 6px;
+  color: #fff;
+  margin: 10px 0;
+}
+
+canvas {
+  max-width: 150px;
+  margin: 15px auto;
+}
+
+.confidence-label {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #ccc;
+}

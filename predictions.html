@@ -2,78 +2,83 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Match Predictions</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>AI77 Betting | Predictions</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="predictions.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <header>
-    <h1>⚽ Match Predictions</h1>
-    <p>Detailed analysis and betting tips</p>
+    <h1>🎯 Match Predictions</h1>
+    <p>AI-driven insights for today’s matches</p>
   </header>
 
   <nav>
     <a href="index.html">Home</a>
-    <a href="reviews.html">Bookmaker Reviews</a>
     <a href="predictions.html">Match Predictions</a>
+    <a href="reviews.html">Bookmaker Reviews</a>
+    <a href="strategy.html">Betting Strategies</a>
   </nav>
 
-  <div id="content">
-    <h2>Today’s Match Predictions</h2>
-  </div>
+  <main class="container">
+    <div class="prediction-card">
+      <h3>19 Sep 2025 | Football | Premier League</h3>
+      <p class="league">Manchester City vs Arsenal</p>
+      <p class="bet-type">Bet: Over 2.5 Goals</p>
+      <canvas id="chart1"></canvas>
+      <p class="confidence-label">Confidence</p>
+      <a href="reviews.html" class="btn">Bet with Bonus</a>
+    </div>
 
-  <!-- Affiliate banner -->
-  <div class="affiliate-banner">
-    <a href="https://your-affiliate-link.com/1xbet" target="_blank">
-      <img src="1xbet.jpg" alt="1xBet Bonus Offer">
-    </a>
+    <div class="prediction-card">
+      <h3>19 Sep 2025 | Basketball | EuroLeague</h3>
+      <p class="league">Real Madrid vs Fenerbahce</p>
+      <p class="bet-type">Bet: Real Madrid -5.5</p>
+      <canvas id="chart2"></canvas>
+      <p class="confidence-label">Confidence</p>
+      <a href="reviews.html" class="btn">Bet with Bonus</a>
+    </div>
+
+    <div class="prediction-card">
+      <h3>19 Sep 2025 | Tennis | ATP Tour</h3>
+      <p class="league">Djokovic vs Alcaraz</p>
+      <p class="bet-type">Bet: Djokovic to Win</p>
+      <canvas id="chart3"></canvas>
+      <p class="confidence-label">Confidence</p>
+      <a href="reviews.html" class="btn">Bet with Bonus</a>
+    </div>
+  </main>
+
+  <div class="affiliate-banners">
+    <a href="#"><img src="1xbet.gif" alt="1xBet Bonus"></a>
+    <a href="#"><img src="IMG_3372.webp" alt="Sportaza Bonus"></a>
+    <a href="#"><img src="IMG_3380.jpeg" alt="20Bet Bonus"></a>
   </div>
 
   <footer>
-    <p>© 2025 Betting Tips & Reviews. All rights reserved.</p>
+    <p>© 2025 AI-77 Betting. All rights reserved.</p>
   </footer>
 
-  <script src="analyses.js"></script>
   <script>
-    const container = document.getElementById("content");
-
-    analyses.forEach((m, i) => {
-      container.innerHTML += `
-        <div class="analysis">
-          <h3>${m.home} vs ${m.away}</h3>
-          <div class="match-info">📅 ${m.date} | 🏆 ${m.competition} | 🏟 ${m.stadium}</div>
-          <p>${m.analysis}</p>
-          <h4>Form Guide</h4>
-          <div class="form-guide">
-            <b>${m.home}:</b> ${m.formHome.map(r => `<span class="${r}">${r}</span>`).join("")}
-            <br><b>${m.away}:</b> ${m.formAway.map(r => `<span class="${r}">${r}</span>`).join("")}
-          </div>
-          <canvas id="chart-${i}" height="120"></canvas>
-          <canvas id="goals-${i}" height="120"></canvas>
-          <div class="bet-box">
-            💡 Tip: ${m.tip} @ ${m.odds}
-            <br>
-            <a href="${m.affiliate}" target="_blank" class="bet-btn">Bet Now with 100% Bonus</a>
-          </div>
-        </div>
-      `;
-
-      new Chart(document.getElementById(`chart-${i}`), {
-        type: 'bar',
-        data: { labels: [m.home, m.away], datasets: [{ label: 'Win % (last 5)', data: [m.winRateHome, m.winRateAway], backgroundColor: ['#007bff', '#dc3545'] }] },
-        options: { scales: { y: { beginAtZero: true, max: 100 } } }
+    function makeChart(id, val) {
+      new Chart(document.getElementById(id), {
+        type: 'doughnut',
+        data: {
+          labels: ['Confidence', 'Other'],
+          datasets: [{
+            data: [val, 100 - val],
+            backgroundColor: ['#28a745', '#e0e0e0']
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          cutout: '70%'
+        }
       });
-
-      new Chart(document.getElementById(`goals-${i}`), {
-        type: 'bar',
-        data: { labels: ['Goals Scored', 'Goals Conceded'], datasets: [
-          { label: m.home, data: [m.goalsScoredHome, m.goalsConcededHome], backgroundColor: '#007bff' },
-          { label: m.away, data: [m.goalsScoredAway, m.goalsConcededAway], backgroundColor: '#dc3545' }
-        ]},
-        options: { scales: { y: { beginAtZero: true } } }
-      });
-    });
+    }
+    makeChart('chart1', 78);
+    makeChart('chart2', 65);
+    makeChart('chart3', 72);
   </script>
 </body>
 </html>
