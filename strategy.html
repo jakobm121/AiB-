@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI77 Betting | Strategies</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="strategy.css">
+</head>
+<body>
+  <header>
+    <h1>📘 Betting Strategies</h1>
+    <p>Learn smart betting strategies to increase your edge</p>
+  </header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="predictions.html">Match Predictions</a>
+    <a href="reviews.html">Bookmaker Reviews</a>
+    <a href="strategy.html">Betting Strategies</a>
+  </nav>
+
+  <main class="container">
+    <div class="strategy-card">
+      <button class="accordion">Bonus Strategy</button>
+      <div class="panel"><p>Maximize bookmaker welcome bonuses by splitting deposits across different platforms...</p></div>
+    </div>
+
+    <div class="strategy-card">
+      <button class="accordion">Value Betting</button>
+      <div class="panel"><p>Find bets where odds are higher than the true probability of an event happening...</p></div>
+    </div>
+
+    <div class="strategy-card">
+      <button class="accordion">Arbitrage Betting</button>
+      <div class="panel"><p>Exploit differences in odds between bookmakers to guarantee a profit regardless of outcome...</p></div>
+    </div>
+
+    <div class="strategy-card">
+      <button class="accordion">Bankroll Management</button>
+      <div class="panel"><p>Control your risk by staking a fixed percentage of your bankroll per bet...</p></div>
+    </div>
+
+    <div class="strategy-card">
+      <button class="accordion">Live Betting</button>
+      <div class="panel"><p>Capitalize on momentum shifts and in-play opportunities using advanced statistics...</p></div>
+    </div>
+  </main>
+
+  <div class="affiliate-banners">
+    <a href="#"><img src="1xbet.gif" alt="1xBet Bonus"></a>
+    <a href="#"><img src="IMG_3372.webp" alt="Sportaza Bonus"></a>
+    <a href="#"><img src="IMG_3380.jpeg" alt="20Bet Bonus"></a>
+  </div>
+
+  <footer>
+    <p>© 2025 AI-77 Betting. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const acc = document.querySelectorAll(".accordion");
+    acc.forEach(btn => {
+      btn.addEventListener("click", function() {
+        this.classList.toggle("active");
+        let panel = this.nextElementSibling;
+        if (panel.style.maxHeight) {
+          panel.style.maxHeight = null;
+        } else {
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
