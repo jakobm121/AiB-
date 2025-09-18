@@ -1,29 +1,175 @@
-.review-card {
-  display: flex;
-  align-items: center;
-  background: #1e1e1e;
-  margin-bottom: 25px;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
 }
 
-.review-card img {
-  max-width: 140px;
-  margin-right: 20px;
+h1, h2, h3, h4 {
+  margin: 0 0 10px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #0077b6, #00b4d8);
+  color: white;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #0077b6;
+}
+
+/* Bookmakers Grid */
+.bookmakers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-logo img {
+  max-width: 200px;
+  max-height: 100px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 15px;
+}
+
+.card h3 {
+  font-size: 1.3rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card .rating {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0077b6;
+  margin-left: 8px;
+}
+
+/* Welcome Bonus */
+.welcome-bonus {
+  background: #d4edda;
+  color: #155724;
+  padding: 10px;
+  border-radius: 6px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* Pros & Cons */
+.pros-cons {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.pros, .cons {
+  flex: 1;
+  background: #f1f9ff;
+  padding: 10px;
   border-radius: 6px;
 }
 
-.review-content h3 {
-  color: #00b4d8;
-  margin-bottom: 5px;
-}
-
-.review-content .rating {
-  color: #ffd700;
+.pros h4, .cons h4 {
   margin-bottom: 8px;
+  font-size: 1rem;
+  color: #0077b6;
 }
 
-.review-content p {
-  margin-bottom: 10px;
+.pros ul, .cons ul {
+  padding-left: 20px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Button */
+.btn-wrapper {
+  text-align: center;
+  margin-top: auto;
+}
+
+.btn {
+  display: inline-block;
+  background: #0077b6;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background: #023e8a;
+}
+
+/* Footer */
+footer {
+  background: #023e8a;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+footer p {
+  margin: 8px 0;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #90e0ef;
+  font-weight: 600;
+}
+
+footer a:hover {
+  color: #fff;
 }
