@@ -53,3 +53,4 @@ AI77 PREMIUM UPLOAD CHECKLIST
 Notes:
 - The package includes placeholder content for predictions.json/results.json and image assets so the site can load cleanly immediately.
 - Replace placeholders with your real content whenever ready.
+- reviews.js (expand/collapse Detailed Review on bookmaker cards)

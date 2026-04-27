@@ -1,3 +1,4 @@
+
 .page-reviews .intro-banner {
   padding: 0 0 var(--space-7);
 }
@@ -94,14 +95,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.42rem 0.7rem;
+  padding: 0.42rem 0.72rem;
   border-radius: 999px;
-  background: rgba(77, 163, 255, 0.12);
-  border: 1px solid rgba(77, 163, 255, 0.18);
-  color: #8fc2ff;
-  font-size: 0.85rem;
+  background: rgba(212, 175, 55, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  color: var(--gold);
+  font-size: 0.88rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
   white-space: nowrap;
+}
+
+.bookmaker-card__rating--stars {
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
 }
 
 .bookmaker-card__bonus {
@@ -114,6 +121,47 @@
   font-weight: 700;
 }
 
+.bookmaker-card__actions--stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.bookmaker-toggle {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.9rem 1.2rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-strong);
+  transition: 0.2s ease;
+}
+
+.bookmaker-toggle:hover,
+.bookmaker-toggle:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(212, 175, 55, 0.25);
+}
+
+.bookmaker-toggle[aria-expanded="true"] {
+  color: var(--gold);
+  border-color: rgba(212, 175, 55, 0.25);
+  background: rgba(212, 175, 55, 0.08);
+}
+
+.bookmaker-card__details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, margin-top 0.35s ease;
+  margin-top: 0;
+}
+
+.bookmaker-card__details.is-open {
+  margin-top: 1rem;
+}
+
 .bookmaker-card__body {
   display: grid;
   gap: 1rem;
@@ -124,8 +172,6 @@
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
 }
 
 .bookmaker-card__col h4 {
@@ -143,27 +189,23 @@
   margin-top: 0.45rem;
 }
 
-.bookmaker-card__actions {
-  margin-top: 1rem;
-}
-
-.bookmaker-card__actions .btn {
-  width: 100%;
-}
-
 @media (min-width: 768px) {
   .bookmaker-card {
     padding: 1.5rem;
   }
 
+  .bookmaker-card__actions--stack {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+
+  .bookmaker-toggle {
+    width: auto;
+    min-width: 180px;
+  }
+
   .bookmaker-card__body {
     grid-template-columns: 1fr 1fr;
     align-items: start;
-  }
-}
-
-@media (min-width: 1024px) {
-  .bookmakers-grid {
-    gap: 1.25rem;
   }
 }
