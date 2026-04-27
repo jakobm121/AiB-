@@ -62,6 +62,7 @@
   overflow: hidden;
   transition: max-height 0.3s ease;
   color: var(--text-soft);
+  padding: 0 1.2rem;
 }
 
 .panel > *:first-child {
@@ -70,10 +71,6 @@
 
 .panel > *:last-child {
   margin-bottom: 0;
-}
-
-.panel {
-  padding: 0 1.2rem;
 }
 
 .accordion.active + .panel {

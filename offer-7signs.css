@@ -1,1 +1,125 @@
+.page-offer .offer-hero {
+  padding: var(--space-7) 0 var(--space-6);
+}
 
+.page-offer .offer-hero__card {
+  display: grid;
+  gap: 1.2rem;
+  background:
+    linear-gradient(180deg, rgba(24, 31, 47, 0.95), rgba(14, 20, 31, 0.9));
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 1.35rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.page-offer .offer-hero__card::after {
+  content: "";
+  position: absolute;
+  inset: auto -8% -28% auto;
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.page-offer .offer-hero__media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-offer .offer-logo {
+  width: min(190px, 100%);
+  object-fit: contain;
+}
+
+.page-offer .offer-hero__title {
+  margin-bottom: 0.75rem;
+  font-size: clamp(1.9rem, 7vw, 3.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.page-offer .offer-hero__text {
+  color: var(--text-soft);
+}
+
+.page-offer .offer-hero__text + .offer-hero__text {
+  margin-top: 0.9rem;
+}
+
+.page-offer .offer-hero__actions {
+  margin-top: 1.15rem;
+}
+
+.offer-content {
+  padding: 0 0 var(--space-8);
+}
+
+.offer-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.offer-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 1.3rem;
+  color: var(--text-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.offer-block h2 {
+  margin-bottom: 0.8rem;
+  color: var(--text);
+  font-size: 1.4rem;
+}
+
+.offer-block p {
+  color: var(--text-soft);
+}
+
+.offer-block .btn {
+  margin-top: 1rem;
+}
+
+.offer-list {
+  margin: 0.2rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.offer-list li + li {
+  margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-offer .offer-hero__card {
+    grid-template-columns: 220px 1fr;
+    align-items: center;
+    padding: 1.8rem;
+  }
+
+  .offer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .offer-block--wide {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-offer .offer-hero__card {
+    padding: 2.2rem;
+  }
+
+  .offer-block {
+    padding: 1.55rem;
+  }
+}

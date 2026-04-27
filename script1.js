@@ -10,9 +10,6 @@ const AFFILIATE_URL = "https://stzns.lynmonkel.com/?mid=309891_1838278";
 
 let profitChartInstance = null;
 
-// ------------------------
-// HELPERS
-// ------------------------
 function capitalize(text) {
   if (!text || typeof text !== "string") return "";
   return text.charAt(0).toUpperCase() + text.slice(1);
@@ -23,9 +20,6 @@ function safeNumber(value, fallback = 0) {
   return Number.isFinite(n) ? n : fallback;
 }
 
-// ------------------------
-// LOAD PREDICTIONS + LAST UPDATED
-// ------------------------
 async function loadPredictions() {
   try {
     const response = await fetch("./predictions.json", { cache: "no-store" });
@@ -60,9 +54,6 @@ async function loadPredictions() {
   }
 }
 
-// ------------------------
-// CONFIDENCE SYSTEM
-// ------------------------
 function getConfidenceData(conf) {
   const confidence = safeNumber(conf);
 
@@ -89,9 +80,6 @@ function getConfidenceData(conf) {
   };
 }
 
-// ------------------------
-// TIME UNTIL MATCH
-// ------------------------
 function getKickoffStatus(dateStr, timeStr) {
   if (!dateStr || !timeStr) return "";
 
@@ -119,9 +107,6 @@ function getKickoffStatus(dateStr, timeStr) {
   return "";
 }
 
-// ------------------------
-// RENDER CARDS
-// ------------------------
 function renderPredictions(data) {
   const container = document.getElementById("predictions-container");
   if (!container) return;
@@ -210,9 +195,6 @@ function renderPredictions(data) {
   });
 }
 
-// ------------------------
-// STATS + REAL PROFIT CHART
-// ------------------------
 async function loadStats() {
   try {
     const res = await fetch("./results.json", { cache: "no-store" });
@@ -340,9 +322,6 @@ async function loadStats() {
   }
 }
 
-// ------------------------
-// TOGGLE HOW WE PLAY
-// ------------------------
 function initHowWePlayToggle() {
   const title = document.getElementById("howWePlayTitle");
   const content = document.getElementById("howWePlayContent");
@@ -356,9 +335,6 @@ function initHowWePlayToggle() {
   });
 }
 
-// ------------------------
-// RUN
-// ------------------------
 document.addEventListener("DOMContentLoaded", () => {
   initHowWePlayToggle();
   loadPredictions();

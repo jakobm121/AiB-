@@ -122,10 +122,6 @@ body.page {
   margin-inline: auto;
 }
 
-/* =========================
-   SHARED SURFACES
-   ========================= */
-
 .section-card,
 .stat-card,
 .metric-card,
@@ -169,10 +165,6 @@ body.page {
   font-weight: 500;
 }
 
-/* =========================
-   HEADER / NAV
-   ========================= */
-
 .site-header {
   position: sticky;
   top: 0;
@@ -187,6 +179,7 @@ body.page {
   width: min(calc(100% - 1rem), var(--container));
   margin-inline: auto;
   padding: 0.85rem 0 0.9rem;
+  position: relative;
 }
 
 .site-brand {
@@ -203,19 +196,66 @@ body.page {
   color: var(--text);
 }
 
-.site-nav {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.15rem;
-  scrollbar-width: none;
+.site-nav-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 12px;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  position: absolute;
+  top: 0.7rem;
+  right: 0;
 }
 
-.site-nav::-webkit-scrollbar {
+.site-nav-toggle span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: 0.25s ease;
+}
+
+.site-nav-toggle[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.site-nav-toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-nav-toggle[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.site-nav {
   display: none;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.85rem;
+  border-radius: 20px;
+  background: rgba(13, 18, 29, 0.96);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: var(--shadow-lg);
+}
+
+.site-nav.is-open {
+  display: flex;
 }
 
 .site-nav__link {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
   flex: 0 0 auto;
   padding: 0.72rem 0.95rem;
   border: 1px solid rgba(255, 255, 255, 0.07);
@@ -225,6 +265,8 @@ body.page {
   font-size: 0.92rem;
   font-weight: 600;
   transition: 0.25s ease;
+  display: inline-flex;
+  align-items: center;
 }
 
 .site-nav__link:hover,
@@ -240,10 +282,6 @@ body.page {
   border-color: transparent;
   box-shadow: 0 10px 24px rgba(212, 175, 55, 0.25);
 }
-
-/* =========================
-   HERO
-   ========================= */
 
 .hero,
 .page-hero {
@@ -310,10 +348,6 @@ body.page {
   gap: 0.9rem;
 }
 
-/* =========================
-   BUTTONS
-   ========================= */
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -344,22 +378,9 @@ body.page {
   border: 1px solid var(--border-strong);
 }
 
-.btn-offer {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 0.85rem 1.15rem;
-  border-radius: 999px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #f1d97d, #d4af37);
-  color: #10141d;
-  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.22);
+.page-main {
+  padding-bottom: var(--space-6);
 }
-
-/* =========================
-   HOME PAGE
-   ========================= */
 
 .intro-section,
 .stats-section,
@@ -368,8 +389,50 @@ body.page {
 .affiliate-section,
 .performance-section,
 .method-section,
-.predictions-section {
+.predictions-section,
+.reviews-section,
+.strategy-section,
+.info-section,
+.offer-content {
   padding: var(--space-7) 0;
+  scroll-margin-top: 90px;
+}
+
+.section-card,
+.stat-card,
+.metric-card,
+.chart-card,
+.info-panel,
+.method-card,
+.offer-feature-card,
+.partner-card,
+.prediction-card,
+.bookmaker-card,
+.strategy-card,
+.info-card,
+.offer-block {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-card::before,
+.stat-card::before,
+.metric-card::before,
+.chart-card::before,
+.info-panel::before,
+.method-card::before,
+.offer-feature-card::before,
+.prediction-card::before,
+.bookmaker-card::before,
+.strategy-card::before,
+.info-card::before,
+.offer-block::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  opacity: 0.55;
 }
 
 .section-card {
@@ -471,10 +534,6 @@ body.page {
   color: var(--text-soft);
 }
 
-/* =========================
-   PREDICTIONS PAGE
-   ========================= */
-
 .promo-banner,
 .full-width-banner {
   padding: 0 0 var(--space-6);
@@ -547,6 +606,7 @@ body.page {
   margin: 0.7rem 0 0.6rem;
   font-size: 1.18rem;
   line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .prediction-meta,
@@ -594,6 +654,8 @@ body.page {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.06);
   color: var(--text-soft);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .prediction-card__chart-wrap {
@@ -615,9 +677,12 @@ body.page {
   color: var(--text-soft);
 }
 
-/* =========================
-   PARTNERS / TRUST
-   ========================= */
+.prediction-card .btn,
+.bookmaker-card .btn,
+.offer-block .btn,
+.offer-feature-card .btn {
+  width: 100%;
+}
 
 .trust-badges {
   display: flex;
@@ -643,6 +708,9 @@ body.page {
   display: block;
   overflow: hidden;
   border-radius: var(--radius-lg);
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(255,255,255,0.03);
 }
 
 .partner-card img,
@@ -651,12 +719,15 @@ body.page {
   object-fit: cover;
 }
 
-/* =========================
-   FOOTER
-   ========================= */
+.affiliate-banners a:hover,
+.partner-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(212, 175, 55, 0.18);
+}
 
 .site-footer {
-  margin-top: var(--space-8);
+  margin-top: var(--space-9);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(9, 13, 22, 0.85);
   backdrop-filter: blur(14px);
@@ -702,6 +773,9 @@ body.page {
 
 .site-footer__bottom .container {
   padding: 1rem 0 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .site-footer__bottom p {
@@ -710,19 +784,11 @@ body.page {
   font-size: 0.84rem;
 }
 
-/* =========================
-   UTILITY
-   ========================= */
-
 hr {
   border: none;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   margin: 2rem 0;
 }
-
-/* =========================
-   TABLET
-   ========================= */
 
 @media (min-width: 768px) {
   .container {
@@ -742,8 +808,24 @@ hr {
     margin-bottom: 0;
   }
 
+  .site-nav-toggle {
+    display: none;
+  }
+
   .site-nav {
+    display: flex !important;
+    flex-direction: row;
+    width: auto;
+    margin-top: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
     justify-content: flex-end;
+  }
+
+  .site-nav__link {
+    width: auto;
   }
 
   .hero,
@@ -780,11 +862,17 @@ hr {
     align-items: center;
     padding: 1.6rem;
   }
-}
 
-/* =========================
-   DESKTOP
-   ========================= */
+  .prediction-card .btn,
+  .bookmaker-card .btn,
+  .offer-block .btn {
+    width: auto;
+  }
+
+  .site-footer__bottom .container {
+    gap: 0.25rem;
+  }
+}
 
 @media (min-width: 1024px) {
   .hero__content,
