@@ -1,0 +1,55 @@
+AI77 PREMIUM UPLOAD CHECKLIST
+
+1. Upload every file from this ZIP to the root of your repo or hosting folder.
+2. Keep these files together:
+   - index.html
+   - predictions.html
+   - reviews.html
+   - strategy.html
+   - info.html
+   - special-offer.html
+   - style.css
+   - reviews.css
+   - strategy.css
+   - info.css
+   - offer-7signs.css
+   - script1.js
+   - site.js
+   - predictions.json
+   - results.json
+
+3. Keep these image files in the same root folder:
+   - IMG_3372.webp
+   - 1xbet.png
+   - img_4392.png
+   - icon1.png
+   - 7signs.jpg
+   - 5gringos.webp
+   - woo.jpg
+
+4. Replace placeholder images with your real brand/bookmaker images if you have them.
+5. Replace predictions.json with your live model output.
+6. Replace results.json with your real tracked results history.
+7. Update sitemap.xml and robots.txt:
+   - change https://your-domain.com to your real domain
+8. Optional but recommended:
+   - keep favicon files
+   - keep site.webmanifest
+   - keep 404.html
+
+9. Test after upload:
+   - Home page opens
+   - Predictions page loads cards
+   - Profit chart renders
+   - Mobile menu opens and closes
+   - All affiliate links work
+   - Footer links to info sections work
+
+10. If you use GitHub Pages:
+   - push all files to the branch you publish from
+   - wait 1-2 minutes
+   - hard refresh browser after deploy
+
+Notes:
+- The package includes placeholder content for predictions.json/results.json and image assets so the site can load cleanly immediately.
+- Replace placeholders with your real content whenever ready.

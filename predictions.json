@@ -1,0 +1,13 @@
+[
+  {
+    "date": "2026-04-30",
+    "time": "19:45",
+    "sport": "football",
+    "league": "Demo League",
+    "match": "AI77 United - Value FC",
+    "bet": "Over 2.5",
+    "odds": 2.05,
+    "confidence": 66,
+    "reasoning": "This is a demo prediction card placeholder. Replace predictions.json with your live model output."
+  }
+]

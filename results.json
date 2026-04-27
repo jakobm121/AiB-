@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2026-04-28",
+    "time": "20:00",
+    "sport": "football",
+    "league": "Demo League",
+    "match": "AI77 City - Edge Town",
+    "bet": "AI77 City",
+    "odds": 2.1,
+    "confidence": 66,
+    "reasoning": "Demo historical result placeholder.",
+    "result": "win"
+  }
+]
