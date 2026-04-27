@@ -1,0 +1,149 @@
+.page-strategy .strategy-intro {
+  padding: 0 0 var(--space-7);
+}
+
+.page-strategy .strategy-intro__card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 1.35rem;
+  color: var(--text-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.strategy-section {
+  padding: 0 0 var(--space-8);
+}
+
+.strategy-accordion {
+  display: grid;
+  gap: 1rem;
+}
+
+.strategy-card {
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.accordion {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.15rem 1.2rem;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  background: transparent;
+  border: none;
+}
+
+.accordion.active {
+  color: var(--gold);
+}
+
+.stars {
+  flex: 0 0 auto;
+  color: var(--gold);
+  font-size: 0.95rem;
+}
+
+.panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  color: var(--text-soft);
+}
+
+.panel > *:first-child {
+  margin-top: 0;
+}
+
+.panel > *:last-child {
+  margin-bottom: 0;
+}
+
+.panel {
+  padding: 0 1.2rem;
+}
+
+.accordion.active + .panel {
+  padding-bottom: 1.2rem;
+}
+
+.panel h3,
+.panel h4 {
+  color: var(--text);
+  margin-top: 1.2rem;
+  margin-bottom: 0.65rem;
+}
+
+.panel p,
+.panel li {
+  color: var(--text-soft);
+}
+
+.panel ul,
+.panel ol {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.panel a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.disclaimer {
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 107, 107, 0.08);
+  border: 1px solid rgba(255, 107, 107, 0.18);
+  color: #ffd1d1;
+}
+
+.strategy-graphic {
+  margin: 1rem 0 1.25rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow-x: auto;
+}
+
+.strategy-graphic svg {
+  width: 100%;
+  min-width: 320px;
+  height: auto;
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .page-strategy .strategy-intro__card {
+    padding: 1.7rem;
+  }
+
+  .accordion {
+    padding: 1.25rem 1.35rem;
+    font-size: 1.04rem;
+  }
+
+  .panel {
+    padding: 0 1.35rem;
+  }
+
+  .accordion.active + .panel {
+    padding-bottom: 1.35rem;
+  }
+}
