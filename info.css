@@ -1,0 +1,58 @@
+.page-info .info-section {
+  padding: 0 0 var(--space-8);
+}
+
+.page-info .info-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.page-info .info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  padding: 1.35rem;
+  color: var(--text-soft);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.page-info .info-card h2 {
+  margin-bottom: 0.8rem;
+  color: var(--text);
+  font-size: 1.45rem;
+}
+
+.page-info .info-card h3 {
+  margin-top: 1.15rem;
+  margin-bottom: 0.6rem;
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.page-info .info-card p,
+.page-info .info-card li {
+  color: var(--text-soft);
+}
+
+.page-info .info-card ul {
+  margin-top: 0.45rem;
+  margin-bottom: 0.9rem;
+}
+
+.page-info .info-card a {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .page-info .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-info .info-card {
+    padding: 1.6rem;
+  }
+}
