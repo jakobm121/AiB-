@@ -24,7 +24,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="lab-stats.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="page page-predictions">
   <header class="site-header">
@@ -32,9 +31,11 @@
       <a href="index.html" class="site-brand" aria-label="AI77 Sports Lab home">
         <span class="site-brand__title">AI77 Sports Lab®</span>
       </a>
+
       <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation">
         <span></span><span></span><span></span>
       </button>
+
       <nav class="site-nav" id="site-nav" aria-label="Main navigation">
         <a href="index.html" class="site-nav__link">Home</a>
         <a href="predictions.html" class="site-nav__link is-active" aria-current="page">Match Predictions</a>
@@ -47,9 +48,9 @@
   <main class="page-main">
     <section class="page-hero page-hero--predictions">
       <div class="container">
-        <p class="page-hero__eyebrow">Daily AI77 insights</p>
+        <p class="page-hero__eyebrow">AI77 Experimental Feed</p>
         <h1 class="page-hero__title">Match Predictions</h1>
-        <p class="page-hero__text">Stop guessing. Start playing with edge.</p>
+        <p class="page-hero__text">Private lab version for bucket testing, edge tracking, and model validation.</p>
       </div>
     </section>
 
@@ -64,34 +65,32 @@
     <section class="monthly-stats performance-section">
       <div class="container">
         <div class="section-heading">
-          <p class="section-label">Performance overview</p>
-          <h2 class="section-title">AI77 Quantum Edge <span class="section-subtitle">(Demo Version)</span></h2>
+          <p class="section-label">Testing overview</p>
+          <h2 class="section-title">AI77 Lab Buckets <span class="section-subtitle">(Private Version)</span></h2>
         </div>
 
         <div class="stats-grid">
           <article class="stat-box">
-            <h3>82</h3>
-            <p>Total Predictions 📊</p>
+            <h3>9</h3>
+            <p>Tracked Buckets 📊</p>
           </article>
           <article class="stat-box">
-            <h3>61</h3>
-            <p>Winning Picks ✅</p>
+            <h3>1u</h3>
+            <p>Flat Stake Per Pick 💰</p>
           </article>
           <article class="stat-box">
-            <h3>1.87</h3>
-            <p>Average Odds ⚡️</p>
+            <h3>1–6h</h3>
+            <p>Match Window ⏱️</p>
           </article>
           <article class="stat-box">
-            <h3>+7.2%</h3>
-            <p>ROI 📈</p>
+            <h3>API</h3>
+            <p>API-Football Source ⚡️</p>
           </article>
         </div>
 
-        <div class="chart-panel">
-          <canvas id="profitChart" aria-label="Profit chart"></canvas>
-        </div>
-
-        <p class="vip-note">📊 Full history performance and detailed statistics are available only to AI77 VIP members.</p>
+        <p class="vip-note">
+          📊 This page is built for private testing. The goal is to measure which markets actually work over time.
+        </p>
       </div>
     </section>
 
@@ -99,22 +98,17 @@
       <div class="container">
         <div class="info-panel">
           <button class="info-panel__toggle" id="howWePlayTitle" type="button" aria-expanded="false" aria-controls="howWePlayContent">
-            <span>👉🏻 Play Like a Pro ✔️</span>
+            <span>👉🏻 How This Lab Works ✔️</span>
           </button>
+
           <div id="howWePlayContent" class="info-panel__content hidden">
             <ul class="info-panel__list">
-              <li>
-                <strong>💰 Unit system:</strong> 1 unit = 1% of your bankroll
-                <ul class="info-panel__sublist">
-                  <li>🟡 Medium Confidence → 1 unit</li>
-                  <li>🟢 Strong Confidence → 1.5 units</li>
-                  <li>🔥 Very Strong Confidence → 2 units</li>
-                </ul>
-              </li>
-              <li><strong>📈 Value-based approach:</strong> We target bets where our model identifies a statistical edge over market expectations.</li>
-              <li><strong>🧠 AI + Human analysis:</strong> Our predictions combine data models, recent form, and match context to identify value opportunities.</li>
+              <li><strong>💰 Flat stake:</strong> every pick is tracked with exactly 1 unit.</li>
+              <li><strong>🧪 Bucket model:</strong> Home, Draw, Away, Over 2.5, Under 2.5, BTTS Yes, BTTS No, Over 3.5, Under 3.5.</li>
+              <li><strong>📈 Goal:</strong> collect a large clean sample and identify which buckets are truly profitable.</li>
+              <li><strong>⚙️ Source:</strong> API-Football only, with market filtering and edge selection.</li>
             </ul>
-            <p class="note">🎓 Goal: sustainable long-term ROI between 6–10% per month</p>
+            <p class="note">🎓 This is not a public release model. It is a private testing environment for formula development.</p>
           </div>
         </div>
       </div>
@@ -125,7 +119,8 @@
         <div class="predictions-section__header">
           <p id="last-updated" class="last-updated"></p>
         </div>
-        <div class="predictions-grid" id="predictions-container"></div>
+
+        <div id="predictions-container"></div>
       </div>
     </section>
 
@@ -190,9 +185,15 @@
     <section class="affiliate-section" aria-label="Featured bookmakers">
       <div class="container">
         <div class="affiliate-banners">
-          <a href="https://stzns.naralvin.com/?mid=309891_1835232" target="_blank" rel="noopener noreferrer"><img src="IMG_3372.webp" alt="Sportaza Bonus" loading="lazy"></a>
-          <a href="https://refpa649012.pro/L?tag=d_4666247m_1599c_&site=4666247&ad=1599" target="_blank" rel="noopener noreferrer"><img src="1xbet.png" alt="1xBet Bonus" loading="lazy"></a>
-          <a href="https://promo.20bet.partners/redirect.aspx?pid=389482&bid=2044" target="_blank" rel="noopener noreferrer"><img src="https://promo.20bet.partners/renderimage.aspx?pid=389794&bid=2044" alt="20Bet Bonus" loading="lazy"></a>
+          <a href="https://stzns.naralvin.com/?mid=309891_1835232" target="_blank" rel="noopener noreferrer">
+            <img src="IMG_3372.webp" alt="Sportaza Bonus" loading="lazy">
+          </a>
+          <a href="https://refpa649012.pro/L?tag=d_4666247m_1599c_&site=4666247&ad=1599" target="_blank" rel="noopener noreferrer">
+            <img src="1xbet.png" alt="1xBet Bonus" loading="lazy">
+          </a>
+          <a href="https://promo.20bet.partners/redirect.aspx?pid=389482&bid=2044" target="_blank" rel="noopener noreferrer">
+            <img src="https://promo.20bet.partners/renderimage.aspx?pid=389794&bid=2044" alt="20Bet Bonus" loading="lazy">
+          </a>
         </div>
       </div>
     </section>
@@ -204,6 +205,7 @@
         <h2 class="site-footer__title">AI-77 Betting Lab®</h2>
         <p>AI-77 Betting Lab® combines the power of artificial intelligence and expert analysis to deliver smart match predictions, bookmaker reviews, and long-term betting strategies.</p>
       </section>
+
       <nav class="site-footer__links" aria-label="Footer links">
         <h2 class="site-footer__title">Information</h2>
         <ul>
@@ -213,16 +215,26 @@
           <li><a href="info.html#responsible">Responsible Gambling</a></li>
         </ul>
       </nav>
+
       <section class="site-footer__contact">
         <h2 class="site-footer__title">Contact</h2>
         <p><a href="mailto:info@ai77.bettinglab.com">info@ai77.bettinglab.com</a></p>
         <p>Follow us on social media:</p>
         <a href="https://instagram.com/ai77.bettinglab" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9Zm4.5 3.25a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5Zm0 2a3.25 3.25 0 1 0 0 6.5a3.25 3.25 0 0 0 0-6.5ZM18 6.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5Z"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4h-9Zm4.5 3.25a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5Zm0 2a3.25 3.25 0 1 0 0 6.5a3.25 3.25 0 0 0 0-6.5ZM18 6.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5Z"/>
+          </svg>
         </a>
       </section>
     </div>
-    <div class="site-footer__bottom"><div class="container"><p>© 2025 AI-77 Betting. All rights reserved.</p><p>Disclaimer: Betting involves risk. Please gamble responsibly. This website is intended for users aged 18+ only.</p><p>🔞 18+</p></div></div>
+
+    <div class="site-footer__bottom">
+      <div class="container">
+        <p>© 2025 AI-77 Betting. All rights reserved.</p>
+        <p>Disclaimer: Betting involves risk. Please gamble responsibly. This website is intended for users aged 18+ only.</p>
+        <p>🔞 18+</p>
+      </div>
+    </div>
   </footer>
 
   <script src="site.js" defer></script>
