@@ -37,7 +37,7 @@
     "line": null,
     "stake": 1,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e402bd2f7ca4fb9d18f3e42f692dc247",
@@ -97,7 +97,7 @@
     "line": 2.5,
     "stake": 1,
     "reasoning": "Arema FC vs Persebaya Surabaya projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "6b8b90d55d6810ab19415aaa3a663b31",
@@ -117,7 +117,7 @@
     "line": null,
     "stake": 1,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "f359430abef4f5c00caa599db33dc408",
@@ -217,6 +217,6 @@
     "line": 3.5,
     "stake": 1,
     "reasoning": "Arema FC vs Persebaya Surabaya projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   }
 ]

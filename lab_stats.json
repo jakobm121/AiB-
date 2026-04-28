@@ -3,17 +3,17 @@
   "stats_generated": true,
   "overall": {
     "picks": 11,
-    "settled_picks": 4,
-    "wins": 3,
-    "losses": 1,
+    "settled_picks": 8,
+    "wins": 4,
+    "losses": 4,
     "storno": 0,
-    "pending": 7,
+    "pending": 3,
     "avg_odds": 2.28,
     "avg_edge": 0.3154,
-    "profit": 1.24,
-    "staked": 4.0,
-    "hit_rate": 75.0,
-    "roi": 31.0
+    "profit": -0.67,
+    "staked": 8.0,
+    "hit_rate": 50.0,
+    "roi": -8.38
   },
   "by_bucket": {
     "home": {
@@ -32,15 +32,15 @@
     },
     "draw": {
       "picks": 2,
-      "settled_picks": 1,
+      "settled_picks": 2,
       "wins": 0,
-      "losses": 1,
+      "losses": 2,
       "storno": 0,
-      "pending": 1,
+      "pending": 0,
       "avg_odds": 3.58,
       "avg_edge": 0.1766,
-      "profit": -1.0,
-      "staked": 1.0,
+      "profit": -2.0,
+      "staked": 2.0,
       "hit_rate": 0.0,
       "roi": -100.0
     },
@@ -74,17 +74,17 @@
     },
     "under_2_5": {
       "picks": 3,
-      "settled_picks": 1,
+      "settled_picks": 2,
       "wins": 1,
-      "losses": 0,
+      "losses": 1,
       "storno": 0,
-      "pending": 2,
+      "pending": 1,
       "avg_odds": 2.44,
       "avg_edge": 0.4626,
-      "profit": 1.0,
-      "staked": 1.0,
-      "hit_rate": 100.0,
-      "roi": 100.0
+      "profit": 0.0,
+      "staked": 2.0,
+      "hit_rate": 50.0,
+      "roi": 0.0
     },
     "btts_yes": {
       "picks": 0,
@@ -102,17 +102,17 @@
     },
     "btts_no": {
       "picks": 3,
-      "settled_picks": 1,
-      "wins": 1,
+      "settled_picks": 2,
+      "wins": 2,
       "losses": 0,
       "storno": 0,
-      "pending": 2,
+      "pending": 1,
       "avg_odds": 1.93,
       "avg_edge": 0.2787,
-      "profit": 0.87,
-      "staked": 1.0,
+      "profit": 1.96,
+      "staked": 2.0,
       "hit_rate": 100.0,
-      "roi": 87.0
+      "roi": 98.0
     },
     "over_3_5": {
       "picks": 0,
@@ -130,17 +130,17 @@
     },
     "under_3_5": {
       "picks": 3,
-      "settled_picks": 1,
+      "settled_picks": 2,
       "wins": 1,
-      "losses": 0,
+      "losses": 1,
       "storno": 0,
-      "pending": 2,
+      "pending": 1,
       "avg_odds": 1.59,
       "avg_edge": 0.2972,
-      "profit": 0.37,
-      "staked": 1.0,
-      "hit_rate": 100.0,
-      "roi": 37.0
+      "profit": -0.63,
+      "staked": 2.0,
+      "hit_rate": 50.0,
+      "roi": -31.5
     }
   }
 }
