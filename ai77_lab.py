@@ -22,14 +22,14 @@ REQUEST_TIMEOUT = 20
 
 BUCKETS = {
     "home": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
-    "draw": {"limit": 3, "min_edge": 0.035, "min_bookmakers": 3, "odds_min": 2.80, "odds_max": 4.50},
+    "draw": {"limit": 3, "min_edge": 0.030, "min_bookmakers": 3, "odds_min": 2.80, "odds_max": 4.50},
     "away": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
     "over_2_5": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
     "under_2_5": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
-    "btts_yes": {"limit": 5, "min_edge": 0.030, "min_bookmakers": 4, "odds_min": 1.55, "odds_max": 4.50},
-    "btts_no": {"limit": 5, "min_edge": 0.030, "min_bookmakers": 4, "odds_min": 1.55, "odds_max": 4.50},
+    "btts_yes": {"limit": 5, "min_edge": 0.028, "min_bookmakers": 4, "odds_min": 1.55, "odds_max": 4.50},
+    "btts_no": {"limit": 5, "min_edge": 0.028, "min_bookmakers": 4, "odds_min": 1.55, "odds_max": 4.50},
     "over_3_5": {"limit": 5, "min_edge": 0.030, "min_bookmakers": 3, "odds_min": 1.70, "odds_max": 5.20},
-    "under_3_5": {"limit": 5, "min_edge": 0.030, "min_bookmakers": 3, "odds_min": 1.35, "odds_max": 3.50},
+    "under_3_5": {"limit": 5, "min_edge": 0.028, "min_bookmakers": 3, "odds_min": 1.35, "odds_max": 3.50},
 }
 
 VALID_STATUSES = {"NS", "TBD", "PST"}
@@ -38,14 +38,24 @@ TEAM_FORM_CACHE = {}
 FIXTURE_PRED_CACHE = {}
 FIXTURE_ODDS_CACHE = {}
 
+LEAGUE_BASELINES = {
+    "default": {"goals": 2.45, "draw": 0.27, "home_adv": 0.16},
+    "suomen cup": {"goals": 2.85, "draw": 0.24, "home_adv": 0.13},
+    "liga 1": {"goals": 2.35, "draw": 0.29, "home_adv": 0.17},
+    "liga de ascenso": {"goals": 2.30, "draw": 0.30, "home_adv": 0.16},
+}
+
+
 def football_headers():
     return {"x-apisports-key": FOOTBALL_API_KEY}
+
 
 def safe_float(value, default=None):
     try:
         return float(value)
     except Exception:
         return default
+
 
 def median_or_none(values):
     cleaned = [safe_float(v) for v in values]
@@ -54,20 +64,25 @@ def median_or_none(values):
         return None
     return float(statistics.median(cleaned))
 
+
 def clamp(value, min_value, max_value):
     return max(min_value, min(max_value, value))
 
+
 def normalize_name(text):
     return " ".join(str(text or "").strip().lower().split())
+
 
 def poisson_pmf(k, lam):
     if lam <= 0:
         return 1.0 if k == 0 else 0.0
     return math.exp(-lam) * (lam ** k) / math.factorial(k)
 
+
 def build_pick_id(fixture_id, bucket, bet, line):
     base = f"{fixture_id}|{bucket}|{bet}|{line}"
     return hashlib.md5(base.encode("utf-8")).hexdigest()
+
 
 def load_json_file(path, default):
     if not os.path.exists(path):
@@ -78,19 +93,36 @@ def load_json_file(path, default):
     except Exception:
         return default
 
+
 def save_json_file(path, data):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
+
 def debug(msg):
     print(msg)
+
 
 def api_get(endpoint, params):
     url = f"{FOOTBALL_URL}/{endpoint}"
     res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
     res.raise_for_status()
     return res.json()
+
+
+def get_league_baseline(league_name):
+    key = normalize_name(league_name)
+    return LEAGUE_BASELINES.get(key, LEAGUE_BASELINES["default"])
+
+
+def soft_market_blend(model_prob, market_odds, strength=0.18):
+    median_odds = median_or_none(market_odds)
+    if median_odds is None or median_odds <= 1:
+        return model_prob
+    implied = 1.0 / median_odds
+    return (model_prob * (1 - strength)) + (implied * strength)
+
 
 def fetch_fixtures_in_window(start_time, end_time, tz_name):
     fixtures = []
@@ -128,16 +160,25 @@ def fetch_fixtures_in_window(start_time, end_time, tz_name):
     debug(f"FILTERED FIXTURES: {len(filtered)}")
     return filtered
 
+
 def get_recent_team_form(team_id):
     if team_id in TEAM_FORM_CACHE:
         return TEAM_FORM_CACHE[team_id]
 
     fallback = {
-        "home_scored_avg": 1.25, "home_conceded_avg": 1.15,
-        "away_scored_avg": 1.15, "away_conceded_avg": 1.25,
-        "overall_scored_avg": 1.20, "overall_conceded_avg": 1.20,
-        "over25_rate": 0.50, "over35_rate": 0.25, "btts_rate": 0.50,
-        "wins_rate": 0.33, "draws_rate": 0.28, "losses_rate": 0.39, "games_used": 0
+        "home_scored_avg": 1.25,
+        "home_conceded_avg": 1.15,
+        "away_scored_avg": 1.15,
+        "away_conceded_avg": 1.25,
+        "overall_scored_avg": 1.20,
+        "overall_conceded_avg": 1.20,
+        "over25_rate": 0.50,
+        "over35_rate": 0.25,
+        "btts_rate": 0.50,
+        "wins_rate": 0.33,
+        "draws_rate": 0.28,
+        "losses_rate": 0.39,
+        "games_used": 0
     }
 
     try:
@@ -161,22 +202,33 @@ def get_recent_team_form(team_id):
             valid_games += 1
 
             total_goals = gh + ga
-            if total_goals > 2.5: over25 += 1
-            if total_goals > 3.5: over35 += 1
-            if gh > 0 and ga > 0: btts += 1
+            if total_goals > 2.5:
+                over25 += 1
+            if total_goals > 3.5:
+                over35 += 1
+            if gh > 0 and ga > 0:
+                btts += 1
 
             if home_team.get("id") == team_id:
                 scored, conceded = gh, ga
-                home_scored.append(gh); home_conceded.append(ga)
-                if gh > ga: wins += 1
-                elif gh == ga: draws += 1
-                else: losses += 1
+                home_scored.append(gh)
+                home_conceded.append(ga)
+                if gh > ga:
+                    wins += 1
+                elif gh == ga:
+                    draws += 1
+                else:
+                    losses += 1
             elif away_team.get("id") == team_id:
                 scored, conceded = ga, gh
-                away_scored.append(ga); away_conceded.append(gh)
-                if ga > gh: wins += 1
-                elif ga == gh: draws += 1
-                else: losses += 1
+                away_scored.append(ga)
+                away_conceded.append(gh)
+                if ga > gh:
+                    wins += 1
+                elif ga == gh:
+                    draws += 1
+                else:
+                    losses += 1
             else:
                 continue
 
@@ -209,14 +261,20 @@ def get_recent_team_form(team_id):
         TEAM_FORM_CACHE[team_id] = fallback
         return fallback
 
+
 def get_fixture_prediction_data(fixture_id):
     if fixture_id in FIXTURE_PRED_CACHE:
         return FIXTURE_PRED_CACHE[fixture_id]
 
     result = {
-        "advice": "", "goals_home": None, "goals_away": None,
-        "winner_name": None, "winner_comment": None,
-        "percent_home": None, "percent_draw": None, "percent_away": None
+        "advice": "",
+        "goals_home": None,
+        "goals_away": None,
+        "winner_name": None,
+        "winner_comment": None,
+        "percent_home": None,
+        "percent_draw": None,
+        "percent_away": None
     }
 
     try:
@@ -247,16 +305,20 @@ def get_fixture_prediction_data(fixture_id):
         FIXTURE_PRED_CACHE[fixture_id] = result
         return result
 
+
 def is_h2h_bet_name(name):
     return normalize_name(name) in {"match winner", "1x2", "winner", "fulltime result", "result", "match result"}
+
 
 def is_total_bet_name(name):
     n = normalize_name(name)
     return "over/under" in n or "goals over/under" in n or "over under" in n or "total goals" in n
 
+
 def is_btts_bet_name(name):
     n = normalize_name(name)
     return "both teams" in n or "btts" in n or "both team" in n
+
 
 def get_fixture_odds_markets(fixture_id, home_name, away_name):
     if fixture_id in FIXTURE_ODDS_CACHE:
@@ -346,92 +408,151 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
         FIXTURE_ODDS_CACHE[fixture_id] = result
         return result
 
-def calculate_expected_goals(home_stats, away_stats, pred):
-    expected_home = (home_stats["home_scored_avg"] + away_stats["away_conceded_avg"]) / 2
-    expected_away = (away_stats["away_scored_avg"] + home_stats["home_conceded_avg"]) / 2
 
-    if home_stats["wins_rate"] >= 0.50: expected_home += 0.08
-    if away_stats["wins_rate"] >= 0.50: expected_away += 0.08
-    if home_stats["overall_scored_avg"] < 0.95: expected_home -= 0.07
-    if away_stats["overall_scored_avg"] < 0.95: expected_away -= 0.07
+def calculate_expected_goals(home_stats, away_stats, pred, league_name):
+    baseline = get_league_baseline(league_name)
+    league_goals = baseline["goals"]
+    home_adv = baseline["home_adv"]
+
+    base_home_attack = (home_stats["home_scored_avg"] * 0.58) + (away_stats["away_conceded_avg"] * 0.42)
+    base_away_attack = (away_stats["away_scored_avg"] * 0.58) + (home_stats["home_conceded_avg"] * 0.42)
+
+    expected_home = base_home_attack + home_adv
+    expected_away = base_away_attack
+
+    form_strength_home = home_stats["wins_rate"] - home_stats["losses_rate"]
+    form_strength_away = away_stats["wins_rate"] - away_stats["losses_rate"]
+    expected_home += form_strength_home * 0.10
+    expected_away += form_strength_away * 0.10
+
+    if home_stats["overall_scored_avg"] < 0.95:
+        expected_home -= 0.08
+    if away_stats["overall_scored_avg"] < 0.95:
+        expected_away -= 0.08
+
     if home_stats["over25_rate"] >= 0.60 and away_stats["over25_rate"] >= 0.60:
-        expected_home += 0.05; expected_away += 0.05
-    if home_stats["over35_rate"] >= 0.35 and away_stats["over35_rate"] >= 0.35:
-        expected_home += 0.04; expected_away += 0.04
+        expected_home += 0.06
+        expected_away += 0.06
+
     if home_stats["over25_rate"] <= 0.35 and away_stats["over25_rate"] <= 0.35:
-        expected_home -= 0.05; expected_away -= 0.05
+        expected_home -= 0.06
+        expected_away -= 0.06
+
+    current_total = expected_home + expected_away
+    if current_total > 0:
+        scale = league_goals / current_total
+        expected_home *= (0.82 + 0.18 * scale)
+        expected_away *= (0.82 + 0.18 * scale)
 
     pred_home = pred.get("goals_home")
     pred_away = pred.get("goals_away")
     if pred_home is not None and pred_away is not None:
-        expected_home = (expected_home * 0.75) + (pred_home * 0.25)
-        expected_away = (expected_away * 0.75) + (pred_away * 0.25)
+        expected_home = (expected_home * 0.82) + (pred_home * 0.18)
+        expected_away = (expected_away * 0.82) + (pred_away * 0.18)
 
-    expected_home = clamp(expected_home, 0.35, 3.20)
-    expected_away = clamp(expected_away, 0.35, 3.20)
+    expected_home = clamp(expected_home, 0.30, 2.85)
+    expected_away = clamp(expected_away, 0.30, 2.75)
+
     return expected_home, expected_away, expected_home + expected_away
 
-def get_h2h_probs(expected_home, expected_away, pred):
+
+def get_h2h_probs(expected_home, expected_away, pred, league_name):
+    baseline = get_league_baseline(league_name)
     max_goals = 8
     home_win = draw = away_win = 0.0
+
     for h in range(max_goals + 1):
         for a in range(max_goals + 1):
             p = poisson_pmf(h, expected_home) * poisson_pmf(a, expected_away)
-            if h > a: home_win += p
-            elif h == a: draw += p
-            else: away_win += p
+            if h > a:
+                home_win += p
+            elif h == a:
+                draw += p
+            else:
+                away_win += p
 
     total = home_win + draw + away_win
     if total <= 0:
-        return {"home": 0.40, "draw": 0.28, "away": 0.32}
+        return {"home": 0.40, "draw": 0.27, "away": 0.33}
 
-    home_win /= total; draw /= total; away_win /= total
-    ph = pred.get("percent_home"); pd = pred.get("percent_draw"); pa = pred.get("percent_away")
+    home_win /= total
+    draw /= total
+    away_win /= total
+
+    ph = pred.get("percent_home")
+    pd = pred.get("percent_draw")
+    pa = pred.get("percent_away")
+
     if ph is not None and pd is not None and pa is not None:
-        ph /= 100.0; pd /= 100.0; pa /= 100.0
+        ph /= 100.0
+        pd /= 100.0
+        pa /= 100.0
         sum_pred = ph + pd + pa
         if 0.95 < sum_pred < 1.05:
-            home_win = home_win * 0.75 + ph * 0.25
-            draw = draw * 0.75 + pd * 0.25
-            away_win = away_win * 0.75 + pa * 0.25
+            home_win = home_win * 0.84 + ph * 0.16
+            draw = draw * 0.84 + pd * 0.16
+            away_win = away_win * 0.84 + pa * 0.16
 
-    if abs(expected_home - expected_away) < 0.18:
-        draw += 0.02; home_win -= 0.01; away_win -= 0.01
+    if abs(expected_home - expected_away) < 0.14:
+        draw += 0.012
 
-    home_win = clamp(home_win, 0.15, 0.70)
-    draw = clamp(draw, 0.14, 0.38)
-    away_win = clamp(away_win, 0.15, 0.70)
+    target_draw = baseline["draw"]
+    draw = draw * 0.88 + target_draw * 0.12
+
+    home_win = clamp(home_win, 0.16, 0.68)
+    draw = clamp(draw, 0.12, 0.33)
+    away_win = clamp(away_win, 0.16, 0.68)
+
     total = home_win + draw + away_win
-    return {"home": home_win / total, "draw": draw / total, "away": away_win / total}
+    return {
+        "home": home_win / total,
+        "draw": draw / total,
+        "away": away_win / total
+    }
+
 
 def get_total_probs(expected_total):
     max_goals = 10
     over25 = over35 = 0.0
     for g in range(max_goals + 1):
         p = poisson_pmf(g, expected_total)
-        if g >= 3: over25 += p
-        if g >= 4: over35 += p
+        if g >= 3:
+            over25 += p
+        if g >= 4:
+            over35 += p
+
     under25 = 1 - over25
     under35 = 1 - over35
+
     return {
-        "over_2_5": clamp(over25, 0.10, 0.90),
-        "under_2_5": clamp(under25, 0.10, 0.90),
-        "over_3_5": clamp(over35, 0.05, 0.80),
-        "under_3_5": clamp(under35, 0.20, 0.95),
+        "over_2_5": clamp(over25, 0.08, 0.84),
+        "under_2_5": clamp(under25, 0.08, 0.84),
+        "over_3_5": clamp(over35, 0.04, 0.72),
+        "under_3_5": clamp(under35, 0.18, 0.90),
     }
+
 
 def get_btts_probs(expected_home, expected_away, home_stats, away_stats):
     p_home_scores = 1 - math.exp(-expected_home)
     p_away_scores = 1 - math.exp(-expected_away)
+
     btts_yes = p_home_scores * p_away_scores
     form_btts = (home_stats["btts_rate"] + away_stats["btts_rate"]) / 2
-    btts_yes = btts_yes * 0.75 + form_btts * 0.25
+    btts_yes = (btts_yes * 0.80) + (form_btts * 0.20)
+
     if home_stats["overall_scored_avg"] < 0.95 or away_stats["overall_scored_avg"] < 0.95:
-        btts_yes -= 0.04
+        btts_yes -= 0.03
+
     if home_stats["overall_scored_avg"] > 1.60 and away_stats["overall_scored_avg"] > 1.40:
-        btts_yes += 0.03
-    btts_yes = clamp(btts_yes, 0.12, 0.88)
-    return {"btts_yes": btts_yes, "btts_no": 1 - btts_yes}
+        btts_yes += 0.025
+
+    btts_yes = clamp(btts_yes, 0.16, 0.80)
+
+    return {
+        "btts_yes": btts_yes,
+        "btts_no": 1 - btts_yes
+    }
+
 
 def h2h_reasoning(home, away, bet):
     if bet == home:
@@ -440,15 +561,18 @@ def h2h_reasoning(home, away, bet):
         return f"{away} looks slightly undervalued away from home. The model sees a better win probability than the market median, which keeps this as a live value side."
     return "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value."
 
+
 def totals_reasoning(home, away, bet):
     if "Over" in bet:
         return f"{home} vs {away} projects with enough scoring volume to justify an aggressive totals angle. The expected goals profile supports the market line being slightly too low."
     return f"{home} vs {away} projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome."
 
+
 def btts_reasoning(home, away, bet):
     if bet == "BTTS Yes":
         return f"Both teams rate with enough attacking involvement to keep a two-sided scoring game live. Recent BTTS tendencies and projected scoring output both support the Yes side."
     return f"The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing."
+
 
 def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line, reasoning):
     cfg = BUCKETS[bucket]
@@ -495,6 +619,7 @@ def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line,
         "result": "pending"
     }
 
+
 def build_lab_predictions():
     if not FOOTBALL_API_KEY:
         raise RuntimeError("Missing FOOTBALL_API_KEY environment variable.")
@@ -511,6 +636,9 @@ def build_lab_predictions():
         try:
             fixture_id = fixture.get("fixture", {}).get("id")
             teams = fixture.get("teams", {})
+            league = fixture.get("league", {})
+            league_name = league.get("name", "Football")
+
             home = teams.get("home", {}).get("name")
             away = teams.get("away", {}).get("name")
             home_id = teams.get("home", {}).get("id")
@@ -524,37 +652,65 @@ def build_lab_predictions():
             pred = get_fixture_prediction_data(fixture_id)
             odds = get_fixture_odds_markets(fixture_id, home, away)
 
-            expected_home, expected_away, expected_total = calculate_expected_goals(home_stats, away_stats, pred)
-            h2h_probs = get_h2h_probs(expected_home, expected_away, pred)
+            expected_home, expected_away, expected_total = calculate_expected_goals(home_stats, away_stats, pred, league_name)
+
+            h2h_probs = get_h2h_probs(expected_home, expected_away, pred, league_name)
             total_probs = get_total_probs(expected_total)
             btts_probs = get_btts_probs(expected_home, expected_away, home_stats, away_stats)
+
+            h2h_probs["home"] = soft_market_blend(h2h_probs["home"], odds["h2h"]["home"], strength=0.15)
+            h2h_probs["draw"] = soft_market_blend(h2h_probs["draw"], odds["h2h"]["draw"], strength=0.12)
+            h2h_probs["away"] = soft_market_blend(h2h_probs["away"], odds["h2h"]["away"], strength=0.15)
+
+            total_probs["over_2_5"] = soft_market_blend(total_probs["over_2_5"], odds["totals"][2.5]["over"], strength=0.16)
+            total_probs["under_2_5"] = soft_market_blend(total_probs["under_2_5"], odds["totals"][2.5]["under"], strength=0.16)
+            total_probs["over_3_5"] = soft_market_blend(total_probs["over_3_5"], odds["totals"][3.5]["over"], strength=0.14)
+            total_probs["under_3_5"] = soft_market_blend(total_probs["under_3_5"], odds["totals"][3.5]["under"], strength=0.14)
+
+            btts_probs["btts_yes"] = soft_market_blend(btts_probs["btts_yes"], odds["btts"]["yes"], strength=0.15)
+            btts_probs["btts_no"] = soft_market_blend(btts_probs["btts_no"], odds["btts"]["no"], strength=0.15)
 
             h = build_generic_candidate("home", fixture, odds["h2h"]["home"], h2h_probs["home"], home, None, h2h_reasoning(home, away, home))
             d = build_generic_candidate("draw", fixture, odds["h2h"]["draw"], h2h_probs["draw"], "Draw", None, h2h_reasoning(home, away, "Draw"))
             a = build_generic_candidate("away", fixture, odds["h2h"]["away"], h2h_probs["away"], away, None, h2h_reasoning(home, away, away))
-            if h: candidates["home"].append(h)
-            if d: candidates["draw"].append(d)
-            if a: candidates["away"].append(a)
+            if h:
+                candidates["home"].append(h)
+            if d:
+                candidates["draw"].append(d)
+            if a:
+                candidates["away"].append(a)
 
             o25 = build_generic_candidate("over_2_5", fixture, odds["totals"][2.5]["over"], total_probs["over_2_5"], "Over 2.5", 2.5, totals_reasoning(home, away, "Over 2.5"))
             u25 = build_generic_candidate("under_2_5", fixture, odds["totals"][2.5]["under"], total_probs["under_2_5"], "Under 2.5", 2.5, totals_reasoning(home, away, "Under 2.5"))
             o35 = build_generic_candidate("over_3_5", fixture, odds["totals"][3.5]["over"], total_probs["over_3_5"], "Over 3.5", 3.5, totals_reasoning(home, away, "Over 3.5"))
             u35 = build_generic_candidate("under_3_5", fixture, odds["totals"][3.5]["under"], total_probs["under_3_5"], "Under 3.5", 3.5, totals_reasoning(home, away, "Under 3.5"))
-            if o25: candidates["over_2_5"].append(o25)
-            if u25: candidates["under_2_5"].append(u25)
-            if o35: candidates["over_3_5"].append(o35)
-            if u35: candidates["under_3_5"].append(u35)
+            if o25:
+                candidates["over_2_5"].append(o25)
+            if u25:
+                candidates["under_2_5"].append(u25)
+            if o35:
+                candidates["over_3_5"].append(o35)
+            if u35:
+                candidates["under_3_5"].append(u35)
 
             by = build_generic_candidate("btts_yes", fixture, odds["btts"]["yes"], btts_probs["btts_yes"], "BTTS Yes", None, btts_reasoning(home, away, "BTTS Yes"))
             bn = build_generic_candidate("btts_no", fixture, odds["btts"]["no"], btts_probs["btts_no"], "BTTS No", None, btts_reasoning(home, away, "BTTS No"))
-            if by: candidates["btts_yes"].append(by)
-            if bn: candidates["btts_no"].append(bn)
+            if by:
+                candidates["btts_yes"].append(by)
+            if bn:
+                candidates["btts_no"].append(bn)
+
         except Exception as e:
             debug(f"FIXTURE BUILD ERROR: {e}")
 
     final_buckets = {}
     for bucket_name, cfg in BUCKETS.items():
-        bucket_candidates = sorted(candidates.get(bucket_name, []), key=lambda x: (x["edge"], x["odds"]), reverse=True)
+        bucket_candidates = sorted(
+            candidates.get(bucket_name, []),
+            key=lambda x: (x["edge"], x["odds"]),
+            reverse=True
+        )
+
         filtered = []
         used_matches = set()
         for c in bucket_candidates:
@@ -564,12 +720,13 @@ def build_lab_predictions():
             used_matches.add(c["match"])
             if len(filtered) >= cfg["limit"]:
                 break
+
         final_buckets[bucket_name] = filtered
         debug(f"FINAL BUCKET {bucket_name}: {len(filtered)} picks")
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
-        "model": "AI77 Lab Buckets v1",
+        "model": "AI77 Lab Buckets v2",
         "stake_mode": "flat_1_unit",
         "source": "API-Football",
         "timezone": TZ_NAME,
@@ -577,10 +734,12 @@ def build_lab_predictions():
         "buckets": final_buckets
     }
 
+
 def append_to_lab_results(predictions_payload):
     history = load_json_file(LAB_RESULTS_FILE, [])
     if not isinstance(history, list):
         history = []
+
     existing_ids = {item.get("pick_id") for item in history if isinstance(item, dict)}
 
     for picks in predictions_payload.get("buckets", {}).values():
@@ -592,12 +751,14 @@ def append_to_lab_results(predictions_payload):
 
     save_json_file(LAB_RESULTS_FILE, history)
 
+
 def main():
     payload = build_lab_predictions()
     save_json_file(LAB_PREDICTIONS_FILE, payload)
     append_to_lab_results(payload)
     total_picks = sum(len(v) for v in payload["buckets"].values())
     debug(f"SAVED {LAB_PREDICTIONS_FILE} with {total_picks} picks.")
+
 
 if __name__ == "__main__":
     main()
