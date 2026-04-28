@@ -50,5 +50,3 @@ jobs:
           git add lab_predictions.json lab_results.json lab_stats.json
           git commit -m "Update AI77 Lab data" || echo "No changes to commit"
           git push
-
-#triger
