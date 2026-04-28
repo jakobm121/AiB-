@@ -17,25 +17,25 @@ LAB_PREDICTIONS_FILE = "lab_predictions.json"
 LAB_RESULTS_FILE = "lab_results.json"
 
 TIME_WINDOW_MIN_HOURS = 0
-TIME_WINDOW_MAX_HOURS = 12
+TIME_WINDOW_MAX_HOURS = 6
 REQUEST_TIMEOUT = 20
 
-MAX_PICKS_PER_FIXTURE = 2
+MAX_PICKS_PER_FIXTURE = 3
 
 MIN_LEAGUE_LEARNING_SAMPLE = 8
 FULL_LEAGUE_LEARNING_SAMPLE = 30
 MAX_LEAGUE_LEARNING_ADJUSTMENT = 0.04
 
 BUCKETS = {
-    "home": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
-    "draw": {"limit": 3, "min_edge": 0.030, "min_bookmakers": 3, "odds_min": 2.80, "odds_max": 4.50},
-    "away": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
-    "over_2_5": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
-    "under_2_5": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
-    "btts_yes": {"limit": 5, "min_edge": 0.028, "min_bookmakers": 4, "odds_min": 1.55, "odds_max": 4.50},
-    "btts_no": {"limit": 5, "min_edge": 0.028, "min_bookmakers": 4, "odds_min": 1.55, "odds_max": 4.50},
-    "over_3_5": {"limit": 5, "min_edge": 0.030, "min_bookmakers": 3, "odds_min": 1.70, "odds_max": 5.20},
-    "under_3_5": {"limit": 5, "min_edge": 0.028, "min_bookmakers": 3, "odds_min": 1.35, "odds_max": 3.50},
+    "home": {"limit": 5, "min_edge": 0.018, "min_bookmakers": 3, "odds_min": 1.45, "odds_max": 4.80},
+    "draw": {"limit": 3, "min_edge": 0.020, "min_bookmakers": 3, "odds_min": 2.60, "odds_max": 4.80},
+    "away": {"limit": 5, "min_edge": 0.018, "min_bookmakers": 3, "odds_min": 1.45, "odds_max": 4.80},
+    "over_2_5": {"limit": 5, "min_edge": 0.022, "min_bookmakers": 3, "odds_min": 1.50, "odds_max": 4.80},
+    "under_2_5": {"limit": 5, "min_edge": 0.022, "min_bookmakers": 3, "odds_min": 1.50, "odds_max": 4.80},
+    "btts_yes": {"limit": 5, "min_edge": 0.024, "min_bookmakers": 4, "odds_min": 1.50, "odds_max": 4.80},
+    "btts_no": {"limit": 5, "min_edge": 0.024, "min_bookmakers": 4, "odds_min": 1.50, "odds_max": 4.80},
+    "over_3_5": {"limit": 5, "min_edge": 0.026, "min_bookmakers": 3, "odds_min": 1.65, "odds_max": 5.50},
+    "under_3_5": {"limit": 5, "min_edge": 0.024, "min_bookmakers": 3, "odds_min": 1.30, "odds_max": 3.80},
 }
 
 VALID_STATUSES = {"NS", "TBD", "PST"}
@@ -312,16 +312,12 @@ def candidate_conflicts(existing_pick, new_pick):
     existing_family = get_bucket_family(existing_bucket)
     new_family = get_bucket_family(new_bucket)
 
-    if existing_family == new_family:
+    if existing_family == "h2h" and new_family == "h2h":
         return True
 
     correlated_pairs = {
         tuple(sorted(("under_2_5", "btts_no"))),
-        tuple(sorted(("under_3_5", "btts_no"))),
         tuple(sorted(("over_2_5", "btts_yes"))),
-        tuple(sorted(("over_3_5", "btts_yes"))),
-        tuple(sorted(("under_2_5", "under_3_5"))),
-        tuple(sorted(("over_2_5", "over_3_5"))),
     }
 
     pair = tuple(sorted([existing_bucket, new_bucket]))
@@ -806,7 +802,7 @@ def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line,
     if median_odds is None:
         return None
 
-    bookmakers_used = len(market_odds)
+        bookmakers_used = len(market_odds)
     implied_prob = 1 / median_odds
     edge = model_prob - implied_prob
 
@@ -905,9 +901,9 @@ def build_lab_predictions():
             total_probs = get_total_probs(expected_total, league_name)
             btts_probs = get_btts_probs(expected_home, expected_away, home_stats, away_stats, league_name)
 
-            h2h_probs["home"] = soft_market_blend(h2h_probs["home"], odds["h2h"]["home"], strength=0.15)
-            h2h_probs["draw"] = soft_market_blend(h2h_probs["draw"], odds["h2h"]["draw"], strength=0.10)
-            h2h_probs["away"] = soft_market_blend(h2h_probs["away"], odds["h2h"]["away"], strength=0.15)
+            h2h_probs["home"] = soft_market_blend(h2h_probs["home"], odds["h2h"]["home"], strength=0.08)
+            h2h_probs["draw"] = soft_market_blend(h2h_probs["draw"], odds["h2h"]["draw"], strength=0.06)
+            h2h_probs["away"] = soft_market_blend(h2h_probs["away"], odds["h2h"]["away"], strength=0.08)
 
             total_probs["over_2_5"] = soft_market_blend(total_probs["over_2_5"], odds["totals"][2.5]["over"], strength=0.16)
             total_probs["under_2_5"] = soft_market_blend(total_probs["under_2_5"], odds["totals"][2.5]["under"], strength=0.16)
@@ -1002,7 +998,7 @@ def build_lab_predictions():
                 continue
 
             fixture_id = candidate["fixture_id"]
-            if fixture_pick_counts[fixture_id] >= MAX_PICKS_PER_FIXTURE:
+            if fixture_pick_counts[fixture_id] >= (MAX_PICKS_PER_FIXTURE + 1):
                 continue
 
             selected_by_bucket[bucket_name].append(candidate)
@@ -1011,7 +1007,10 @@ def build_lab_predictions():
             already_ids.add(candidate["pick_id"])
 
     for bucket_name in BUCKETS:
-        debug(f"FINAL BUCKET {bucket_name}: {len(selected_by_bucket[bucket_name])} picks")
+        debug(
+            f"FINAL BUCKET {bucket_name}: {len(selected_by_bucket[bucket_name])} picks "
+            f"(raw candidates: {len(candidates.get(bucket_name, []))})"
+        )
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
