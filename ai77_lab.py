@@ -124,7 +124,14 @@ def api_get(endpoint, params):
     url = f"{FOOTBALL_URL}/{endpoint}"
     res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
     res.raise_for_status()
-    return res.json()
+
+    data = res.json()
+    print(f"API {endpoint} params={params}")
+    print(f"API errors={data.get('errors')}")
+    print(f"API results={data.get('results')}")
+    print(f"API response_len={len(data.get('response', [])) if isinstance(data.get('response'), list) else 'n/a'}")
+
+    return data
 
 
 def get_league_baseline(league_name):
