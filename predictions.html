@@ -23,6 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="lab-stats.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="page page-predictions">
@@ -128,6 +129,56 @@
       </div>
     </section>
 
+    <section class="lab-stats-section">
+      <div class="container">
+        <div class="section-heading">
+          <p class="section-label">AI77 Lab Stats</p>
+          <h2 class="section-title">Bucket Performance Dashboard</h2>
+          <p class="section-subtitle">Flat stake testing. This section shows which markets are actually working.</p>
+        </div>
+
+        <div class="lab-summary-grid" id="lab-summary-grid">
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">Total Picks</p>
+            <h3 id="lab-total-picks">-</h3>
+          </article>
+
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">Hit Rate</p>
+            <h3 id="lab-hit-rate">-</h3>
+          </article>
+
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">Profit</p>
+            <h3 id="lab-profit">-</h3>
+          </article>
+
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">ROI</p>
+            <h3 id="lab-roi">-</h3>
+          </article>
+        </div>
+
+        <div class="lab-table-wrap">
+          <table class="lab-stats-table">
+            <thead>
+              <tr>
+                <th>Bucket</th>
+                <th>Picks</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Avg Odds</th>
+                <th>Hit Rate</th>
+                <th>Profit</th>
+                <th>ROI</th>
+              </tr>
+            </thead>
+            <tbody id="lab-stats-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
     <section class="trust-section" aria-label="Trust badges">
       <div class="container">
         <div class="trust-badges">
@@ -176,5 +227,6 @@
 
   <script src="site.js" defer></script>
   <script src="script1.js" defer></script>
+  <script src="lab_stats.js" defer></script>
 </body>
 </html>
