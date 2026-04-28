@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -11,7 +12,6 @@ TZ_NAME = "Europe/Ljubljana"
 REQUEST_TIMEOUT = 20
 
 LAB_RESULTS_FILE = "lab_results.json"
-LAB_STATS_FILE = "lab_stats.json"
 
 
 def football_headers():
@@ -41,37 +41,39 @@ def save_json_file(path, data):
         f.write("\n")
 
 
-def api_get(endpoint, params):
+def api_get(endpoint, params, retries=3, sleep_seconds=2):
     url = f"{FOOTBALL_URL}/{endpoint}"
-    res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
-    res.raise_for_status()
-    return res.json()
+
+    for attempt in range(retries):
+        res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
+
+        if res.status_code == 429:
+            wait_time = sleep_seconds * (attempt + 1)
+            print(f"RATE LIMIT hit for {endpoint} {params} -> sleeping {wait_time}s")
+            time.sleep(wait_time)
+            continue
+
+        res.raise_for_status()
+        return res.json()
+
+    raise RuntimeError(f"API rate-limited too many times for {endpoint} {params}")
 
 
-def fetch_recent_finished_fixtures(days_back=5):
-    tz = ZoneInfo(TZ_NAME)
-    now = datetime.now(tz)
-    start_date = (now - timedelta(days=days_back)).date()
-    end_date = now.date()
-
+def fetch_finished_pending_fixtures(pending_fixture_ids):
     fixture_map = {}
-    current_date = start_date
 
-    while current_date <= end_date:
+    unique_ids = sorted({fid for fid in pending_fixture_ids if fid})
+    print(f"PENDING UNIQUE FIXTURE IDS: {len(unique_ids)}")
+
+    for fixture_id in unique_ids:
         try:
-            data = api_get("fixtures", {
-                "date": current_date.strftime("%Y-%m-%d"),
-                "timezone": TZ_NAME
-            })
-            for item in data.get("response", []):
-                fixture = item.get("fixture", {})
-                fixture_id = fixture.get("id")
-                status = fixture.get("status", {}).get("short")
-                if fixture_id and status in {"FT", "AET", "PEN", "CANC", "ABD", "AWD", "WO"}:
-                    fixture_map[fixture_id] = item
+            data = api_get("fixtures", {"id": fixture_id})
+            response = data.get("response", [])
+            if response:
+                fixture_map[fixture_id] = response[0]
+            time.sleep(1.2)
         except Exception as e:
-            print(f"SETTLE FETCH ERROR {current_date}: {e}")
-        current_date += timedelta(days=1)
+            print(f"SETTLE FETCH ERROR fixture_id={fixture_id}: {e}")
 
     print(f"SETTLE FIXTURES LOADED: {len(fixture_map)}")
     return fixture_map
@@ -82,6 +84,7 @@ def settle_h2h_pick(pick, fixture):
     away = fixture.get("teams", {}).get("away", {}).get("name")
     gh = fixture.get("goals", {}).get("home")
     ga = fixture.get("goals", {}).get("away")
+
     if gh is None or ga is None:
         return "pending"
 
@@ -109,11 +112,10 @@ def settle_total_pick(pick, fixture):
 
     bet = str(pick.get("bet", "")).lower()
 
-    if abs(line - 2.5) < 0.001 or abs(line - 3.5) < 0.001:
-        if "over" in bet:
-            return "win" if total > line else "loss"
-        if "under" in bet:
-            return "win" if total < line else "loss"
+    if "over" in bet:
+        return "win" if total > line else "loss"
+    if "under" in bet:
+        return "win" if total < line else "loss"
 
     return "pending"
 
@@ -131,19 +133,27 @@ def settle_btts_pick(pick, fixture):
         return "win" if both else "loss"
     if bet == "btts no":
         return "win" if not both else "loss"
+
     return "pending"
 
 
 def settle_pick(pick, fixture):
     status = fixture.get("fixture", {}).get("status", {}).get("short")
+
+    if status in {"NS", "TBD", "PST", "1H", "HT", "2H", "ET", "BT", "LIVE"}:
+        return "pending"
+
     if status in {"CANC", "ABD", "AWD", "WO"}:
         return "storno"
 
     bucket = str(pick.get("bucket", ""))
+
     if bucket in {"home", "draw", "away"}:
         return settle_h2h_pick(pick, fixture)
+
     if bucket in {"over_2_5", "under_2_5", "over_3_5", "under_3_5"}:
         return settle_total_pick(pick, fixture)
+
     if bucket in {"btts_yes", "btts_no"}:
         return settle_btts_pick(pick, fixture)
 
@@ -158,9 +168,20 @@ def main():
     if not isinstance(history, list):
         history = []
 
-    fixture_map = fetch_recent_finished_fixtures(days_back=5)
+    pending_fixture_ids = [
+        item.get("fixture_id")
+        for item in history
+        if isinstance(item, dict) and item.get("result") == "pending"
+    ]
+
+    if not pending_fixture_ids:
+        print("NO PENDING PICKS TO SETTLE")
+        return
+
+    fixture_map = fetch_finished_pending_fixtures(pending_fixture_ids)
 
     updated = 0
+
     for item in history:
         if not isinstance(item, dict):
             continue
@@ -168,10 +189,14 @@ def main():
             continue
 
         fixture_id = item.get("fixture_id")
-        if not fixture_id or fixture_id not in fixture_map:
+        if not fixture_id:
             continue
 
-        new_result = settle_pick(item, fixture_map[fixture_id])
+        fixture = fixture_map.get(fixture_id)
+        if not fixture:
+            continue
+
+        new_result = settle_pick(item, fixture)
         if new_result != "pending":
             item["result"] = new_result
             updated += 1
