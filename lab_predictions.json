@@ -1,0 +1,39 @@
+{
+  "generated_at": "2026-04-29T14:00:00+02:00",
+  "model": "AI77 Lab Buckets v1",
+  "stake_mode": "flat_1_unit",
+  "source": "API-Football",
+  "window_hours": {
+    "min": 1,
+    "max": 6
+  },
+  "buckets": {
+    "home": [
+      {
+        "bucket": "home",
+        "date": "2026-04-29",
+        "time": "18:30",
+        "league": "Turkey Super League",
+        "match": "Alanyaspor - Samsunspor",
+        "bet": "Alanyaspor",
+        "odds": 2.22,
+        "market_odds_median": 2.22,
+        "model_prob": 0.49,
+        "implied_prob": 0.45,
+        "edge": 0.04,
+        "bookmakers_used": 6,
+        "line": null,
+        "reasoning": "Home side rates slightly stronger than the market median. The edge is not massive, but the price still leaves room for value.",
+        "result": "pending"
+      }
+    ],
+    "draw": [],
+    "away": [],
+    "over_2_5": [],
+    "under_2_5": [],
+    "btts_yes": [],
+    "btts_no": [],
+    "over_3_5": [],
+    "under_3_5": []
+  }
+}
