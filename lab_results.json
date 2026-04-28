@@ -17,7 +17,7 @@
     "line": null,
     "stake": 1,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "162883b2f74cbd83e5733827c4e9655b",
@@ -77,7 +77,7 @@
     "line": 2.5,
     "stake": 1,
     "reasoning": "Inter San Carlos vs Pitbulls Santa Barbara FC projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "163d3cb8fcd6b437c7d3ce71bfe20d14",
@@ -137,7 +137,7 @@
     "line": null,
     "stake": 1,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4ce1da8edb8bb75a6d2350df8c89b500",
@@ -197,7 +197,7 @@
     "line": 3.5,
     "stake": 1,
     "reasoning": "Inter San Carlos vs Pitbulls Santa Barbara FC projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "210cc4c0540df92c6e584412bbb1e556",
