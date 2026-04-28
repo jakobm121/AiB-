@@ -22,8 +22,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=12">
-  <link rel="stylesheet" href="lab-stats.css?v=12">
+
+  <!-- keep your existing global site css -->
+  <link rel="stylesheet" href="style.css">
+  <!-- predictions-only styles -->
+  <link rel="stylesheet" href="predictions-lab.css?v=21">
+  <link rel="stylesheet" href="lab-stats.css?v=21">
 </head>
 <body class="page page-predictions">
   <header class="site-header">
@@ -54,43 +58,50 @@
       </div>
     </section>
 
-    <section class="full-width-banner" aria-label="Affiliate banner">
-      <div class="container">
-        <a href="https://moy.auraodin.com/redirect.aspx?pid=148721&bid=1616" target="_blank" rel="noopener noreferrer">
-          <img src="https://moy.auraodin.com/renderimage.aspx?pid=148721&bid=1616" alt="Affiliate banner" loading="lazy">
-        </a>
-      </div>
-    </section>
-
-    <section class="monthly-stats performance-section">
+    <section class="predictions-top-stats">
       <div class="container">
         <div class="section-heading">
-          <p class="section-label">Testing overview</p>
-          <h2 class="section-title">AI77 Lab Buckets <span class="section-subtitle">(Private Version)</span></h2>
+          <p class="section-label">AI77 Lab Stats</p>
+          <h2 class="section-title">Bucket Performance Dashboard</h2>
+          <p class="section-subtitle">Flat stake testing. This section shows which markets are actually working.</p>
         </div>
 
-        <div class="stats-grid">
-          <article class="stat-box">
-            <h3>9</h3>
-            <p>Tracked Buckets 📊</p>
+        <div class="lab-summary-grid">
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">Total Picks</p>
+            <h3 id="lab-total-picks">-</h3>
           </article>
-          <article class="stat-box">
-            <h3>1u</h3>
-            <p>Flat Stake Per Pick 💰</p>
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">Hit Rate</p>
+            <h3 id="lab-hit-rate">-</h3>
           </article>
-          <article class="stat-box">
-            <h3>1–6h</h3>
-            <p>Match Window ⏱️</p>
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">Profit</p>
+            <h3 id="lab-profit">-</h3>
           </article>
-          <article class="stat-box">
-            <h3>API</h3>
-            <p>API-Football Source ⚡️</p>
+          <article class="lab-summary-card">
+            <p class="lab-summary-label">ROI</p>
+            <h3 id="lab-roi">-</h3>
           </article>
         </div>
 
-        <p class="vip-note">
-          📊 This page is built for private testing. The goal is to measure which markets actually work over time.
-        </p>
+        <div class="lab-table-wrap">
+          <table class="lab-stats-table">
+            <thead>
+              <tr>
+                <th>Bucket</th>
+                <th>Picks</th>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Avg Odds</th>
+                <th>Hit Rate</th>
+                <th>Profit</th>
+                <th>ROI</th>
+              </tr>
+            </thead>
+            <tbody id="lab-stats-body"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
@@ -120,56 +131,6 @@
           <p id="last-updated" class="last-updated"></p>
         </div>
         <div id="predictions-container"></div>
-      </div>
-    </section>
-
-    <section class="lab-stats-section">
-      <div class="container">
-        <div class="section-heading">
-          <p class="section-label">AI77 Lab Stats</p>
-          <h2 class="section-title">Bucket Performance Dashboard</h2>
-          <p class="section-subtitle">Flat stake testing. This section shows which markets are actually working.</p>
-        </div>
-
-        <div class="lab-summary-grid">
-          <article class="lab-summary-card">
-            <p class="lab-summary-label">Total Picks</p>
-            <h3 id="lab-total-picks">-</h3>
-          </article>
-
-          <article class="lab-summary-card">
-            <p class="lab-summary-label">Hit Rate</p>
-            <h3 id="lab-hit-rate">-</h3>
-          </article>
-
-          <article class="lab-summary-card">
-            <p class="lab-summary-label">Profit</p>
-            <h3 id="lab-profit">-</h3>
-          </article>
-
-          <article class="lab-summary-card">
-            <p class="lab-summary-label">ROI</p>
-            <h3 id="lab-roi">-</h3>
-          </article>
-        </div>
-
-        <div class="lab-table-wrap">
-          <table class="lab-stats-table">
-            <thead>
-              <tr>
-                <th>Bucket</th>
-                <th>Picks</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Avg Odds</th>
-                <th>Hit Rate</th>
-                <th>Profit</th>
-                <th>ROI</th>
-              </tr>
-            </thead>
-            <tbody id="lab-stats-body"></tbody>
-          </table>
-        </div>
       </div>
     </section>
 
@@ -236,8 +197,8 @@
     </div>
   </footer>
 
-  <script src="site.js?v=12" defer></script>
-  <script src="lab_predictions.js?v=12" defer></script>
+  <script src="site.js"></script>
+  <script src="lab_predictions.js?v=21"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
@@ -259,17 +220,7 @@
         under_3_5: "Under 3.5"
       };
 
-      const order = [
-        "home",
-        "draw",
-        "away",
-        "over_2_5",
-        "under_2_5",
-        "btts_yes",
-        "btts_no",
-        "over_3_5",
-        "under_3_5"
-      ];
+      const order = ["home","draw","away","over_2_5","under_2_5","btts_yes","btts_no","over_3_5","under_3_5"];
 
       const formatSigned = (value, digits = 2) => {
         const num = Number(value || 0);
@@ -285,16 +236,9 @@
 
       try {
         const response = await fetch(`./lab_stats.json?v=${Date.now()}`, { cache: "no-store" });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status} while loading lab_stats.json`);
-        }
-
+        if (!response.ok) throw new Error(`HTTP ${response.status} while loading lab_stats.json`);
         const stats = await response.json();
-
-        if (!stats || !stats.overall || !stats.by_bucket) {
-          throw new Error("Invalid lab_stats.json structure");
-        }
+        if (!stats || !stats.overall || !stats.by_bucket) throw new Error("Invalid lab_stats.json structure");
 
         if (totalPicks) totalPicks.textContent = stats.overall.picks ?? "-";
         if (hitRate) hitRate.textContent = stats.overall.hit_rate != null ? `${stats.overall.hit_rate}%` : "-";
@@ -311,7 +255,6 @@
 
         if (tbody) {
           tbody.innerHTML = "";
-
           order.forEach((key) => {
             const row = stats.by_bucket[key];
             if (!row) return;

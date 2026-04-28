@@ -1,0 +1,146 @@
+.page-predictions .predictions-top-stats {
+  padding: 2rem 0 0.5rem;
+}
+
+.page-predictions .predictions-section {
+  padding-top: 1.25rem;
+}
+
+.page-predictions .prediction-card--lab {
+  background: rgba(20, 27, 41, 0.82);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.24);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.page-predictions .prediction-card__match {
+  margin: 0.85rem 0 0.35rem;
+  font-size: 1.16rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.page-predictions .prediction-card__league {
+  margin: 0 0 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.page-predictions .prediction-card__topline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin-bottom: 0.95rem;
+}
+
+.page-predictions .prediction-card__details {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 0.95rem;
+  margin-top: 0.25rem;
+}
+
+.page-predictions .prediction-card__details summary {
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.page-predictions .prediction-card__details summary::-webkit-details-marker {
+  display: none;
+}
+
+.page-predictions .prediction-card__details summary::after {
+  content: "+";
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--gold);
+}
+
+.page-predictions .prediction-card__details[open] summary::after {
+  content: "–";
+}
+
+.page-predictions .prediction-card__details .ai-reasoning,
+.page-predictions .prediction-card__details .lab-pick-stats {
+  margin-top: 0.95rem;
+}
+
+.page-predictions .prediction-card__footer {
+  margin-top: 1rem;
+}
+
+.page-predictions .bet-odds {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+}
+
+.page-predictions .lab-pick-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.page-predictions .lab-pick-stat {
+  padding: 0.85rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.page-predictions .lab-pick-stat__label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.page-predictions .lab-flat-stake {
+  margin: 0 0 1rem;
+  font-weight: 700;
+  color: #f4d35e;
+}
+
+.page-predictions .lab-bucket {
+  margin-bottom: 1.5rem;
+}
+
+.page-predictions .lab-bucket__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.page-predictions .lab-bucket__title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.page-predictions .lab-bucket__count {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.75rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  font-weight: 800;
+}
+
+@media (min-width: 768px) {
+  .page-predictions .lab-pick-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
