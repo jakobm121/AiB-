@@ -22,8 +22,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=11">
-  <link rel="stylesheet" href="lab-stats.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
+  <link rel="stylesheet" href="lab-stats.css?v=12">
 </head>
 <body class="page page-predictions">
   <header class="site-header">
@@ -136,14 +136,17 @@
             <p class="lab-summary-label">Total Picks</p>
             <h3 id="lab-total-picks">-</h3>
           </article>
+
           <article class="lab-summary-card">
             <p class="lab-summary-label">Hit Rate</p>
             <h3 id="lab-hit-rate">-</h3>
           </article>
+
           <article class="lab-summary-card">
             <p class="lab-summary-label">Profit</p>
             <h3 id="lab-profit">-</h3>
           </article>
+
           <article class="lab-summary-card">
             <p class="lab-summary-label">ROI</p>
             <h3 id="lab-roi">-</h3>
@@ -233,8 +236,120 @@
     </div>
   </footer>
 
-  <script src="site.js?v=11" defer></script>
-  <script src="lab_predictions.js?v=11" defer></script>
-  <script src="lab_stats.js?v=11" defer></script>
+  <script src="site.js?v=12" defer></script>
+  <script src="lab_predictions.js?v=12" defer></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const totalPicks = document.getElementById("lab-total-picks");
+      const hitRate = document.getElementById("lab-hit-rate");
+      const profit = document.getElementById("lab-profit");
+      const roi = document.getElementById("lab-roi");
+      const tbody = document.getElementById("lab-stats-body");
+
+      const labels = {
+        home: "Home",
+        draw: "Draw",
+        away: "Away",
+        over_2_5: "Over 2.5",
+        under_2_5: "Under 2.5",
+        btts_yes: "BTTS Yes",
+        btts_no: "BTTS No",
+        over_3_5: "Over 3.5",
+        under_3_5: "Under 3.5"
+      };
+
+      const order = [
+        "home",
+        "draw",
+        "away",
+        "over_2_5",
+        "under_2_5",
+        "btts_yes",
+        "btts_no",
+        "over_3_5",
+        "under_3_5"
+      ];
+
+      const formatSigned = (value, digits = 2) => {
+        const num = Number(value || 0);
+        return num > 0 ? `+${num.toFixed(digits)}` : num.toFixed(digits);
+      };
+
+      const getClassName = (value, positiveClass, negativeClass) => {
+        const num = Number(value || 0);
+        if (num > 0) return positiveClass;
+        if (num < 0) return negativeClass;
+        return "lab-neutral";
+      };
+
+      try {
+        const response = await fetch(`./lab_stats.json?v=${Date.now()}`, { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} while loading lab_stats.json`);
+        }
+
+        const stats = await response.json();
+
+        if (!stats || !stats.overall || !stats.by_bucket) {
+          throw new Error("Invalid lab_stats.json structure");
+        }
+
+        if (totalPicks) totalPicks.textContent = stats.overall.picks ?? "-";
+        if (hitRate) hitRate.textContent = stats.overall.hit_rate != null ? `${stats.overall.hit_rate}%` : "-";
+
+        if (profit) {
+          profit.textContent = stats.overall.profit != null ? formatSigned(stats.overall.profit) : "-";
+          profit.className = getClassName(stats.overall.profit, "lab-profit-positive", "lab-profit-negative");
+        }
+
+        if (roi) {
+          roi.textContent = stats.overall.roi != null ? `${formatSigned(stats.overall.roi)}%` : "-";
+          roi.className = getClassName(stats.overall.roi, "lab-roi-positive", "lab-roi-negative");
+        }
+
+        if (tbody) {
+          tbody.innerHTML = "";
+
+          order.forEach((key) => {
+            const row = stats.by_bucket[key];
+            if (!row) return;
+
+            const tr = document.createElement("tr");
+            const roiClass = getClassName(row.roi, "lab-roi-positive", "lab-roi-negative");
+            const profitClass = getClassName(row.profit, "lab-profit-positive", "lab-profit-negative");
+
+            tr.innerHTML = `
+              <td>${labels[key] || key}</td>
+              <td>${row.picks ?? 0}</td>
+              <td>${row.wins ?? 0}</td>
+              <td>${row.losses ?? 0}</td>
+              <td>${row.avg_odds ?? 0}</td>
+              <td>${row.hit_rate != null ? row.hit_rate + "%" : "-"}</td>
+              <td class="${profitClass}">${formatSigned(row.profit ?? 0)}</td>
+              <td class="${roiClass}">${formatSigned(row.roi ?? 0)}%</td>
+            `;
+            tbody.appendChild(tr);
+          });
+        }
+      } catch (err) {
+        if (totalPicks) totalPicks.textContent = "ERR";
+        if (hitRate) hitRate.textContent = "ERR";
+        if (profit) profit.textContent = "ERR";
+        if (roi) roi.textContent = "ERR";
+
+        if (tbody) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="8" style="color:#ff6b6b;font-weight:700;">
+                ${err.message}
+              </td>
+            </tr>
+          `;
+        }
+      }
+    });
+  </script>
 </body>
 </html>
