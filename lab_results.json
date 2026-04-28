@@ -198,5 +198,25 @@
     "stake": 1,
     "reasoning": "Inter San Carlos vs Pitbulls Santa Barbara FC projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
     "result": "pending"
+  },
+  {
+    "pick_id": "210cc4c0540df92c6e584412bbb1e556",
+    "fixture_id": 1403825,
+    "bucket": "under_3_5",
+    "date": "2026-04-28",
+    "time": "10:30",
+    "league": "Liga 1",
+    "match": "Arema FC - Persebaya Surabaya",
+    "bet": "Under 3.5",
+    "odds": 1.35,
+    "market_odds_median": 1.35,
+    "model_prob": 0.95,
+    "implied_prob": 0.7407,
+    "edge": 0.2093,
+    "bookmakers_used": 9,
+    "line": 3.5,
+    "stake": 1,
+    "reasoning": "Arema FC vs Persebaya Surabaya projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
+    "result": "pending"
   }
 ]
