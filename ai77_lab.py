@@ -22,6 +22,10 @@ REQUEST_TIMEOUT = 20
 
 MAX_PICKS_PER_FIXTURE = 2
 
+MIN_LEAGUE_LEARNING_SAMPLE = 8
+FULL_LEAGUE_LEARNING_SAMPLE = 30
+MAX_LEAGUE_LEARNING_ADJUSTMENT = 0.04
+
 BUCKETS = {
     "home": {"limit": 5, "min_edge": 0.025, "min_bookmakers": 3, "odds_min": 1.55, "odds_max": 4.50},
     "draw": {"limit": 3, "min_edge": 0.030, "min_bookmakers": 3, "odds_min": 2.80, "odds_max": 4.50},
@@ -136,6 +140,125 @@ def soft_market_blend(model_prob, market_odds, strength=0.18):
     return (model_prob * (1 - strength)) + (implied * strength)
 
 
+def is_settled_result(result_value):
+    return result_value in {"win", "loss", "storno"}
+
+
+def settled_profit_for_pick(pick):
+    result_value = pick.get("result")
+    odds = safe_float(pick.get("odds"), 0) or 0
+
+    if result_value == "win":
+        return odds - 1.0
+    if result_value == "loss":
+        return -1.0
+    if result_value == "storno":
+        return 0.0
+    return None
+
+
+def build_league_learning_table(history):
+    league_bucket = defaultdict(lambda: defaultdict(lambda: {
+        "settled_picks": 0,
+        "wins": 0,
+        "losses": 0,
+        "storno": 0,
+        "profit": 0.0
+    }))
+
+    for item in history:
+        if not isinstance(item, dict):
+            continue
+
+        result_value = item.get("result")
+        if not is_settled_result(result_value):
+            continue
+
+        league_name = normalize_name(item.get("league"))
+        bucket = item.get("bucket")
+
+        if not league_name or not bucket:
+            continue
+
+        profit = settled_profit_for_pick(item)
+        if profit is None:
+            continue
+
+        row = league_bucket[league_name][bucket]
+        row["settled_picks"] += 1
+        row["profit"] += profit
+
+        if result_value == "win":
+            row["wins"] += 1
+        elif result_value == "loss":
+            row["losses"] += 1
+        elif result_value == "storno":
+            row["storno"] += 1
+
+    final_table = defaultdict(dict)
+
+    for league_name, bucket_map in league_bucket.items():
+        for bucket, row in bucket_map.items():
+            settled = row["settled_picks"]
+            if settled <= 0:
+                continue
+
+            staked = settled - row["storno"]
+            staked = max(staked, 1)
+
+            roi = row["profit"] / staked
+            hit_rate = row["wins"] / max((row["wins"] + row["losses"]), 1)
+
+            sample_weight = clamp(
+                (settled - MIN_LEAGUE_LEARNING_SAMPLE) / max((FULL_LEAGUE_LEARNING_SAMPLE - MIN_LEAGUE_LEARNING_SAMPLE), 1),
+                0.0,
+                1.0
+            )
+
+            roi_component = clamp(roi / 0.25, -1.0, 1.0)
+            hit_component = clamp((hit_rate - 0.50) / 0.20, -1.0, 1.0)
+
+            blended_signal = (roi_component * 0.70) + (hit_component * 0.30)
+            adjustment = blended_signal * sample_weight * MAX_LEAGUE_LEARNING_ADJUSTMENT
+            adjustment = clamp(adjustment, -MAX_LEAGUE_LEARNING_ADJUSTMENT, MAX_LEAGUE_LEARNING_ADJUSTMENT)
+
+            final_table[league_name][bucket] = {
+                "settled_picks": settled,
+                "wins": row["wins"],
+                "losses": row["losses"],
+                "storno": row["storno"],
+                "profit": round(row["profit"], 4),
+                "roi": round(roi, 4),
+                "hit_rate": round(hit_rate, 4),
+                "learning_weight": round(sample_weight, 4),
+                "adjustment": round(adjustment, 4),
+            }
+
+    return final_table
+
+
+def get_league_bucket_adjustment(league_learning, league_name, bucket):
+    league_key = normalize_name(league_name)
+    row = league_learning.get(league_key, {}).get(bucket)
+    if not row:
+        return 0.0
+    return safe_float(row.get("adjustment"), 0.0) or 0.0
+
+
+def apply_league_learning(model_prob, league_learning, league_name, bucket):
+    adjustment = get_league_bucket_adjustment(league_learning, league_name, bucket)
+    return clamp(model_prob + adjustment, 0.02, 0.98)
+
+
+def debug_league_learning(league_learning):
+    for league_name, buckets in league_learning.items():
+        for bucket, row in buckets.items():
+            debug(
+                f"LEARNING {league_name} | {bucket} | settled={row['settled_picks']} "
+                f"roi={row['roi']} hit={row['hit_rate']} adj={row['adjustment']}"
+            )
+
+
 def calculate_confidence_score(model_prob, implied_prob, bookmakers_used, edge):
     edge_component = clamp(edge / 0.12, 0.0, 1.0) * 45
     separation_component = clamp(abs(model_prob - 0.5) / 0.30, 0.0, 1.0) * 18
@@ -193,12 +316,12 @@ def candidate_conflicts(existing_pick, new_pick):
         return True
 
     correlated_pairs = {
-        ("under_2_5", "btts_no"),
-        ("under_3_5", "btts_no"),
-        ("over_2_5", "btts_yes"),
-        ("over_3_5", "btts_yes"),
-        ("under_2_5", "under_3_5"),
-        ("over_2_5", "over_3_5"),
+        tuple(sorted(("under_2_5", "btts_no"))),
+        tuple(sorted(("under_3_5", "btts_no"))),
+        tuple(sorted(("over_2_5", "btts_yes"))),
+        tuple(sorted(("over_3_5", "btts_yes"))),
+        tuple(sorted(("under_2_5", "under_3_5"))),
+        tuple(sorted(("over_2_5", "over_3_5"))),
     }
 
     pair = tuple(sorted([existing_bucket, new_bucket]))
@@ -745,6 +868,14 @@ def build_lab_predictions():
     start_time = now + timedelta(hours=TIME_WINDOW_MIN_HOURS)
     end_time = now + timedelta(hours=TIME_WINDOW_MAX_HOURS)
 
+    history = load_json_file(LAB_RESULTS_FILE, [])
+    if not isinstance(history, list):
+        history = []
+
+    league_learning = build_league_learning_table(history)
+    debug(f"LEAGUE LEARNING LEAGUES: {len(league_learning)}")
+    debug_league_learning(league_learning)
+
     fixtures = fetch_fixtures_in_window(start_time, end_time, TZ_NAME)
     candidates = defaultdict(list)
 
@@ -785,6 +916,18 @@ def build_lab_predictions():
 
             btts_probs["btts_yes"] = soft_market_blend(btts_probs["btts_yes"], odds["btts"]["yes"], strength=0.15)
             btts_probs["btts_no"] = soft_market_blend(btts_probs["btts_no"], odds["btts"]["no"], strength=0.15)
+
+            h2h_probs["home"] = apply_league_learning(h2h_probs["home"], league_learning, league_name, "home")
+            h2h_probs["draw"] = apply_league_learning(h2h_probs["draw"], league_learning, league_name, "draw")
+            h2h_probs["away"] = apply_league_learning(h2h_probs["away"], league_learning, league_name, "away")
+
+            total_probs["over_2_5"] = apply_league_learning(total_probs["over_2_5"], league_learning, league_name, "over_2_5")
+            total_probs["under_2_5"] = apply_league_learning(total_probs["under_2_5"], league_learning, league_name, "under_2_5")
+            total_probs["over_3_5"] = apply_league_learning(total_probs["over_3_5"], league_learning, league_name, "over_3_5")
+            total_probs["under_3_5"] = apply_league_learning(total_probs["under_3_5"], league_learning, league_name, "under_3_5")
+
+            btts_probs["btts_yes"] = apply_league_learning(btts_probs["btts_yes"], league_learning, league_name, "btts_yes")
+            btts_probs["btts_no"] = apply_league_learning(btts_probs["btts_no"], league_learning, league_name, "btts_no")
 
             h = build_generic_candidate("home", fixture, odds["h2h"]["home"], h2h_probs["home"], home, None, h2h_reasoning(home, away, home))
             d = build_generic_candidate("draw", fixture, odds["h2h"]["draw"], h2h_probs["draw"], "Draw", None, h2h_reasoning(home, away, "Draw"))
@@ -832,7 +975,6 @@ def build_lab_predictions():
         for bucket_name in BUCKETS
     }
 
-    # 1st pass: pick best unique candidates while respecting anti-correlation and max per fixture
     for bucket_name, cfg in BUCKETS.items():
         for candidate in ordered_bucket_candidates[bucket_name]:
             if len(selected_by_bucket[bucket_name]) >= cfg["limit"]:
@@ -850,7 +992,6 @@ def build_lab_predictions():
             selected_all.append(candidate)
             fixture_pick_counts[fixture_id] += 1
 
-    # 2nd pass: if bucket still not full, allow softer fill but still respect max per fixture
     for bucket_name, cfg in BUCKETS.items():
         already_ids = {p["pick_id"] for p in selected_by_bucket[bucket_name]}
         for candidate in ordered_bucket_candidates[bucket_name]:
@@ -874,11 +1015,18 @@ def build_lab_predictions():
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
-        "model": "AI77 Lab Buckets v3",
+        "model": "AI77 Lab Buckets v3 + auto-learning",
         "stake_mode": "flat_1_unit",
         "source": "API-Football",
         "timezone": TZ_NAME,
         "window_hours": {"min": TIME_WINDOW_MIN_HOURS, "max": TIME_WINDOW_MAX_HOURS},
+        "learning": {
+            "enabled": True,
+            "min_sample": MIN_LEAGUE_LEARNING_SAMPLE,
+            "full_sample": FULL_LEAGUE_LEARNING_SAMPLE,
+            "max_adjustment": MAX_LEAGUE_LEARNING_ADJUSTMENT,
+            "league_count": len(league_learning)
+        },
         "buckets": selected_by_bucket
     }
 
