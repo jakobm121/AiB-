@@ -30,15 +30,32 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;");
 }
 
+function formatPercent(value, digits = 1) {
+  const num = Number(value);
+  if (Number.isNaN(num)) return "-";
+  return `${(num * 100).toFixed(digits)}%`;
+}
+
+function formatEdge(value) {
+  const num = Number(value);
+  if (Number.isNaN(num)) return "-";
+  const pct = (num * 100).toFixed(2);
+  return `${num > 0 ? "+" : ""}${pct}%`;
+}
+
 function formatUpdatedDate(isoString) {
   if (!isoString) return "Updated • --";
+
   try {
     const d = new Date(isoString);
+    if (Number.isNaN(d.getTime())) return "Updated • --";
+
     const formatted =
       d.toLocaleDateString("en-GB") +
       " • " +
       d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    return "Updated • " + formatted;
+
+    return `Updated • ${formatted}`;
   } catch {
     return "Updated • --";
   }
@@ -59,67 +76,71 @@ function getBucketBadge(bucket) {
   return map[bucket] || bucket;
 }
 
+function createPickCard(pick, bucketKey) {
+  const badge = getBucketBadge(bucketKey);
+
+  return `
+    <article class="prediction-card prediction-card--lab">
+      <div class="prediction-meta">
+        <span>📅 ${escapeHtml(pick.date || "-")}</span>
+        <span>🕒 ${escapeHtml(pick.time || "-")}</span>
+        <span>🏆 ${escapeHtml(pick.league || "-")}</span>
+        <span>${escapeHtml(badge)}</span>
+      </div>
+
+      <h3>${escapeHtml(pick.match || "-")}</h3>
+
+      <p class="bet-type">Tip: ${escapeHtml(pick.bet || "-")}</p>
+      <p class="bet-odds">Odds: ${escapeHtml(pick.odds ?? "-")}</p>
+
+      <div class="ai-reasoning">
+        <p><strong>AI Analysis:</strong> ${escapeHtml(pick.reasoning || "No reasoning available.")}</p>
+      </div>
+
+      <div class="lab-pick-stats">
+        <div class="lab-pick-stat">
+          <span class="lab-pick-stat__label">Model Prob</span>
+          <strong>${formatPercent(pick.model_prob)}</strong>
+        </div>
+
+        <div class="lab-pick-stat">
+          <span class="lab-pick-stat__label">Implied Prob</span>
+          <strong>${formatPercent(pick.implied_prob)}</strong>
+        </div>
+
+        <div class="lab-pick-stat">
+          <span class="lab-pick-stat__label">Edge</span>
+          <strong>${formatEdge(pick.edge)}</strong>
+        </div>
+
+        <div class="lab-pick-stat">
+          <span class="lab-pick-stat__label">Books Used</span>
+          <strong>${escapeHtml(pick.bookmakers_used ?? "-")}</strong>
+        </div>
+      </div>
+
+      <p class="lab-flat-stake">Flat Stake • 1 Unit</p>
+
+      <a href="https://stzns.lynmonkel.com/?mid=309891_1838278" class="btn">
+        Check Best Odds 💥
+      </a>
+    </article>
+  `;
+}
+
 function createBucketSection(bucketKey, picks) {
   const section = document.createElement("section");
   section.className = "lab-bucket";
 
   const title = LAB_BUCKET_LABELS[bucketKey] || bucketKey;
-  const badge = getBucketBadge(bucketKey);
-
-  let cardsHtml = "";
-
-  picks.forEach((pick, index) => {
-    cardsHtml += `
-      <article class="prediction-card prediction-card--lab">
-        <div class="prediction-meta">
-          <span>📅 ${escapeHtml(pick.date)}</span>
-          <span>🕒 ${escapeHtml(pick.time)}</span>
-          <span>🏆 ${escapeHtml(pick.league)}</span>
-          <span>${escapeHtml(badge)}</span>
-        </div>
-
-        <h3>${escapeHtml(pick.match)}</h3>
-
-        <p class="bet-type">Tip: ${escapeHtml(pick.bet)}</p>
-        <p class="bet-odds">Odds: ${escapeHtml(pick.odds)}</p>
-
-        <div class="ai-reasoning">
-          <p><strong>AI Analysis:</strong> ${escapeHtml(pick.reasoning)}</p>
-        </div>
-
-        <div class="lab-pick-stats">
-          <div class="lab-pick-stat">
-            <span class="lab-pick-stat__label">Model Prob</span>
-            <strong>${Number(pick.model_prob * 100).toFixed(1)}%</strong>
-          </div>
-          <div class="lab-pick-stat">
-            <span class="lab-pick-stat__label">Implied Prob</span>
-            <strong>${Number(pick.implied_prob * 100).toFixed(1)}%</strong>
-          </div>
-          <div class="lab-pick-stat">
-            <span class="lab-pick-stat__label">Edge</span>
-            <strong>${(pick.edge > 0 ? "+" : "") + Number(pick.edge * 100).toFixed(2)}%</strong>
-          </div>
-          <div class="lab-pick-stat">
-            <span class="lab-pick-stat__label">Books Used</span>
-            <strong>${escapeHtml(pick.bookmakers_used)}</strong>
-          </div>
-        </div>
-
-        <p class="lab-flat-stake">Flat Stake • 1 Unit</p>
-
-        <a href="https://stzns.lynmonkel.com/?mid=309891_1838278" class="btn">
-          Check Best Odds 💥
-        </a>
-      </article>
-    `;
-  });
+  const cardsHtml = picks.map((pick) => createPickCard(pick, bucketKey)).join("");
 
   section.innerHTML = `
     <div class="lab-bucket__header">
       <h2 class="lab-bucket__title">${escapeHtml(title)}</h2>
       <span class="lab-bucket__count">${picks.length}</span>
     </div>
+
     <div class="predictions-grid">
       ${cardsHtml}
     </div>
@@ -156,12 +177,13 @@ async function loadLabPredictions() {
 
     container.innerHTML = "";
 
-    const buckets = payload.buckets || {};
+    const buckets = payload?.buckets || {};
     let totalPicks = 0;
 
     LAB_BUCKET_ORDER.forEach((bucketKey) => {
       const picks = Array.isArray(buckets[bucketKey]) ? buckets[bucketKey] : [];
       if (!picks.length) return;
+
       totalPicks += picks.length;
       container.appendChild(createBucketSection(bucketKey, picks));
     });
@@ -171,7 +193,14 @@ async function loadLabPredictions() {
     }
   } catch (error) {
     console.error("Error loading lab predictions:", error);
+
     const container = document.getElementById("predictions-container");
+    const updatedEl = document.getElementById("last-updated");
+
+    if (updatedEl) {
+      updatedEl.textContent = "Updated • error";
+    }
+
     if (container) {
       container.innerHTML = `
         <div class="prediction-card prediction-card--lab">
