@@ -35,14 +35,54 @@ function getValueClass(value, positiveClass, negativeClass) {
   return "lab-neutral";
 }
 
+function showLabError(message) {
+  const totalPicks = document.getElementById("lab-total-picks");
+  const hitRate = document.getElementById("lab-hit-rate");
+  const profit = document.getElementById("lab-profit");
+  const roi = document.getElementById("lab-roi");
+  const tbody = document.getElementById("lab-stats-body");
+
+  if (totalPicks) totalPicks.textContent = "ERR";
+  if (hitRate) hitRate.textContent = "ERR";
+  if (profit) profit.textContent = "ERR";
+  if (roi) roi.textContent = "ERR";
+
+  if (tbody) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="8" style="color:#ff6b6b;font-weight:700;">
+          ${message}
+        </td>
+      </tr>
+    `;
+  }
+}
+
 async function loadLabStats() {
   try {
-    const response = await fetch("./lab_stats.json", { cache: "no-store" });
+    const response = await fetch(`./lab_stats.json?v=${Date.now()}`, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} while loading lab_stats.json`);
+    }
+
     const stats = await response.json();
-    renderLabSummary(stats.overall || {});
-    renderLabBucketTable(stats.by_bucket || {});
+
+    if (!stats || typeof stats !== "object") {
+      throw new Error("Invalid lab_stats.json");
+    }
+
+    if (!stats.overall || !stats.by_bucket) {
+      throw new Error("Missing overall or by_bucket");
+    }
+
+    renderLabSummary(stats.overall);
+    renderLabBucketTable(stats.by_bucket);
   } catch (error) {
     console.error("Error loading lab stats:", error);
+    showLabError(`Lab stats failed: ${error.message}`);
   }
 }
 
@@ -54,10 +94,12 @@ function renderLabSummary(overall) {
 
   if (totalPicks) totalPicks.textContent = overall.picks ?? "-";
   if (hitRate) hitRate.textContent = overall.hit_rate != null ? `${overall.hit_rate}%` : "-";
+
   if (profit) {
     profit.textContent = overall.profit != null ? formatSigned(overall.profit) : "-";
     profit.className = getValueClass(overall.profit, "lab-profit-positive", "lab-profit-negative");
   }
+
   if (roi) {
     roi.textContent = overall.roi != null ? `${formatSigned(overall.roi)}%` : "-";
     roi.className = getValueClass(overall.roi, "lab-roi-positive", "lab-roi-negative");
@@ -88,6 +130,7 @@ function renderLabBucketTable(byBucket) {
       <td class="${profitClass}">${formatSigned(stats.profit ?? 0)}</td>
       <td class="${roiClass}">${formatSigned(stats.roi ?? 0)}%</td>
     `;
+
     tbody.appendChild(tr);
   });
 }
