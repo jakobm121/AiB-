@@ -1,0 +1,14 @@
+UPLOAD THESE 5 FILES TO THE ROOT OF YOUR GITHUB REPO:
+
+1. predictions.html
+2. lab_predictions.js
+3. lab_stats.js
+4. style.css
+5. lab-stats.css
+
+Do not rename them.
+Do not move them into folders.
+
+After upload:
+- open predictions.html?v=11
+- hard refresh once
