@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-29T21:22:45.439829+02:00",
+  "generated_at": "2026-04-29T23:02:46.238950+02:00",
   "model": "AI77 Lab Buckets v3 + auto-learning + free-plan mode",
   "stake_mode": "flat_1_unit",
   "source": "API-Football",
@@ -13,7 +13,7 @@
     "min_sample": 8,
     "full_sample": 30,
     "max_adjustment": 0.04,
-    "league_count": 0
+    "league_count": 9
   },
   "free_plan_mode": {
     "enabled": true,
