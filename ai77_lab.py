@@ -3,6 +3,7 @@ import math
 import os
 import statistics
 import hashlib
+import time
 from collections import defaultdict
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
@@ -19,6 +20,13 @@ LAB_RESULTS_FILE = "lab_results.json"
 TIME_WINDOW_MIN_HOURS = 0
 TIME_WINDOW_MAX_HOURS = 12
 REQUEST_TIMEOUT = 20
+
+# Free-plan safe mode
+FREE_PLAN_MODE = True
+MAX_FIXTURES_TO_PROCESS = 18
+API_MIN_INTERVAL_SECONDS = 6.2
+API_RETRY_ON_RATELIMIT = 2
+DEBUG_API = False
 
 MAX_PICKS_PER_FIXTURE = 3
 
@@ -43,6 +51,7 @@ VALID_STATUSES = {"NS", "TBD", "PST"}
 TEAM_FORM_CACHE = {}
 FIXTURE_PRED_CACHE = {}
 FIXTURE_ODDS_CACHE = {}
+LAST_API_CALL_TS = 0.0
 
 LEAGUE_BASELINES = {
     "default": {"goals": 2.45, "draw": 0.27, "home_adv": 0.16, "strength": 1.00, "variance": 1.00},
@@ -120,18 +129,56 @@ def debug(msg):
     print(msg)
 
 
+def throttle_api():
+    global LAST_API_CALL_TS
+    now = time.time()
+    elapsed = now - LAST_API_CALL_TS
+    if elapsed < API_MIN_INTERVAL_SECONDS:
+        time.sleep(API_MIN_INTERVAL_SECONDS - elapsed)
+    LAST_API_CALL_TS = time.time()
+
+
 def api_get(endpoint, params):
-    url = f"{FOOTBALL_URL}/{endpoint}"
-    res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
-    res.raise_for_status()
+    if not FOOTBALL_API_KEY:
+        raise RuntimeError("Missing FOOTBALL_API_KEY environment variable.")
 
-    data = res.json()
-    print(f"API {endpoint} params={params}")
-    print(f"API errors={data.get('errors')}")
-    print(f"API results={data.get('results')}")
-    print(f"API response_len={len(data.get('response', [])) if isinstance(data.get('response'), list) else 'n/a'}")
+    last_error = None
 
-    return data
+    for attempt in range(API_RETRY_ON_RATELIMIT + 1):
+        throttle_api()
+
+        url = f"{FOOTBALL_URL}/{endpoint}"
+        res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
+        res.raise_for_status()
+        data = res.json()
+
+        if DEBUG_API:
+            debug(f"API {endpoint} params={params}")
+            debug(f"API errors={data.get('errors')}")
+            debug(f"API results={data.get('results')}")
+            debug(f"API response_len={len(data.get('response', [])) if isinstance(data.get('response'), list) else 'n/a'}")
+
+        errors = data.get("errors") or {}
+
+        if errors:
+            if "requests" in errors:
+                raise RuntimeError(f"Daily API request limit reached: {errors}")
+
+            if "rateLimit" in errors:
+                last_error = RuntimeError(f"Rate limit for {endpoint} {params}: {errors}")
+                wait_s = 8 * (attempt + 1)
+                debug(f"RATE LIMIT {endpoint} {params} -> sleeping {wait_s}s")
+                time.sleep(wait_s)
+                continue
+
+            debug(f"API WARN {endpoint} {params}: {errors}")
+
+        return data
+
+    if last_error:
+        raise last_error
+
+    return {"response": []}
 
 
 def get_league_baseline(league_name):
@@ -364,6 +411,7 @@ def fetch_fixtures_in_window(start_time, end_time, tz_name):
         except Exception as e:
             debug(f"FIXTURE FILTER ERROR: {e}")
 
+    filtered.sort(key=lambda f: f.get("fixture", {}).get("date", ""))
     debug(f"FILTERED FIXTURES: {len(filtered)}")
     return filtered
 
@@ -387,6 +435,11 @@ def get_recent_team_form(team_id):
         "losses_rate": 0.39,
         "games_used": 0
     }
+
+    # Free plan does not support last=10, so do not waste API requests.
+    if FREE_PLAN_MODE:
+        TEAM_FORM_CACHE[team_id] = fallback
+        return fallback
 
     try:
         data = api_get("fixtures", {"team": team_id, "last": 10})
@@ -616,6 +669,18 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
         return result
 
 
+def has_any_supported_odds(odds):
+    if odds["h2h"]["home"] or odds["h2h"]["draw"] or odds["h2h"]["away"]:
+        return True
+    if odds["totals"][2.5]["over"] or odds["totals"][2.5]["under"]:
+        return True
+    if odds["totals"][3.5]["over"] or odds["totals"][3.5]["under"]:
+        return True
+    if odds["btts"]["yes"] or odds["btts"]["no"]:
+        return True
+    return False
+
+
 def calculate_expected_goals(home_stats, away_stats, pred, league_name):
     baseline = get_league_baseline(league_name)
     league_goals = baseline["goals"]
@@ -809,7 +874,7 @@ def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line,
     if median_odds is None:
         return None
 
-        bookmakers_used = len(market_odds)
+    bookmakers_used = len(market_odds)
     implied_prob = 1 / median_odds
     edge = model_prob - implied_prob
 
@@ -880,6 +945,11 @@ def build_lab_predictions():
     debug_league_learning(league_learning)
 
     fixtures = fetch_fixtures_in_window(start_time, end_time, TZ_NAME)
+
+    if MAX_FIXTURES_TO_PROCESS and len(fixtures) > MAX_FIXTURES_TO_PROCESS:
+        fixtures = fixtures[:MAX_FIXTURES_TO_PROCESS]
+        debug(f"PROCESSING ONLY FIRST {len(fixtures)} FIXTURES (free-plan mode)")
+
     candidates = defaultdict(list)
 
     for fixture in fixtures:
@@ -897,10 +967,14 @@ def build_lab_predictions():
             if not fixture_id or not home or not away or not home_id or not away_id:
                 continue
 
+            # First get odds. If no usable odds, skip fixture and save requests.
+            odds = get_fixture_odds_markets(fixture_id, home, away)
+            if not has_any_supported_odds(odds):
+                continue
+
             home_stats = get_recent_team_form(home_id)
             away_stats = get_recent_team_form(away_id)
             pred = get_fixture_prediction_data(fixture_id)
-            odds = get_fixture_odds_markets(fixture_id, home, away)
 
             expected_home, expected_away, expected_total = calculate_expected_goals(home_stats, away_stats, pred, league_name)
 
@@ -1021,7 +1095,7 @@ def build_lab_predictions():
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
-        "model": "AI77 Lab Buckets v3 + auto-learning",
+        "model": "AI77 Lab Buckets v3 + auto-learning + free-plan mode",
         "stake_mode": "flat_1_unit",
         "source": "API-Football",
         "timezone": TZ_NAME,
@@ -1032,6 +1106,11 @@ def build_lab_predictions():
             "full_sample": FULL_LEAGUE_LEARNING_SAMPLE,
             "max_adjustment": MAX_LEAGUE_LEARNING_ADJUSTMENT,
             "league_count": len(league_learning)
+        },
+        "free_plan_mode": {
+            "enabled": FREE_PLAN_MODE,
+            "max_fixtures_to_process": MAX_FIXTURES_TO_PROCESS,
+            "api_min_interval_seconds": API_MIN_INTERVAL_SECONDS
         },
         "buckets": selected_by_bucket
     }
