@@ -767,7 +767,7 @@
     "confidence_score": 66.0,
     "quality_score": 85.5,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "0c4fa126a389ed03698aaea5a482060b",
@@ -855,7 +855,7 @@
     "confidence_score": 83.6,
     "quality_score": 78.0,
     "reasoning": "Dalian Kewei vs BIT projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "87dfddcc71d8078d22b4a6beba5c2a68",
@@ -877,7 +877,7 @@
     "confidence_score": 79.4,
     "quality_score": 76.9,
     "reasoning": "Qingdao Red Lions vs Tai'an Tiankuang projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "c9178f0e4bc92ffd84721300a3dd6fe3",
@@ -899,7 +899,7 @@
     "confidence_score": 57.5,
     "quality_score": 69.1,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f258cc7c204eb004b9d8bd3b2975220c",
@@ -987,7 +987,7 @@
     "confidence_score": 70.0,
     "quality_score": 70.9,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4d3dc6c33d64de45155aee84e742f6cb",
@@ -1075,7 +1075,7 @@
     "confidence_score": 64.2,
     "quality_score": 71.1,
     "reasoning": "Dalian Kewei vs BIT projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "1de460d186afed1c573e042d2f533313",

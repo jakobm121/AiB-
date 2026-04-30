@@ -2,18 +2,18 @@
   "model": "AI77 Lab Buckets v1",
   "stats_generated": true,
   "overall": {
-    "picks": 52,
-    "settled_picks": 35,
-    "wins": 18,
-    "losses": 17,
+    "picks": 58,
+    "settled_picks": 41,
+    "wins": 21,
+    "losses": 20,
     "storno": 0,
     "pending": 17,
-    "avg_odds": 2.26,
-    "avg_edge": 0.2,
-    "profit": 0.2,
-    "staked": 35.0,
-    "hit_rate": 51.43,
-    "roi": 0.57
+    "avg_odds": 2.23,
+    "avg_edge": 0.1948,
+    "profit": -1.17,
+    "staked": 41.0,
+    "hit_rate": 51.22,
+    "roi": -2.85
   },
   "by_bucket": {
     "home": {
@@ -31,18 +31,18 @@
       "roi": 0.0
     },
     "draw": {
-      "picks": 9,
-      "settled_picks": 6,
+      "picks": 10,
+      "settled_picks": 7,
       "wins": 1,
-      "losses": 5,
+      "losses": 6,
       "storno": 0,
       "pending": 3,
-      "avg_odds": 3.81,
-      "avg_edge": 0.0982,
-      "profit": -2.19,
-      "staked": 6.0,
-      "hit_rate": 16.67,
-      "roi": -36.5
+      "avg_odds": 3.79,
+      "avg_edge": 0.0966,
+      "profit": -3.19,
+      "staked": 7.0,
+      "hit_rate": 14.29,
+      "roi": -45.57
     },
     "away": {
       "picks": 0,
@@ -73,18 +73,18 @@
       "roi": 0.0
     },
     "under_2_5": {
-      "picks": 16,
-      "settled_picks": 11,
-      "wins": 6,
+      "picks": 18,
+      "settled_picks": 13,
+      "wins": 8,
       "losses": 5,
       "storno": 0,
       "pending": 5,
-      "avg_odds": 2.12,
-      "avg_edge": 0.2618,
-      "profit": 1.76,
-      "staked": 11.0,
-      "hit_rate": 54.55,
-      "roi": 16.0
+      "avg_odds": 2.08,
+      "avg_edge": 0.2567,
+      "profit": 3.09,
+      "staked": 13.0,
+      "hit_rate": 61.54,
+      "roi": 23.77
     },
     "btts_yes": {
       "picks": 0,
@@ -101,18 +101,18 @@
       "roi": 0.0
     },
     "btts_no": {
-      "picks": 16,
-      "settled_picks": 10,
+      "picks": 18,
+      "settled_picks": 12,
       "wins": 5,
-      "losses": 5,
+      "losses": 7,
       "storno": 0,
       "pending": 6,
-      "avg_odds": 2.0,
-      "avg_edge": 0.208,
-      "profit": -0.38,
-      "staked": 10.0,
-      "hit_rate": 50.0,
-      "roi": -3.8
+      "avg_odds": 1.98,
+      "avg_edge": 0.2009,
+      "profit": -2.38,
+      "staked": 12.0,
+      "hit_rate": 41.67,
+      "roi": -19.83
     },
     "over_3_5": {
       "picks": 0,
@@ -129,18 +129,18 @@
       "roi": 0.0
     },
     "under_3_5": {
-      "picks": 11,
-      "settled_picks": 8,
-      "wins": 6,
+      "picks": 12,
+      "settled_picks": 9,
+      "wins": 7,
       "losses": 2,
       "storno": 0,
       "pending": 3,
-      "avg_odds": 1.54,
-      "avg_edge": 0.182,
-      "profit": 1.01,
-      "staked": 8.0,
-      "hit_rate": 75.0,
-      "roi": 12.62
+      "avg_odds": 1.52,
+      "avg_edge": 0.1748,
+      "profit": 1.31,
+      "staked": 9.0,
+      "hit_rate": 77.78,
+      "roi": 14.56
     }
   }
 }
