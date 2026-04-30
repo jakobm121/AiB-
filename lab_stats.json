@@ -2,18 +2,18 @@
   "model": "AI77 Lab Buckets v1",
   "stats_generated": true,
   "overall": {
-    "picks": 49,
-    "settled_picks": 32,
-    "wins": 16,
-    "losses": 16,
+    "picks": 52,
+    "settled_picks": 35,
+    "wins": 18,
+    "losses": 17,
     "storno": 0,
     "pending": 17,
-    "avg_odds": 2.25,
-    "avg_edge": 0.1935,
-    "profit": -0.58,
-    "staked": 32.0,
-    "hit_rate": 50.0,
-    "roi": -1.81
+    "avg_odds": 2.26,
+    "avg_edge": 0.2,
+    "profit": 0.2,
+    "staked": 35.0,
+    "hit_rate": 51.43,
+    "roi": 0.57
   },
   "by_bucket": {
     "home": {
@@ -73,18 +73,18 @@
       "roi": 0.0
     },
     "under_2_5": {
-      "picks": 15,
-      "settled_picks": 10,
-      "wins": 5,
+      "picks": 16,
+      "settled_picks": 11,
+      "wins": 6,
       "losses": 5,
       "storno": 0,
       "pending": 5,
-      "avg_odds": 2.09,
-      "avg_edge": 0.2549,
-      "profit": 0.49,
-      "staked": 10.0,
-      "hit_rate": 50.0,
-      "roi": 4.9
+      "avg_odds": 2.12,
+      "avg_edge": 0.2618,
+      "profit": 1.76,
+      "staked": 11.0,
+      "hit_rate": 54.55,
+      "roi": 16.0
     },
     "btts_yes": {
       "picks": 0,
@@ -101,18 +101,18 @@
       "roi": 0.0
     },
     "btts_no": {
-      "picks": 14,
-      "settled_picks": 9,
+      "picks": 16,
+      "settled_picks": 10,
       "wins": 5,
-      "losses": 4,
+      "losses": 5,
       "storno": 0,
-      "pending": 5,
-      "avg_odds": 1.97,
-      "avg_edge": 0.1979,
-      "profit": 0.62,
-      "staked": 9.0,
-      "hit_rate": 55.56,
-      "roi": 6.89
+      "pending": 6,
+      "avg_odds": 2.0,
+      "avg_edge": 0.208,
+      "profit": -0.38,
+      "staked": 10.0,
+      "hit_rate": 50.0,
+      "roi": -3.8
     },
     "over_3_5": {
       "picks": 0,
@@ -130,17 +130,17 @@
     },
     "under_3_5": {
       "picks": 11,
-      "settled_picks": 7,
-      "wins": 5,
+      "settled_picks": 8,
+      "wins": 6,
       "losses": 2,
       "storno": 0,
-      "pending": 4,
+      "pending": 3,
       "avg_odds": 1.54,
       "avg_edge": 0.182,
-      "profit": 0.5,
-      "staked": 7.0,
-      "hit_rate": 71.43,
-      "roi": 7.14
+      "profit": 1.01,
+      "staked": 8.0,
+      "hit_rate": 75.0,
+      "roi": 12.62
     }
   }
 }

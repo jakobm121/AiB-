@@ -811,7 +811,7 @@
     "confidence_score": 89.5,
     "quality_score": 80.5,
     "reasoning": "Juárez W vs América W projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "2ab11a2c14ec2e583137864f5135a2c8",
@@ -965,7 +965,7 @@
     "confidence_score": 76.4,
     "quality_score": 73.7,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "92cdc2964fd56d8a4d55ff1f3c8accc0",
@@ -1031,7 +1031,7 @@
     "confidence_score": 81.1,
     "quality_score": 77.2,
     "reasoning": "Juárez W vs América W projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "99c504a8aa8bd55901c4857bbcde486a",
