@@ -723,7 +723,7 @@
     "confidence_score": 72.8,
     "quality_score": 88.7,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "6173c00dc85c30e53b648ee6a6c87f1f",
@@ -745,7 +745,7 @@
     "confidence_score": 70.4,
     "quality_score": 86.7,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4d4d63a58cb4580ec83ec2f3e34cbba9",
@@ -789,7 +789,7 @@
     "confidence_score": 91.2,
     "quality_score": 81.1,
     "reasoning": "Albirex Niigata S vs Tampines Rovers projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b7f9d223f488e7586d15cf2868775d8e",
@@ -833,7 +833,7 @@
     "confidence_score": 85.5,
     "quality_score": 79.6,
     "reasoning": "PSIM Yogyakarta vs Persita projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "60c0e20ad077209257b25ae27766ad14",
@@ -921,7 +921,7 @@
     "confidence_score": 91.5,
     "quality_score": 80.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e1da04cc3c3bac115232e235dfb4902b",
@@ -943,7 +943,7 @@
     "confidence_score": 72.3,
     "quality_score": 76.1,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "021720fb39fa39dda0a023a457fbf37d",
@@ -1009,7 +1009,7 @@
     "confidence_score": 85.6,
     "quality_score": 80.3,
     "reasoning": "Albirex Niigata S vs Tampines Rovers projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "5c69f7f5cf2d43beb3315cdfb6eacf3a",
@@ -1053,7 +1053,7 @@
     "confidence_score": 81.8,
     "quality_score": 75.8,
     "reasoning": "Wisła Płock II vs Widzew II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "27498597228ce6f0887d6ba4284eebf7",
@@ -1097,7 +1097,7 @@
     "confidence_score": 89.4,
     "quality_score": 78.7,
     "reasoning": "Wisła Płock II vs Widzew II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "13305332650b980191febf5363abacc9",
@@ -1119,7 +1119,7 @@
     "confidence_score": 70.5,
     "quality_score": 70.9,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "866617dcd1f105c23e8f7f821769c53b",
@@ -1141,7 +1141,7 @@
     "confidence_score": 83.6,
     "quality_score": 73.1,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "e0ed03e335b27d2d9dc2f5ba8742bc77",
@@ -1163,7 +1163,7 @@
     "confidence_score": 64.3,
     "quality_score": 88.8,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d6dacab132c39a779d8e14c54cc129ee",
@@ -1185,7 +1185,7 @@
     "confidence_score": 87.2,
     "quality_score": 81.1,
     "reasoning": "Bhayangkara FC vs Persib Bandung projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "8c2a4f43c144e3d03346d35fd1635142",
@@ -1207,7 +1207,7 @@
     "confidence_score": 82.7,
     "quality_score": 78.0,
     "reasoning": "Guangdong Mingtu vs Jiangxi Liansheng projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "d398e2f0a1e149e2b9760d34f71a48a4",
@@ -1229,7 +1229,7 @@
     "confidence_score": 69.3,
     "quality_score": 71.0,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "e877d00c0ae3c6a846e426f54c5e0f66",
@@ -1251,7 +1251,7 @@
     "confidence_score": 75.7,
     "quality_score": 77.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7ff50e9b4b1e4267711b6231f4a2d648",
@@ -1273,6 +1273,6 @@
     "confidence_score": 70.8,
     "quality_score": 77.2,
     "reasoning": "Bhayangkara FC vs Persib Bandung projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
