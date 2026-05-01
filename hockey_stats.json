@@ -1,0 +1,17 @@
+{
+  "totals": {
+    "picks": 0,
+    "total_picks": 0,
+    "settled_picks": 0,
+    "pending_picks": 0,
+    "wins": 0,
+    "losses": 0,
+    "storno": 0,
+    "profit_units": 0.0,
+    "hit_rate_percent": 0.0,
+    "roi_percent": 0.0,
+    "avg_odds": 0.0
+  },
+  "bucket_stats": [],
+  "league_stats": []
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI77 Sports Lab | Hockey Lab</title>
+  <meta name="description" content="AI77 Sports Lab hockey totals research board with transparent tracking, bucket stats, and league-by-league testing.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="site-shell">
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="../index.html"><span class="brand-mark">AI77</span><span>Sports Lab</span></a>
+    <nav class="site-nav"><a href="../index.html">Main Site</a><a href="hockey.html" class="active">Hockey Lab</a></nav>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow">Transparent hockey totals research</div>
+      <h1>AI77 Hockey Lab tracks pre-match over/under picks league by league.</h1>
+      <p class="hero-copy">Separate hockey page inside your repo. Only pre-match totals, public settled results, and league-by-league performance.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#today-board">View today’s hockey picks</a>
+        <a class="btn btn-secondary" href="#league-performance">See league stats</a>
+      </div>
+      <div class="hero-proof"><span>Main total line only</span><span>Flat stake research mode</span><span>League testing</span><span>Public record</span></div>
+    </div>
+    <aside class="hero-panel card">
+      <div class="panel-top">Live hockey lab snapshot</div>
+      <div class="hero-stats-grid">
+        <article><strong id="hero-total-picks">0</strong><span>Tracked Picks</span></article>
+        <article><strong id="hero-roi">0.0%</strong><span>ROI</span></article>
+        <article><strong id="hero-hit-rate">0.0%</strong><span>Hit Rate</span></article>
+        <article><strong id="hero-avg-odds">0.00</strong><span>Avg Odds</span></article>
+      </div>
+      <div class="mini-feed">
+        <div class="mini-row"><span>Best bucket</span><strong id="hero-best-bucket">Building sample</strong></div>
+        <div class="mini-row"><span>Best league</span><strong id="hero-best-league">Building sample</strong></div>
+        <div class="mini-row"><span>Stake model</span><strong>Flat 1 Unit</strong></div>
+        <div class="mini-row"><span>Last updated</span><strong id="hero-updated">Waiting…</strong></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading split">
+      <div><span class="eyebrow">Overall performance</span><h2>Public-facing hockey totals stats.</h2></div>
+      <span class="soft-note" id="last-updated">Updated • Waiting for data</span>
+    </div>
+    <div class="stats-row four">
+      <article class="card stat-card"><span>Total Picks</span><strong id="stat-total-picks">0</strong><small>All tracked</small></article>
+      <article class="card stat-card"><span>Settled</span><strong id="stat-settled">0</strong><small id="stat-pending">0 pending</small></article>
+      <article class="card stat-card"><span>Profit</span><strong id="stat-profit">0.0u</strong><small>Flat 1 Unit</small></article>
+      <article class="card stat-card"><span>ROI</span><strong id="stat-roi">0.0%</strong><small>Research mode</small></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="today-board">
+  <div class="container">
+    <div class="section-heading"><span class="eyebrow">Today’s hockey board</span><h2>Selections grouped by totals direction.</h2></div>
+    <div id="today-picks"><article class="card prediction-item"><h4>Loading hockey picks…</h4><p class="muted">The page will populate from hockey_predictions.json.</p></article></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading"><span class="eyebrow">Bucket stats</span><h2>Over and under tracked separately.</h2></div>
+    <div class="table-card card"><table><thead><tr><th>Bucket</th><th>Picks</th><th>Hit Rate</th><th>Avg Odds</th><th>Profit</th><th>ROI</th></tr></thead><tbody id="bucket-stats-body"><tr><td colspan="6">No settled bucket stats yet.</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section class="section" id="league-performance">
+  <div class="container">
+    <div class="section-heading"><span class="eyebrow">League performance</span><h2>Keep what works. Remove what doesn’t.</h2></div>
+    <div class="table-card card"><table><thead><tr><th>League</th><th>Picks</th><th>Hit Rate</th><th>Avg Odds</th><th>Profit</th><th>ROI</th></tr></thead><tbody id="league-stats-body"><tr><td colspan="6">No settled league stats yet.</td></tr></tbody></table></div>
+  </div>
+</section>
+</main>
+<footer class="site-footer"><div class="container footer-bottom"><span>AI77 Sports Lab · Hockey Research Board · 18+ only</span></div></footer>
+</div>
+<script src="hockey.js"></script>
+</body></html>
