@@ -1,0 +1,46 @@
+name: AI77 Hockey Lab Update
+
+on:
+  schedule:
+    # 3x dnevno, varčno za free plan
+    - cron: "10 7 * * *"
+    - cron: "10 13 * * *"
+    - cron: "10 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-hockey-lab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Run AI77 hockey model
+        env:
+          HOCKEY_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+        run: python ai77_hockey_ou.py
+
+      - name: Rebuild hockey stats
+        run: python ai77_hockey_stats.py
+
+      - name: Commit updated hockey files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add hockey/hockey_predictions.json hockey/hockey_results.json hockey/hockey_stats.json
+          git diff --cached --quiet || git commit -m "Update AI77 hockey lab"
+          git push
