@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-05-02T01:45:02.870897+02:00",
+  "generated_at": "2026-05-02T01:49:01.308516+02:00",
   "model": "AI77 Hockey Totals Research v1",
   "stake_mode": "flat_1_unit",
   "source": "API-Hockey",
   "timezone": "Europe/Ljubljana",
   "window_hours": {
     "min": 0,
-    "max": 48
+    "max": 24
   },
   "buckets": {
     "over_main_total": [],
