@@ -19,31 +19,35 @@ RESULTS_FILE = "hockey/hockey_results.json"
 
 REQUEST_TIMEOUT = 20
 
-# Free plan friendly
+# FREE PLAN MODE
+# Free plan usually only allows current available dates, so this avoids wasting calls on inaccessible future dates.
+FREE_PLAN_TODAY_ONLY = True
+
 TIME_WINDOW_MIN_HOURS = 0
 TIME_WINDOW_MAX_HOURS = 24
-MAX_GAMES_TO_PROCESS = 10
+
+# Process more games because many hockey games have no odds on free plan.
+MAX_GAMES_TO_PROCESS = 40
 
 BUCKETS = {
     "over_main_total": {
         "limit": 6,
-        "min_edge_prob": 0.035,
-        "min_goal_edge": 0.45,
-        "min_bookmakers": 3,
-        "odds_min": 1.70,
-        "odds_max": 2.30,
+        "min_edge_prob": 0.010,
+        "min_goal_edge": 0.12,
+        "min_bookmakers": 2,
+        "odds_min": 1.55,
+        "odds_max": 2.65,
     },
     "under_main_total": {
         "limit": 6,
-        "min_edge_prob": 0.035,
-        "min_goal_edge": 0.45,
-        "min_bookmakers": 3,
-        "odds_min": 1.70,
-        "odds_max": 2.30,
+        "min_edge_prob": 0.010,
+        "min_goal_edge": 0.12,
+        "min_bookmakers": 2,
+        "odds_min": 1.55,
+        "odds_max": 2.65,
     },
 }
 
-TEAM_FORM_CACHE = {}
 ODDS_CACHE = {}
 
 FINAL_STATUSES = {
@@ -68,16 +72,40 @@ PREGAME_STATUSES = {
 
 LEAGUE_BASELINES = {
     "default": 5.40,
+
+    # North America
     "nhl": 6.05,
     "ahl": 6.15,
+    "echl": 6.05,
+    "ohl": 6.20,
+    "whl": 6.25,
+    "qmjhl": 6.35,
+    "ushl": 6.10,
+    "sphl": 6.20,
+
+    # Europe
     "liiga": 5.45,
     "shl": 5.25,
+    "allsvenskan": 5.35,
     "del": 6.10,
     "national league": 5.85,
     "ice hockey league": 5.95,
-    "allsvenskan": 5.35,
     "extraliga": 5.55,
+    "czech extraliga": 5.55,
+    "slovakia extraliga": 5.70,
+    "metal ligaen": 5.80,
+    "fjordkraft-ligaen": 5.95,
+    "eliteserien": 5.95,
+    "mestis": 5.70,
+    "hockeyallsvenskan": 5.35,
+
+    # International
     "world championship": 5.80,
+    "world championship u20": 6.15,
+    "olympic games": 5.40,
+
+    # Australia / lower liquidity
+    "aihl": 6.50,
 }
 
 
@@ -159,7 +187,6 @@ def api_get(endpoint, params, retries=3):
             continue
 
         res.raise_for_status()
-
         data = res.json()
 
         debug(f"API {endpoint} params={params}")
@@ -176,10 +203,6 @@ def api_get(endpoint, params, retries=3):
 
 
 def get_game_core(game):
-    """
-    API-Hockey can return fields either directly on the game object
-    or nested under 'game'. This supports both.
-    """
     nested = game.get("game")
 
     if isinstance(nested, dict) and nested:
@@ -253,46 +276,45 @@ def get_team_name(game, side):
     return game.get("teams", {}).get(side, {}).get("name")
 
 
-def get_score(game, side):
-    scores = game.get("scores", {})
-    goals = game.get("goals", {})
-    return safe_int(scores.get(side, goals.get(side)))
-
-
 def get_league_name(game):
     return game.get("league", {}).get("name", "Hockey")
 
 
 def get_baseline(league_name):
-    return LEAGUE_BASELINES.get(
-        normalize_name(league_name),
-        LEAGUE_BASELINES["default"],
-    )
+    key = normalize_name(league_name)
+    return LEAGUE_BASELINES.get(key, LEAGUE_BASELINES["default"])
 
 
 def fetch_games_in_window(start_time, end_time):
     games = []
-    current_date = start_time.date()
-    end_date = end_time.date()
 
-    while current_date <= end_date:
+    if FREE_PLAN_TODAY_ONLY:
+        dates_to_fetch = [start_time.date()]
+    else:
+        dates_to_fetch = []
+        current_date = start_time.date()
+        end_date = end_time.date()
+
+        while current_date <= end_date:
+            dates_to_fetch.append(current_date)
+            current_date += timedelta(days=1)
+
+    for date_value in dates_to_fetch:
         try:
             data = api_get(
                 "games",
                 {
-                    "date": current_date.strftime("%Y-%m-%d"),
+                    "date": date_value.strftime("%Y-%m-%d"),
                     "timezone": TZ_NAME,
                 },
             )
 
             daily = data.get("response", [])
-            debug(f"GAMES {current_date}: {len(daily)}")
+            debug(f"GAMES {date_value}: {len(daily)}")
             games.extend(daily)
 
         except Exception as e:
-            debug(f"GAMES ERROR {current_date}: {e}")
-
-        current_date += timedelta(days=1)
+            debug(f"GAMES ERROR {date_value}: {e}")
 
     filtered = []
     tz = ZoneInfo(TZ_NAME)
@@ -304,7 +326,6 @@ def fetch_games_in_window(start_time, end_time):
     time_rejected = 0
     status_rejected = 0
     missing_rejected = 0
-
     sample_games = []
 
     for game in games:
@@ -316,7 +337,6 @@ def fetch_games_in_window(start_time, end_time):
         home = get_team_name(game, "home")
         away = get_team_name(game, "away")
         league = get_league_name(game)
-        status_debug = get_status_debug(game)
 
         local_dt = dt.astimezone(tz) if dt else None
 
@@ -326,7 +346,7 @@ def fetch_games_in_window(start_time, end_time):
                     "id": game_id,
                     "league": league,
                     "status": status,
-                    "status_raw": status_debug,
+                    "status_raw": get_status_debug(game),
                     "time": str(local_dt),
                     "match": f"{home} - {away}",
                 }
@@ -362,96 +382,6 @@ def fetch_games_in_window(start_time, end_time):
     debug(f"FILTERED GAMES: {len(filtered)}")
 
     return filtered
-
-
-def summarize_team_games(team_id):
-    if team_id in TEAM_FORM_CACHE:
-        return TEAM_FORM_CACHE[team_id]
-
-    fallback = {
-        "overall_scored_avg": 2.70,
-        "overall_conceded_avg": 2.70,
-        "home_scored_avg": 2.80,
-        "home_conceded_avg": 2.60,
-        "away_scored_avg": 2.60,
-        "away_conceded_avg": 2.80,
-        "over_5_5_rate": 0.47,
-    }
-
-    try:
-        data = api_get("games", {"team": team_id, "last": 8})
-        response = data.get("response", [])
-
-        scored_all, conceded_all = [], []
-        scored_home, conceded_home = [], []
-        scored_away, conceded_away = [], []
-
-        over55 = 0
-        valid = 0
-
-        for game in response:
-            if get_status(game) not in FINAL_STATUSES:
-                continue
-
-            gh = get_score(game, "home")
-            ga = get_score(game, "away")
-
-            if gh is None or ga is None:
-                continue
-
-            home_id = get_team_id(game, "home")
-            away_id = get_team_id(game, "away")
-
-            if team_id == home_id:
-                scored, conceded = gh, ga
-                scored_home.append(scored)
-                conceded_home.append(conceded)
-
-            elif team_id == away_id:
-                scored, conceded = ga, gh
-                scored_away.append(scored)
-                conceded_away.append(conceded)
-
-            else:
-                continue
-
-            scored_all.append(scored)
-            conceded_all.append(conceded)
-
-            if gh + ga >= 6:
-                over55 += 1
-
-            valid += 1
-
-        if not valid:
-            TEAM_FORM_CACHE[team_id] = fallback
-            return fallback
-
-        result = {
-            "overall_scored_avg": sum(scored_all) / len(scored_all),
-            "overall_conceded_avg": sum(conceded_all) / len(conceded_all),
-            "home_scored_avg": sum(scored_home) / len(scored_home)
-            if scored_home
-            else fallback["home_scored_avg"],
-            "home_conceded_avg": sum(conceded_home) / len(conceded_home)
-            if conceded_home
-            else fallback["home_conceded_avg"],
-            "away_scored_avg": sum(scored_away) / len(scored_away)
-            if scored_away
-            else fallback["away_scored_avg"],
-            "away_conceded_avg": sum(conceded_away) / len(conceded_away)
-            if conceded_away
-            else fallback["away_conceded_avg"],
-            "over_5_5_rate": over55 / valid,
-        }
-
-        TEAM_FORM_CACHE[team_id] = result
-        return result
-
-    except Exception as e:
-        debug(f"TEAM FORM ERROR team_id={team_id}: {e}")
-        TEAM_FORM_CACHE[team_id] = fallback
-        return fallback
 
 
 def is_total_market_name(name):
@@ -501,10 +431,12 @@ def get_main_total_market(game_id):
 
         for item in response:
             for bookmaker in item.get("bookmakers", []):
-                bid = bookmaker.get("id")
+                bookmaker_id = bookmaker.get("id")
 
                 for bet in bookmaker.get("bets", []):
-                    if not is_total_market_name(bet.get("name", "")):
+                    bet_name = bet.get("name", "")
+
+                    if not is_total_market_name(bet_name):
                         continue
 
                     for value in bet.get("values", []):
@@ -518,7 +450,7 @@ def get_main_total_market(game_id):
                         if side is None or line is None:
                             continue
 
-                        key = (bid, line, side)
+                        key = (bookmaker_id, line, side)
 
                         if key in seen:
                             continue
@@ -554,59 +486,115 @@ def get_main_total_market(game_id):
     return result
 
 
-def calculate_expected_total(home_stats, away_stats, league_name):
-    raw_home = (
-        0.35 * home_stats["home_scored_avg"]
-        + 0.35 * away_stats["away_conceded_avg"]
-        + 0.15 * home_stats["overall_scored_avg"]
-        + 0.15 * away_stats["overall_conceded_avg"]
-    )
+def league_total_adjustment(league_name):
+    """
+    Small free-plan correction layer.
+    Because we do not have team form on free API,
+    league identity and market line are the main signal.
+    """
+    league_key = normalize_name(league_name)
 
-    raw_away = (
-        0.35 * away_stats["away_scored_avg"]
-        + 0.35 * home_stats["home_conceded_avg"]
-        + 0.15 * away_stats["overall_scored_avg"]
-        + 0.15 * home_stats["overall_conceded_avg"]
-    )
+    high_total_leagues = {
+        "qmjhl",
+        "ohl",
+        "whl",
+        "ahl",
+        "echl",
+        "sphl",
+        "aihl",
+    }
 
-    total = ((raw_home + raw_away) * 0.80) + (get_baseline(league_name) * 0.20)
+    low_total_leagues = {
+        "shl",
+        "allsvenskan",
+        "liiga",
+    }
 
-    if home_stats["over_5_5_rate"] >= 0.62 and away_stats["over_5_5_rate"] >= 0.62:
-        total += 0.20
+    if league_key in high_total_leagues:
+        return 0.15
 
-    if home_stats["over_5_5_rate"] <= 0.38 and away_stats["over_5_5_rate"] <= 0.38:
-        total -= 0.20
+    if league_key in low_total_leagues:
+        return -0.10
 
-    if home_stats["overall_scored_avg"] < 2.10 or away_stats["overall_scored_avg"] < 2.10:
-        total -= 0.10
+    return 0.0
 
-    if home_stats["overall_conceded_avg"] > 3.20 and away_stats["overall_conceded_avg"] > 3.20:
-        total += 0.12
 
-    return clamp(total, 3.60, 8.20)
+def calculate_expected_total_free_plan(league_name, line, over_odds, under_odds):
+    baseline = get_baseline(league_name)
+    expected_total = baseline + league_total_adjustment(league_name)
+
+    over_median = median_or_none(over_odds)
+    under_median = median_or_none(under_odds)
+
+    # Market-pressure correction.
+    # If over is shorter than under, market leans over. If under is shorter, market leans under.
+    if over_median and under_median and over_median > 1 and under_median > 1:
+        over_implied = 1 / over_median
+        under_implied = 1 / under_median
+        market_lean = over_implied - under_implied
+        expected_total += clamp(market_lean * 0.75, -0.18, 0.18)
+
+    # Line-shape correction.
+    # Very low totals are easier over candidates. High totals are easier under candidates.
+    if line <= 4.5:
+        expected_total += 0.12
+
+    if line >= 6.5:
+        expected_total -= 0.12
+
+    return clamp(expected_total, 3.80, 7.40)
 
 
 def model_prob_from_goal_edge(goal_edge):
+    """
+    Softer curve than paid-plan model because free-plan model has less information.
+    """
     return clamp(
-        1.0 / (1.0 + math.exp(-(goal_edge / 0.55))),
-        0.08,
-        0.92,
+        1.0 / (1.0 + math.exp(-(goal_edge / 0.80))),
+        0.12,
+        0.88,
     )
 
 
-def calculate_confidence_score(goal_edge, bookmakers_used, line):
-    score = clamp(abs(goal_edge) / 0.90, 0.0, 1.0) * 50
-    score += clamp(bookmakers_used / 10.0, 0.0, 1.0) * 28
-    score += 12 if line in {5.5, 6.0, 6.5} else 0
+def calculate_confidence_score(goal_edge, bookmakers_used, line, odds):
+    edge_component = clamp(abs(goal_edge) / 0.85, 0.0, 1.0) * 45
+    bookmaker_component = clamp(bookmakers_used / 8.0, 0.0, 1.0) * 30
 
+    line_component = 0
+    if line in {5.0, 5.5, 6.0, 6.5}:
+        line_component = 12
+    elif line in {4.5, 7.0}:
+        line_component = 8
+
+    odds_component = 0
+    if 1.75 <= odds <= 2.15:
+        odds_component = 13
+    elif 1.60 <= odds <= 2.45:
+        odds_component = 8
+
+    score = edge_component + bookmaker_component + line_component + odds_component
     return round(clamp(score, 1.0, 99.0), 1)
 
 
-def calculate_quality_score(goal_edge, confidence_score, bookmakers_used, odds):
-    score = clamp(abs(goal_edge) / 0.90, 0.0, 1.0) * 40
-    score += clamp(confidence_score / 100.0, 0.0, 1.0) * 30
-    score += clamp(bookmakers_used / 10.0, 0.0, 1.0) * 20
-    score += 10 if 1.80 <= odds <= 2.10 else (7 if 1.70 <= odds <= 2.25 else 0)
+def calculate_quality_score(goal_edge, confidence_score, bookmakers_used, odds, edge_prob):
+    edge_component = clamp(abs(goal_edge) / 0.85, 0.0, 1.0) * 34
+    prob_edge_component = clamp(edge_prob / 0.10, 0.0, 1.0) * 24
+    confidence_component = clamp(confidence_score / 100.0, 0.0, 1.0) * 22
+    bookmaker_component = clamp(bookmakers_used / 8.0, 0.0, 1.0) * 12
+
+    odds_component = 0
+    if 1.75 <= odds <= 2.15:
+        odds_component = 8
+    elif 1.60 <= odds <= 2.45:
+        odds_component = 5
+
+    score = (
+        edge_component
+        + prob_edge_component
+        + confidence_component
+        + bookmaker_component
+        + odds_component
+    )
 
     return round(clamp(score, 1.0, 99.0), 1)
 
@@ -643,8 +631,20 @@ def build_candidate(
     if edge_prob < cfg["min_edge_prob"]:
         return None
 
-    confidence = calculate_confidence_score(goal_edge, bookmakers_used, line)
-    quality = calculate_quality_score(goal_edge, confidence, bookmakers_used, median_odds)
+    confidence = calculate_confidence_score(
+        goal_edge=goal_edge,
+        bookmakers_used=bookmakers_used,
+        line=line,
+        odds=median_odds,
+    )
+
+    quality = calculate_quality_score(
+        goal_edge=goal_edge,
+        confidence_score=confidence,
+        bookmakers_used=bookmakers_used,
+        odds=median_odds,
+        edge_prob=edge_prob,
+    )
 
     dt = get_game_dt(game)
     local_dt = dt.astimezone(ZoneInfo(TZ_NAME)) if dt else None
@@ -656,8 +656,9 @@ def build_candidate(
     direction = "above" if bucket == "over_main_total" else "below"
 
     reasoning = (
-        f"{home} vs {away} projects {direction} the market total after recent team profile "
-        f"and league baseline adjustments."
+        f"{home} vs {away} projects {direction} the market total in the free-plan model. "
+        f"The signal is based on league baseline, main total line, bookmaker coverage, "
+        f"and median market pricing."
     )
 
     return {
@@ -694,7 +695,7 @@ def append_to_results(payload):
     if not isinstance(history, list):
         history = []
 
-    existing = {x.get("pick_id") for x in history if isinstance(x, dict)}
+    existing = {item.get("pick_id") for item in history if isinstance(item, dict)}
 
     for picks in payload.get("buckets", {}).values():
         for pick in picks:
@@ -719,25 +720,28 @@ def build_predictions():
 
     if MAX_GAMES_TO_PROCESS > 0 and len(games) > MAX_GAMES_TO_PROCESS:
         games = games[:MAX_GAMES_TO_PROCESS]
-        debug(f"PROCESSING ONLY FIRST {len(games)} GAMES (starter mode)")
+        debug(f"PROCESSING ONLY FIRST {len(games)} GAMES (free-plan mode)")
 
     candidates = defaultdict(list)
 
     for game in games:
         try:
-            gid = get_game_id(game)
+            game_id = get_game_id(game)
+
+            if not game_id:
+                continue
+
             home_id = get_team_id(game, "home")
             away_id = get_team_id(game, "away")
 
-            if not gid or not home_id or not away_id:
+            if not home_id or not away_id:
                 continue
 
+            home = get_team_name(game, "home")
+            away = get_team_name(game, "away")
             league = get_league_name(game)
 
-            home_stats = summarize_team_games(home_id)
-            away_stats = summarize_team_games(away_id)
-
-            market = get_main_total_market(gid)
+            market = get_main_total_market(game_id)
 
             line = market.get("line")
             over_odds = market.get("over_odds", [])
@@ -745,14 +749,20 @@ def build_predictions():
             bookmakers_used = safe_int(market.get("bookmakers_used"), 0) or 0
 
             debug(
-                f"MARKET game_id={gid} | {get_team_name(game, 'home')} - {get_team_name(game, 'away')} | "
-                f"line={line} over_odds={len(over_odds)} under_odds={len(under_odds)} bookmakers={bookmakers_used}"
+                f"MARKET game_id={game_id} | {home} - {away} | {league} | "
+                f"line={line} over_odds={len(over_odds)} under_odds={len(under_odds)} "
+                f"bookmakers={bookmakers_used}"
             )
 
             if line is None or not over_odds or not under_odds:
                 continue
 
-            expected_total = calculate_expected_total(home_stats, away_stats, league)
+            expected_total = calculate_expected_total_free_plan(
+                league_name=league,
+                line=line,
+                over_odds=over_odds,
+                under_odds=under_odds,
+            )
 
             over_goal_edge = expected_total - line
             under_goal_edge = line - expected_total
@@ -761,25 +771,25 @@ def build_predictions():
             under_prob = model_prob_from_goal_edge(under_goal_edge)
 
             over_pick = build_candidate(
-                "over_main_total",
-                game,
-                over_odds,
-                line,
-                over_prob,
-                expected_total,
-                over_goal_edge,
-                bookmakers_used,
+                bucket="over_main_total",
+                game=game,
+                odds_list=over_odds,
+                line=line,
+                model_prob=over_prob,
+                expected_total=expected_total,
+                goal_edge=over_goal_edge,
+                bookmakers_used=bookmakers_used,
             )
 
             under_pick = build_candidate(
-                "under_main_total",
-                game,
-                under_odds,
-                line,
-                under_prob,
-                expected_total,
-                under_goal_edge,
-                bookmakers_used,
+                bucket="under_main_total",
+                game=game,
+                odds_list=under_odds,
+                line=line,
+                model_prob=under_prob,
+                expected_total=expected_total,
+                goal_edge=under_goal_edge,
+                bookmakers_used=bookmakers_used,
             )
 
             if over_pick:
@@ -787,6 +797,11 @@ def build_predictions():
 
             if under_pick:
                 candidates["under_main_total"].append(under_pick)
+
+            debug(
+                f"MODEL game_id={game_id} | line={line} expected={round(expected_total, 2)} "
+                f"over_edge={round(over_goal_edge, 2)} under_edge={round(under_goal_edge, 2)}"
+            )
 
         except Exception as e:
             debug(f"GAME BUILD ERROR: {e}")
@@ -800,20 +815,21 @@ def build_predictions():
                 x["quality_score"],
                 x["confidence_score"],
                 abs(x["goal_edge"]),
+                x["bookmakers_used"],
                 x["odds"],
             ),
             reverse=True,
         )
 
         picked = []
-        used = set()
+        used_matches = set()
 
         for item in ranked:
-            if item["match"] in used:
+            if item["match"] in used_matches:
                 continue
 
             picked.append(item)
-            used.add(item["match"])
+            used_matches.add(item["match"])
 
             if len(picked) >= cfg["limit"]:
                 break
@@ -827,7 +843,7 @@ def build_predictions():
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
-        "model": "AI77 Hockey Totals Research v1",
+        "model": "AI77 Hockey Totals Free Plan v1",
         "stake_mode": "flat_1_unit",
         "source": "API-Hockey",
         "timezone": TZ_NAME,
@@ -835,6 +851,7 @@ def build_predictions():
             "min": TIME_WINDOW_MIN_HOURS,
             "max": TIME_WINDOW_MAX_HOURS,
         },
+        "free_plan_mode": True,
         "buckets": final,
     }
 
