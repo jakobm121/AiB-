@@ -1,8 +1,8 @@
 {
   "totals": {
-    "picks": 0,
+    "picks": 3,
     "settled_picks": 0,
-    "pending_picks": 0,
+    "pending_picks": 3,
     "wins": 0,
     "losses": 0,
     "storno": 0,
@@ -11,6 +11,47 @@
     "roi_percent": 0.0,
     "avg_odds": 0.0
   },
-  "bucket_stats": [],
-  "league_stats": []
+  "bucket_stats": [
+    {
+      "picks": 3,
+      "settled_picks": 0,
+      "pending_picks": 3,
+      "wins": 0,
+      "losses": 0,
+      "storno": 0,
+      "profit_units": 0,
+      "hit_rate_percent": 0.0,
+      "roi_percent": 0.0,
+      "avg_odds": 0.0,
+      "bucket": "over_main_total"
+    }
+  ],
+  "league_stats": [
+    {
+      "picks": 2,
+      "settled_picks": 0,
+      "pending_picks": 2,
+      "wins": 0,
+      "losses": 0,
+      "storno": 0,
+      "profit_units": 0,
+      "hit_rate_percent": 0.0,
+      "roi_percent": 0.0,
+      "avg_odds": 0.0,
+      "league": "AHL"
+    },
+    {
+      "picks": 1,
+      "settled_picks": 0,
+      "pending_picks": 1,
+      "wins": 0,
+      "losses": 0,
+      "storno": 0,
+      "profit_units": 0,
+      "hit_rate_percent": 0.0,
+      "roi_percent": 0.0,
+      "avg_odds": 0.0,
+      "league": "NHL"
+    }
+  ]
 }
