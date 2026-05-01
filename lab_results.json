@@ -1317,7 +1317,7 @@
     "confidence_score": 65.8,
     "quality_score": 87.3,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b67fcd050a439a1fcb884f0043816584",
@@ -1361,7 +1361,7 @@
     "confidence_score": 85.7,
     "quality_score": 81.1,
     "reasoning": "CDS Tampico Madero vs Cancún projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f32b63917b8ade978f3c7035b21d72f3",
@@ -1405,7 +1405,7 @@
     "confidence_score": 84.3,
     "quality_score": 79.6,
     "reasoning": "Incheon Red Angels vs Gumi Sportstoto projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "25763c879ed43a4865c8c185cedeabd8",
@@ -1427,7 +1427,7 @@
     "confidence_score": 90.2,
     "quality_score": 79.2,
     "reasoning": "Toluca W vs Tigres UANL W projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "25f166605cb57dcb4aa610b186fd40be",
@@ -1449,7 +1449,7 @@
     "confidence_score": 83.5,
     "quality_score": 78.0,
     "reasoning": "Gangneung City vs Gyeongju HNP projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "18870691d63511612f2900295320d2ad",
@@ -1559,7 +1559,7 @@
     "confidence_score": 78.9,
     "quality_score": 76.8,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "8dd8e71e07f33ebba1be61cd7bf9f41f",
@@ -1581,7 +1581,7 @@
     "confidence_score": 85.6,
     "quality_score": 79.0,
     "reasoning": "Toluca W vs Tigres UANL W projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "beedc70cf6e15d0c6c3228301123f451",
