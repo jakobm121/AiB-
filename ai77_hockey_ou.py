@@ -17,7 +17,7 @@ PRED_FILE = "hockey/hockey_predictions.json"
 RESULTS_FILE = "hockey/hockey_results.json"
 REQUEST_TIMEOUT = 20
 TIME_WINDOW_MIN_HOURS = 0
-TIME_WINDOW_MAX_HOURS = 10
+TIME_WINDOW_MAX_HOURS = 48
 MAX_GAMES_TO_PROCESS = 10
 
 BUCKETS = {
