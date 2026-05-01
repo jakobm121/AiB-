@@ -2,7 +2,7 @@ name: AI77 Lab Settle Hourly
 
 on:
   schedule:
-    - cron: "30 * * * *"
+  - cron: "30 4 * * *"
   workflow_dispatch:
 
 permissions:
