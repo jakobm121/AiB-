@@ -19,8 +19,9 @@ RESULTS_FILE = "hockey/hockey_results.json"
 
 REQUEST_TIMEOUT = 20
 
+# Free plan friendly
 TIME_WINDOW_MIN_HOURS = 0
-TIME_WINDOW_MAX_HOURS = 48
+TIME_WINDOW_MAX_HOURS = 24
 MAX_GAMES_TO_PROCESS = 10
 
 BUCKETS = {
@@ -160,6 +161,7 @@ def api_get(endpoint, params, retries=3):
         res.raise_for_status()
 
         data = res.json()
+
         debug(f"API {endpoint} params={params}")
         debug(f"API errors={data.get('errors')}")
         debug(f"API results={data.get('results')}")
@@ -173,38 +175,73 @@ def api_get(endpoint, params, retries=3):
     raise RuntimeError(f"API rate-limited: {endpoint} {params}")
 
 
+def get_game_core(game):
+    """
+    API-Hockey can return fields either directly on the game object
+    or nested under 'game'. This supports both.
+    """
+    nested = game.get("game")
+
+    if isinstance(nested, dict) and nested:
+        return nested
+
+    return game
+
+
 def get_game_id(game):
-    return game.get("game", {}).get("id")
+    core = get_game_core(game)
+    return core.get("id")
 
 
 def get_game_dt(game):
-    raw = game.get("game", {}).get("date")
+    core = get_game_core(game)
+
+    raw = (
+        core.get("date")
+        or core.get("datetime")
+        or core.get("time")
+    )
 
     if not raw:
         return None
 
     try:
-        return datetime.fromisoformat(raw)
+        return datetime.fromisoformat(str(raw).replace("Z", "+00:00"))
     except Exception:
         return None
 
 
 def get_status(game):
-    status_obj = game.get("game", {}).get("status", {})
-    short_status = str(status_obj.get("short", "") or "").strip().upper()
-    long_status = str(status_obj.get("long", "") or "").strip().upper()
+    core = get_game_core(game)
+    status_obj = core.get("status", {})
 
-    if short_status:
-        return short_status
+    if isinstance(status_obj, dict):
+        short_status = str(status_obj.get("short", "") or "").strip().upper()
+        long_status = str(status_obj.get("long", "") or "").strip().upper()
 
-    return long_status
+        if short_status:
+            return short_status
+
+        return long_status
+
+    return str(status_obj or "").strip().upper()
 
 
 def get_status_debug(game):
-    status_obj = game.get("game", {}).get("status", {})
+    core = get_game_core(game)
+    status_obj = core.get("status", {})
+
+    if isinstance(status_obj, dict):
+        return {
+            "short": status_obj.get("short"),
+            "long": status_obj.get("long"),
+            "raw": status_obj,
+        }
+
     return {
-        "short": status_obj.get("short"),
-        "long": status_obj.get("long"),
+        "short": None,
+        "long": None,
+        "raw": status_obj,
     }
 
 
@@ -411,7 +448,8 @@ def summarize_team_games(team_id):
         TEAM_FORM_CACHE[team_id] = result
         return result
 
-    except Exception:
+    except Exception as e:
+        debug(f"TEAM FORM ERROR team_id={team_id}: {e}")
         TEAM_FORM_CACHE[team_id] = fallback
         return fallback
 
