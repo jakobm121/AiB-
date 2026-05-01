@@ -18,7 +18,7 @@ LAB_PREDICTIONS_FILE = "lab_predictions.json"
 LAB_RESULTS_FILE = "lab_results.json"
 
 TIME_WINDOW_MIN_HOURS = 0
-TIME_WINDOW_MAX_HOURS = 12
+TIME_WINDOW_MAX_HOURS = 8
 REQUEST_TIMEOUT = 20
 
 # Free-plan safe mode
