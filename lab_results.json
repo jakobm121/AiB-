@@ -1295,7 +1295,7 @@
     "confidence_score": 69.3,
     "quality_score": 89.0,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "8a95ddb71af2912d26c15d9ce7af5522",
@@ -1383,7 +1383,7 @@
     "confidence_score": 89.7,
     "quality_score": 80.5,
     "reasoning": "Eastern vs North District projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "0d1ae8bc3cf540bbaf67e19e63f9cdcb",
@@ -1537,7 +1537,7 @@
     "confidence_score": 84.1,
     "quality_score": 76.9,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "9af71f6decfed97b8b8592daecc118ae",
@@ -1603,7 +1603,7 @@
     "confidence_score": 83.2,
     "quality_score": 78.8,
     "reasoning": "Eastern vs North District projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "358598f92e4dd32d96b59238080ad80d",
@@ -1779,7 +1779,7 @@
     "confidence_score": 65.6,
     "quality_score": 85.8,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "15370ab854a35df373d584d17dd87b12",
@@ -1867,7 +1867,7 @@
     "confidence_score": 90.8,
     "quality_score": 80.1,
     "reasoning": "Melbourne Knights vs Port Melbourne projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "011d5404a06f272c78703ea1e99f9075",
@@ -1889,7 +1889,7 @@
     "confidence_score": 87.4,
     "quality_score": 78.8,
     "reasoning": "Kingston City vs Altona City projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "6fb680edf7cc2149cb0c78a59dbe3975",
@@ -2175,7 +2175,7 @@
     "confidence_score": 77.2,
     "quality_score": 89.6,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "b9e2443c5a59a6efe0f5545ad084e800",
@@ -2241,7 +2241,7 @@
     "confidence_score": 91.7,
     "quality_score": 81.0,
     "reasoning": "ASA Targu Mures vs Ceahlăul Piatra Neamţ projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1a002d91b60bffd0c6bd4da8deb89d53",
@@ -2307,7 +2307,7 @@
     "confidence_score": 85.7,
     "quality_score": 79.6,
     "reasoning": "CS Afumati vs Concordia projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "f8ff4a76be4f7615250bcf05a07a60d4",
@@ -2329,7 +2329,7 @@
     "confidence_score": 76.0,
     "quality_score": 77.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "a95d93417ef4c8065c2b1397f45e6694",
@@ -2351,7 +2351,7 @@
     "confidence_score": 82.4,
     "quality_score": 75.4,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "6be293ff2bd0c4cdbe4c3c62725480d2",
@@ -2373,7 +2373,7 @@
     "confidence_score": 85.1,
     "quality_score": 75.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f2a676f2e3a1ddece16da3719e591dee",
@@ -2395,7 +2395,7 @@
     "confidence_score": 80.8,
     "quality_score": 75.0,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "8147cb7b86565737d02e578cce807379",
@@ -2417,7 +2417,7 @@
     "confidence_score": 78.9,
     "quality_score": 73.4,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "bc5c0da6f724a1157301839d7f4e9a44",
@@ -2439,7 +2439,7 @@
     "confidence_score": 87.6,
     "quality_score": 80.6,
     "reasoning": "ASA Targu Mures vs Ceahlăul Piatra Neamţ projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "de936384d54ed4a4c5b68d863fe3afa6",
@@ -2483,7 +2483,7 @@
     "confidence_score": 85.3,
     "quality_score": 78.9,
     "reasoning": "FK Beograd vs Adelaide Comets projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "43168ccefb1671c3b07e8eda758b54ef",
@@ -2505,7 +2505,7 @@
     "confidence_score": 90.3,
     "quality_score": 78.7,
     "reasoning": "Monaro Panthers vs Canberra Juventus projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "748017d6c35881da3364b3cdd9f90f22",
@@ -2527,7 +2527,7 @@
     "confidence_score": 67.5,
     "quality_score": 74.2,
     "reasoning": "CS Afumati vs Concordia projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "bba087981890b7120c9bfa238c11ffc0",
@@ -2549,7 +2549,7 @@
     "confidence_score": 76.4,
     "quality_score": 88.8,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2c72d32e67eae2c28392ba4925061b12",
@@ -2571,7 +2571,7 @@
     "confidence_score": 67.2,
     "quality_score": 88.1,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2ef7e2847d8d4cdea7312b7a800d8be2",
@@ -2593,7 +2593,7 @@
     "confidence_score": 67.0,
     "quality_score": 87.1,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "89466e4daed5ec81590a321a1c38ff96",
@@ -2615,7 +2615,7 @@
     "confidence_score": 93.8,
     "quality_score": 83.9,
     "reasoning": "Nantes vs Marseille projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "9fd657d527bd5bdb97e2c4e88b4e6db6",
@@ -2637,7 +2637,7 @@
     "confidence_score": 87.9,
     "quality_score": 82.6,
     "reasoning": "Udinese vs Torino projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "433cf1e0d40514256c266243b516e3b7",
@@ -2659,7 +2659,7 @@
     "confidence_score": 87.8,
     "quality_score": 81.2,
     "reasoning": "Bodrum FK vs Sarıyer projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "8efd8124c05924c7fb2250fa97c65e92",
@@ -2681,7 +2681,7 @@
     "confidence_score": 90.7,
     "quality_score": 80.9,
     "reasoning": "Iğdır FK vs Amed projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4cf8ea6997699be564e0bad1acd04141",
@@ -2703,7 +2703,7 @@
     "confidence_score": 90.1,
     "quality_score": 80.7,
     "reasoning": "Ümraniyespor vs Keçiörengücü projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2b15a4a2bf4c5f76ad96b53dfa404269",
@@ -2725,7 +2725,7 @@
     "confidence_score": 78.5,
     "quality_score": 78.8,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4e5529676ae30b72c37dce905fb08601",
@@ -2747,7 +2747,7 @@
     "confidence_score": 82.7,
     "quality_score": 78.5,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f061897371c38d843bfeb6e8393485a8",
@@ -2769,7 +2769,7 @@
     "confidence_score": 74.3,
     "quality_score": 77.6,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "71e885f3694dd012bfbc5893de6aca93",
@@ -2791,7 +2791,7 @@
     "confidence_score": 79.5,
     "quality_score": 76.8,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b456f2d30a0c460e14c9d68d2d61da63",
@@ -2813,7 +2813,7 @@
     "confidence_score": 82.7,
     "quality_score": 74.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "6b0f6c77d26aa713cadf75739a029bbe",
@@ -2835,7 +2835,7 @@
     "confidence_score": 86.4,
     "quality_score": 81.8,
     "reasoning": "Nantes vs Marseille projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "eb762110ee917a45d2faf0b7f1b31405",
@@ -2857,7 +2857,7 @@
     "confidence_score": 88.6,
     "quality_score": 80.8,
     "reasoning": "VfL Wolfsburg W vs RB Leipzig W projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d22c57e4c57695e5d6efd284ca724c50",
@@ -2879,7 +2879,7 @@
     "confidence_score": 84.9,
     "quality_score": 80.3,
     "reasoning": "Iğdır FK vs Amed projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e2f8c35b5b15541690db0f156ad7568c",
@@ -2901,7 +2901,7 @@
     "confidence_score": 84.6,
     "quality_score": 80.3,
     "reasoning": "Ümraniyespor vs Keçiörengücü projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "ce6fae720ff5fb6c0a5b19f42d04746a",
@@ -2923,6 +2923,6 @@
     "confidence_score": 84.4,
     "quality_score": 80.3,
     "reasoning": "Esenler Erokspor vs Pendikspor projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   }
 ]
