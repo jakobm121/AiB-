@@ -107,7 +107,9 @@
     "confidence_score": 84.2,
     "quality_score": 95.0,
     "reasoning": "Czech Republic vs Sweden projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-03T01:43:04.273451+02:00",
+    "final_score": "2:4"
   },
   {
     "pick_id": "e0e3ee2eea4e873d20cc669b7141c006",
@@ -133,7 +135,9 @@
     "confidence_score": 84.2,
     "quality_score": 95.0,
     "reasoning": "Switzerland vs Finland projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-03T01:43:04.273488+02:00",
+    "final_score": "3:5"
   },
   {
     "pick_id": "d4c677e7a6fe078bd1acd8220b546d34",
@@ -159,7 +163,9 @@
     "confidence_score": 64.2,
     "quality_score": 81.6,
     "reasoning": "Khimik vs Metallurg Novokuznetsk projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-03T01:43:04.273507+02:00",
+    "final_score": "0:2"
   },
   {
     "pick_id": "c00ea2be941c78e639c65bcbfcd88104",
@@ -185,7 +191,9 @@
     "confidence_score": 75.5,
     "quality_score": 88.6,
     "reasoning": "Netherlands vs China projects below the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-03T01:43:04.273524+02:00",
+    "final_score": "3:6"
   },
   {
     "pick_id": "a7f7a2d0906a7297d308985010b82b42",
@@ -211,7 +219,9 @@
     "confidence_score": 96.0,
     "quality_score": 99.0,
     "reasoning": "Poland vs Ukraine projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-03T01:43:04.273538+02:00",
+    "final_score": "3:2"
   },
   {
     "pick_id": "d22631a051d31c1947e891ffc23cb71a",
@@ -237,7 +247,9 @@
     "confidence_score": 80.5,
     "quality_score": 92.7,
     "reasoning": "Slovakia vs Latvia projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-03T01:43:04.273550+02:00",
+    "final_score": "1:5"
   },
   {
     "pick_id": "92289d77749f43883db585a77ed5a9ca",
@@ -263,7 +275,9 @@
     "confidence_score": 84.7,
     "quality_score": 85.8,
     "reasoning": "Manitoba Moose vs Grand Rapids Griffins projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-03T01:43:04.273563+02:00",
+    "final_score": "1:0"
   },
   {
     "pick_id": "9887963e5d028734a1bbb0f65b7bdd71",
@@ -289,6 +303,8 @@
     "confidence_score": 91.2,
     "quality_score": 93.6,
     "reasoning": "Germany vs Austria projects below the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-03T01:43:04.273584+02:00",
+    "final_score": "5:2"
   }
 ]
