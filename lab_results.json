@@ -1339,7 +1339,7 @@
     "confidence_score": 65.9,
     "quality_score": 85.9,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2cc79ac3bee73b58aec0dcb0f9323e51",
@@ -1471,7 +1471,7 @@
     "confidence_score": 81.1,
     "quality_score": 74.0,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "2be567b7101e3ee5a10d0d6a39f33214",
@@ -1493,7 +1493,7 @@
     "confidence_score": 72.6,
     "quality_score": 72.7,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "bf7e9c05f618c7a3f82faa04aec34c60",
@@ -1515,7 +1515,7 @@
     "confidence_score": 73.3,
     "quality_score": 72.5,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "e393aea26cd430405850d0c3d84e6f8f",
@@ -1625,7 +1625,7 @@
     "confidence_score": 81.8,
     "quality_score": 77.2,
     "reasoning": "Neratovice-Byškovice vs Pardubice II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "80c4052fa366b82b314f90708e34bfc1",
@@ -1647,7 +1647,7 @@
     "confidence_score": 79.0,
     "quality_score": 75.8,
     "reasoning": "Admira Praha vs Petřín Plzeň projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "0c7da8b4cc99bf9e2853ae48e5205e67",
@@ -1669,7 +1669,7 @@
     "confidence_score": 73.1,
     "quality_score": 84.5,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "f60551fade547ff66ede8fea5e674b1a",
@@ -1691,7 +1691,7 @@
     "confidence_score": 87.1,
     "quality_score": 77.7,
     "reasoning": "Neratovice-Byškovice vs Pardubice II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "96f558248229a55492d1a79251f7933d",
@@ -1713,7 +1713,7 @@
     "confidence_score": 85.0,
     "quality_score": 77.0,
     "reasoning": "Admira Praha vs Petřín Plzeň projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "779a2840115a369db7f12a6050b26bce",
@@ -1735,7 +1735,7 @@
     "confidence_score": 81.4,
     "quality_score": 76.5,
     "reasoning": "Loko Vltavín vs Motorlet Praha projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "a8af5fe550bdaa1b7997d05601b011e2",
@@ -1757,7 +1757,7 @@
     "confidence_score": 82.2,
     "quality_score": 87.3,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d8ae4d4b0be1b82af87bf8a16db5e539",
@@ -1801,7 +1801,7 @@
     "confidence_score": 84.0,
     "quality_score": 85.0,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e8512ecddfa594112e7672577aaf9e3d",
@@ -1823,7 +1823,7 @@
     "confidence_score": 90.4,
     "quality_score": 80.8,
     "reasoning": "Green Gully vs Oakleigh Cannons projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "05b633665eb1e9482b9ed9e0de3dabd0",
@@ -1845,7 +1845,7 @@
     "confidence_score": 90.3,
     "quality_score": 80.7,
     "reasoning": "South Melbourne vs Melbourne City II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "8158386e4a8bd00e201fe2b4058cd9ae",
@@ -1911,7 +1911,7 @@
     "confidence_score": 86.4,
     "quality_score": 78.0,
     "reasoning": "Sparta Praha U19 vs České Budějovice U19 projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "29cc5b5cd60e61dce5c246b0f2d45645",
@@ -1933,7 +1933,7 @@
     "confidence_score": 83.1,
     "quality_score": 74.0,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1147e54c428cce62691f6230c1e7d02c",
@@ -1955,7 +1955,7 @@
     "confidence_score": 84.6,
     "quality_score": 73.9,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "dbb21af7e53dab4956b3c38a670a5b21",
@@ -1977,7 +1977,7 @@
     "confidence_score": 80.0,
     "quality_score": 72.7,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7addb6c7e87551b04c82ba3f5ec3a0dc",
@@ -1999,7 +1999,7 @@
     "confidence_score": 72.5,
     "quality_score": 72.4,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "ad19190bfefe93a3fd633fc1a8bc0ddc",
@@ -2021,7 +2021,7 @@
     "confidence_score": 85.6,
     "quality_score": 77.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "62535f0e179971f153fd63cb0217fe8a",
@@ -2043,7 +2043,7 @@
     "confidence_score": 84.7,
     "quality_score": 80.3,
     "reasoning": "Green Gully vs Oakleigh Cannons projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "23041ceeb1799b7a0aed83b18c4ed799",
@@ -2065,7 +2065,7 @@
     "confidence_score": 84.7,
     "quality_score": 80.3,
     "reasoning": "South Melbourne vs Melbourne City II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "21fc1bf04da11471765c822222d107f1",
@@ -2087,7 +2087,7 @@
     "confidence_score": 88.2,
     "quality_score": 78.6,
     "reasoning": "Tallinna Kalev vs Nõmme United II projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e31f984f01d1f69e52c1e7df313ed7d3",
@@ -2109,7 +2109,7 @@
     "confidence_score": 86.6,
     "quality_score": 78.1,
     "reasoning": "Sparta Praha U19 vs České Budějovice U19 projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "768b68a102256c8bea023454ae063a16",
@@ -2131,6 +2131,6 @@
     "confidence_score": 82.9,
     "quality_score": 77.3,
     "reasoning": "FCI Levadia II vs Viimsi projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   }
 ]
