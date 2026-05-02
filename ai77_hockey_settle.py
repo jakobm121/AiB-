@@ -1,7 +1,7 @@
 import json
 import os
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import requests
@@ -173,6 +173,29 @@ def get_score(game, side):
     return None
 
 
+def is_old_enough_to_settle(pick, hours_after_start=4):
+    """
+    Fallback for API responses where status is missing.
+    If the match start time is more than X hours ago and score exists,
+    we treat it as final.
+    """
+    date_str = str(pick.get("date") or "").strip()
+    time_str = str(pick.get("time") or "").strip()
+
+    if not date_str or not time_str:
+        return False
+
+    try:
+        start_dt = datetime.fromisoformat(f"{date_str}T{time_str}:00").replace(
+            tzinfo=ZoneInfo(TZ_NAME)
+        )
+    except Exception:
+        return False
+
+    now = datetime.now(ZoneInfo(TZ_NAME))
+    return now >= start_dt + timedelta(hours=hours_after_start)
+
+
 def settle_total(pick, home_score, away_score):
     total = home_score + away_score
 
@@ -207,8 +230,19 @@ def settle_total(pick, home_score, away_score):
 
 def settle_h2h(pick, game, home_score, away_score):
     teams = game.get("teams", {})
-    home_name = teams.get("home", {}).get("name") or game.get("teams", {}).get("home")
-    away_name = teams.get("away", {}).get("name") or game.get("teams", {}).get("away")
+
+    home_obj = teams.get("home", {})
+    away_obj = teams.get("away", {})
+
+    if isinstance(home_obj, dict):
+        home_name = home_obj.get("name")
+    else:
+        home_name = home_obj
+
+    if isinstance(away_obj, dict):
+        away_name = away_obj.get("name")
+    else:
+        away_name = away_obj
 
     bet = str(pick.get("bet", "")).strip()
 
@@ -240,10 +274,20 @@ def settle_pick(pick, game):
     if short_status in VOID_STATUSES or long_status in VOID_STATUSES:
         return "storno"
 
-    if short_status not in FINAL_STATUSES and long_status not in FINAL_STATUSES:
-        return "pending"
+    has_final_status = (
+        short_status in FINAL_STATUSES
+        or long_status in FINAL_STATUSES
+    )
 
-    if home_score is None or away_score is None:
+    has_score = home_score is not None and away_score is not None
+
+    if not has_final_status:
+        if has_score and is_old_enough_to_settle(pick, hours_after_start=4):
+            debug("STATUS MISSING, BUT GAME IS OLD ENOUGH -> SETTLING BY SCORE")
+        else:
+            return "pending"
+
+    if not has_score:
         return "pending"
 
     bucket = str(pick.get("bucket", "")).lower()
@@ -286,6 +330,7 @@ def main():
             if response:
                 game = response[0]
                 api_game_id = normalize_id(game.get("game", {}).get("id") or game_id)
+
                 game_map[api_game_id] = game
                 game_map[game_id] = game
 
