@@ -2153,7 +2153,7 @@
     "confidence_score": 67.5,
     "quality_score": 89.7,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "50710fc4bbda88347acdf595978c5d7b",
@@ -2197,7 +2197,7 @@
     "confidence_score": 54.3,
     "quality_score": 85.4,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "cda2ac7b29041b187b264b369aec0798",
@@ -2219,7 +2219,7 @@
     "confidence_score": 85.9,
     "quality_score": 81.1,
     "reasoning": "Jeju United FC vs Jeonbuk Motors projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "c876cac3c4433ac30a019b9e98b889a2",
@@ -2263,7 +2263,7 @@
     "confidence_score": 87.4,
     "quality_score": 79.9,
     "reasoning": "NWS Spirit vs Manly United projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "a2f8f557037c304ff69f4ce458cdbeea",
@@ -2285,7 +2285,7 @@
     "confidence_score": 83.1,
     "quality_score": 79.8,
     "reasoning": "Incheon United vs Gangwon FC projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "e0ece8f96fd18ce187f67420aa06bc70",
@@ -2461,7 +2461,7 @@
     "confidence_score": 83.1,
     "quality_score": 80.5,
     "reasoning": "NWS Spirit vs Manly United projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "d00fc2b97dfbe70340eefb853240d9d5",
@@ -2945,7 +2945,7 @@
     "confidence_score": 82.5,
     "quality_score": 87.3,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "f00f8c9ccad3d87035437f9b728de66c",
@@ -2967,7 +2967,7 @@
     "confidence_score": 57.9,
     "quality_score": 86.9,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "709222b8e85b5ab8025f85b8e1f495ad",
@@ -2989,7 +2989,7 @@
     "confidence_score": 61.5,
     "quality_score": 85.8,
     "reasoning": "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c265f4ba8f452f1bab6fcf5e1662a49d",
@@ -3011,7 +3011,7 @@
     "confidence_score": 93.2,
     "quality_score": 83.1,
     "reasoning": "NEC Nijmegen vs Telstar projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "a3ec6db8171e72d3ec88dedc48229da3",
@@ -3033,7 +3033,7 @@
     "confidence_score": 91.3,
     "quality_score": 83.1,
     "reasoning": "Atalanta vs Genoa projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "7f5de4f302a594bd87189dcb8a597c50",
@@ -3055,7 +3055,7 @@
     "confidence_score": 86.4,
     "quality_score": 81.1,
     "reasoning": "St. Truiden vs Union St. Gilloise projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e4b23ed598a70d0d95954121646520b8",
@@ -3077,7 +3077,7 @@
     "confidence_score": 83.5,
     "quality_score": 79.7,
     "reasoning": "Sloga Doboj vs Siroki Brijeg projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "6f7e65318bab1712cf94381bdec99990",
@@ -3099,7 +3099,7 @@
     "confidence_score": 80.0,
     "quality_score": 80.3,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "7dd09380eb2aedc722e9815c499ab978",
@@ -3121,7 +3121,7 @@
     "confidence_score": 91.2,
     "quality_score": 80.2,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "33fc955c9d997061ba541a04f04fe02b",
@@ -3143,7 +3143,7 @@
     "confidence_score": 81.5,
     "quality_score": 78.3,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "710c25c56c4c191a9d11e25d1eeaac88",
@@ -3165,7 +3165,7 @@
     "confidence_score": 56.8,
     "quality_score": 74.3,
     "reasoning": "The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "25f6f28c752c18997403c6e3c46f2412",
@@ -3187,7 +3187,7 @@
     "confidence_score": 90.3,
     "quality_score": 82.3,
     "reasoning": "NEC Nijmegen vs Telstar projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "1a7b00b582d9ceea5e18bba9d33ac3e3",
@@ -3209,6 +3209,6 @@
     "confidence_score": 84.9,
     "quality_score": 82.0,
     "reasoning": "Atalanta vs Genoa projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome.",
-    "result": "pending"
+    "result": "win"
   }
 ]
