@@ -1,28 +1,28 @@
 {
   "totals": {
-    "picks": 18,
-    "settled_picks": 11,
-    "pending_picks": 7,
-    "wins": 7,
+    "picks": 13,
+    "settled_picks": 7,
+    "pending_picks": 6,
+    "wins": 3,
     "losses": 4,
     "storno": 0,
-    "profit_units": 2.73,
-    "hit_rate_percent": 63.6,
-    "roi_percent": 24.8,
-    "avg_odds": 1.92
+    "profit_units": -1.42,
+    "hit_rate_percent": 42.9,
+    "roi_percent": -20.3,
+    "avg_odds": 1.85
   },
   "bucket_stats": [
     {
-      "picks": 15,
-      "settled_picks": 9,
-      "pending_picks": 6,
-      "wins": 7,
+      "picks": 10,
+      "settled_picks": 5,
+      "pending_picks": 5,
+      "wins": 3,
       "losses": 2,
       "storno": 0,
-      "profit_units": 4.73,
-      "hit_rate_percent": 77.8,
-      "roi_percent": 52.6,
-      "avg_odds": 1.98,
+      "profit_units": 0.58,
+      "hit_rate_percent": 60.0,
+      "roi_percent": 11.6,
+      "avg_odds": 1.93,
       "bucket": "over_main_total"
     },
     {
@@ -47,32 +47,6 @@
       "wins": 1,
       "losses": 0,
       "storno": 0,
-      "profit_units": 1.19,
-      "hit_rate_percent": 100.0,
-      "roi_percent": 119.0,
-      "avg_odds": 2.19,
-      "league": "VHL"
-    },
-    {
-      "picks": 4,
-      "settled_picks": 2,
-      "pending_picks": 2,
-      "wins": 2,
-      "losses": 0,
-      "storno": 0,
-      "profit_units": 2.07,
-      "hit_rate_percent": 100.0,
-      "roi_percent": 103.5,
-      "avg_odds": 2.04,
-      "league": "Czech Hockey Games"
-    },
-    {
-      "picks": 1,
-      "settled_picks": 1,
-      "pending_picks": 0,
-      "wins": 1,
-      "losses": 0,
-      "storno": 0,
       "profit_units": 0.81,
       "hit_rate_percent": 100.0,
       "roi_percent": 81.0,
@@ -80,9 +54,9 @@
       "league": "NHL"
     },
     {
-      "picks": 3,
+      "picks": 1,
       "settled_picks": 1,
-      "pending_picks": 2,
+      "pending_picks": 0,
       "wins": 1,
       "losses": 0,
       "storno": 0,
@@ -106,35 +80,9 @@
       "league": "DEL"
     },
     {
-      "picks": 1,
-      "settled_picks": 0,
-      "pending_picks": 1,
-      "wins": 0,
-      "losses": 0,
-      "storno": 0,
-      "profit_units": 0,
-      "hit_rate_percent": 0.0,
-      "roi_percent": 0.0,
-      "avg_odds": 0.0,
-      "league": "MHL"
-    },
-    {
-      "picks": 2,
-      "settled_picks": 2,
-      "pending_picks": 0,
-      "wins": 1,
-      "losses": 1,
-      "storno": 0,
-      "profit_units": -0.11,
-      "hit_rate_percent": 50.0,
-      "roi_percent": -5.5,
-      "avg_odds": 1.78,
-      "league": "Friendly International"
-    },
-    {
-      "picks": 3,
+      "picks": 7,
       "settled_picks": 3,
-      "pending_picks": 0,
+      "pending_picks": 4,
       "wins": 1,
       "losses": 2,
       "storno": 0,
@@ -156,6 +104,19 @@
       "roi_percent": -100.0,
       "avg_odds": 1.6,
       "league": "WCH IB"
+    },
+    {
+      "picks": 1,
+      "settled_picks": 1,
+      "pending_picks": 0,
+      "wins": 0,
+      "losses": 1,
+      "storno": 0,
+      "profit_units": -1.0,
+      "hit_rate_percent": 0.0,
+      "roi_percent": -100.0,
+      "avg_odds": 1.67,
+      "league": "Friendly International"
     }
   ]
 }
