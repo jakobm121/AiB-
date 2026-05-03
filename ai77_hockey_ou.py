@@ -19,32 +19,44 @@ RESULTS_FILE = "hockey/hockey_results.json"
 
 REQUEST_TIMEOUT = 20
 
-# FREE PLAN MODE
-# Free plan usually only allows current available dates, so this avoids wasting calls on inaccessible future dates.
 FREE_PLAN_TODAY_ONLY = True
 
 TIME_WINDOW_MIN_HOURS = 0
 TIME_WINDOW_MAX_HOURS = 24
 
-# Process more games because many hockey games have no odds on free plan.
-MAX_GAMES_TO_PROCESS = 40
+MAX_GAMES_TO_PROCESS = 80
+
+# HARD SAFETY FILTERS
+VALID_MAIN_TOTAL_LINES = {4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5}
+MAIN_TOTAL_LINE_MIN = 4.5
+MAIN_TOTAL_LINE_MAX = 7.5
+
+BLOCKED_LEAGUE_KEYWORDS = [
+    "friendly",
+    "friendlies",
+    "exhibition",
+    "u18",
+    "u20",
+    "women",
+    "(w)",
+]
 
 BUCKETS = {
     "over_main_total": {
-        "limit": 6,
-        "min_edge_prob": 0.010,
-        "min_goal_edge": 0.12,
-        "min_bookmakers": 2,
-        "odds_min": 1.55,
-        "odds_max": 2.65,
+        "limit": 4,
+        "min_edge_prob": 0.025,
+        "min_goal_edge": 0.35,
+        "min_bookmakers": 5,
+        "odds_min": 1.60,
+        "odds_max": 2.35,
     },
     "under_main_total": {
-        "limit": 6,
-        "min_edge_prob": 0.010,
-        "min_goal_edge": 0.12,
-        "min_bookmakers": 2,
-        "odds_min": 1.55,
-        "odds_max": 2.65,
+        "limit": 4,
+        "min_edge_prob": 0.025,
+        "min_goal_edge": 0.35,
+        "min_bookmakers": 5,
+        "odds_min": 1.60,
+        "odds_max": 2.35,
     },
 }
 
@@ -73,7 +85,6 @@ PREGAME_STATUSES = {
 LEAGUE_BASELINES = {
     "default": 5.40,
 
-    # North America
     "nhl": 6.05,
     "ahl": 6.15,
     "echl": 6.05,
@@ -83,7 +94,6 @@ LEAGUE_BASELINES = {
     "ushl": 6.10,
     "sphl": 6.20,
 
-    # Europe
     "liiga": 5.45,
     "shl": 5.25,
     "allsvenskan": 5.35,
@@ -99,12 +109,10 @@ LEAGUE_BASELINES = {
     "mestis": 5.70,
     "hockeyallsvenskan": 5.35,
 
-    # International
     "world championship": 5.80,
     "world championship u20": 6.15,
     "olympic games": 5.40,
 
-    # Australia / lower liquidity
     "aihl": 6.50,
 }
 
@@ -137,12 +145,17 @@ def clamp(value, lo, hi):
 
 def median_or_none(values):
     cleaned = [safe_float(v) for v in values]
-    cleaned = [v for v in cleaned if v is not None]
+    cleaned = [v for v in cleaned if v is not None and v > 1.0]
     return float(statistics.median(cleaned)) if cleaned else None
 
 
 def normalize_name(text):
     return " ".join(str(text or "").strip().lower().split())
+
+
+def is_blocked_league(league_name):
+    n = normalize_name(league_name)
+    return any(word in n for word in BLOCKED_LEAGUE_KEYWORDS)
 
 
 def build_pick_id(game_id, bucket, bet, line):
@@ -156,7 +169,8 @@ def load_json(path, default):
 
     try:
         with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            return data if isinstance(data, type(default)) else default
     except Exception:
         return default
 
@@ -181,7 +195,7 @@ def api_get(endpoint, params, retries=3):
         )
 
         if res.status_code == 429:
-            wait_time = 2 * (attempt + 1)
+            wait_time = 3 * (attempt + 1)
             debug(f"RATE LIMIT {endpoint} {params} -> sleeping {wait_time}s")
             time.sleep(wait_time)
             continue
@@ -326,6 +340,7 @@ def fetch_games_in_window(start_time, end_time):
     time_rejected = 0
     status_rejected = 0
     missing_rejected = 0
+    league_rejected = 0
     sample_games = []
 
     for game in games:
@@ -352,6 +367,10 @@ def fetch_games_in_window(start_time, end_time):
                 }
             )
 
+        if is_blocked_league(league):
+            league_rejected += 1
+            continue
+
         if not dt:
             missing_rejected += 1
             continue
@@ -374,26 +393,66 @@ def fetch_games_in_window(start_time, end_time):
 
         filtered.append(game)
 
+    filtered.sort(key=lambda g: get_game_dt(g) or datetime.max.replace(tzinfo=ZoneInfo("UTC")))
+
     debug(f"SAMPLE GAMES: {sample_games}")
     debug(f"STATUS COUNTS: {dict(status_counts)}")
     debug(f"REJECTED BY TIME: {time_rejected}")
     debug(f"REJECTED BY STATUS: {status_rejected}")
+    debug(f"REJECTED BY LEAGUE: {league_rejected}")
     debug(f"REJECTED BY MISSING DATA: {missing_rejected}")
     debug(f"FILTERED GAMES: {len(filtered)}")
 
     return filtered
 
 
-def is_total_market_name(name):
+def is_main_total_market_name(name):
     n = normalize_name(name)
 
-    return (
-        "over/under" in n
-        or "total goals" in n
-        or "goals over/under" in n
-        or "totals" in n
-        or "over under" in n
-    )
+    blocked_terms = [
+        "1st period",
+        "first period",
+        "2nd period",
+        "second period",
+        "3rd period",
+        "third period",
+        "period",
+        "team total",
+        "home team",
+        "away team",
+        "odd/even",
+        "odd even",
+        "race",
+        "period winner",
+        "double chance",
+        "handicap",
+        "spread",
+        "puck line",
+    ]
+
+    if any(term in n for term in blocked_terms):
+        return False
+
+    allowed_exact = {
+        "over/under",
+        "total",
+        "totals",
+        "goals over/under",
+        "over under",
+        "game total",
+        "match total",
+    }
+
+    if n in allowed_exact:
+        return True
+
+    if "over/under" in n and "period" not in n and "team" not in n:
+        return True
+
+    if "total goals" in n and "team" not in n and "period" not in n:
+        return True
+
+    return False
 
 
 def extract_total_side_and_line(value_name):
@@ -406,6 +465,15 @@ def extract_total_side_and_line(value_name):
     line = safe_float(parts[-1])
 
     if side not in {"over", "under"}:
+        return None, None
+
+    if line is None:
+        return None, None
+
+    if line < MAIN_TOTAL_LINE_MIN or line > MAIN_TOTAL_LINE_MAX:
+        return None, None
+
+    if line not in VALID_MAIN_TOTAL_LINES:
         return None, None
 
     return side, line
@@ -426,7 +494,7 @@ def get_main_total_market(game_id):
         data = api_get("odds", {"game": game_id})
         response = data.get("response", [])
 
-        lines = defaultdict(lambda: {"over": [], "under": []})
+        lines = defaultdict(lambda: {"over": [], "under": [], "bookmakers": set()})
         seen = set()
 
         for item in response:
@@ -436,13 +504,13 @@ def get_main_total_market(game_id):
                 for bet in bookmaker.get("bets", []):
                     bet_name = bet.get("name", "")
 
-                    if not is_total_market_name(bet_name):
+                    if not is_main_total_market_name(bet_name):
                         continue
 
                     for value in bet.get("values", []):
                         odd = safe_float(value.get("odd"))
 
-                        if odd is None:
+                        if odd is None or odd <= 1:
                             continue
 
                         side, line = extract_total_side_and_line(value.get("value"))
@@ -457,16 +525,33 @@ def get_main_total_market(game_id):
 
                         seen.add(key)
                         lines[line][side].append(odd)
+                        lines[line]["bookmakers"].add(bookmaker_id)
 
         best_line = None
-        best_support = -1
+        best_score = -999
 
         for line, sides in lines.items():
-            support = min(len(sides["over"]), len(sides["under"]))
+            over_count = len(sides["over"])
+            under_count = len(sides["under"])
+            support = min(over_count, under_count)
 
-            if support > best_support:
+            if support <= 0:
+                continue
+
+            # Prefer strongest bookmaker support, then normal hockey main lines around 5.5/6.0.
+            standard_line_bonus = 0
+            if line in {5.5, 6.0}:
+                standard_line_bonus = 3
+            elif line in {5.0, 6.5}:
+                standard_line_bonus = 2
+            elif line in {4.5, 7.0, 7.5}:
+                standard_line_bonus = 1
+
+            score = support * 10 + standard_line_bonus
+
+            if score > best_score:
                 best_line = line
-                best_support = support
+                best_score = score
 
         if best_line is not None:
             result = {
@@ -487,11 +572,6 @@ def get_main_total_market(game_id):
 
 
 def league_total_adjustment(league_name):
-    """
-    Small free-plan correction layer.
-    Because we do not have team form on free API,
-    league identity and market line are the main signal.
-    """
     league_key = normalize_name(league_name)
 
     high_total_leagues = {
@@ -526,66 +606,61 @@ def calculate_expected_total_free_plan(league_name, line, over_odds, under_odds)
     over_median = median_or_none(over_odds)
     under_median = median_or_none(under_odds)
 
-    # Market-pressure correction.
-    # If over is shorter than under, market leans over. If under is shorter, market leans under.
     if over_median and under_median and over_median > 1 and under_median > 1:
         over_implied = 1 / over_median
         under_implied = 1 / under_median
         market_lean = over_implied - under_implied
-        expected_total += clamp(market_lean * 0.75, -0.18, 0.18)
+        expected_total += clamp(market_lean * 0.55, -0.14, 0.14)
 
-    # Line-shape correction.
-    # Very low totals are easier over candidates. High totals are easier under candidates.
-    if line <= 4.5:
-        expected_total += 0.12
+    if line <= 5.0:
+        expected_total += 0.05
 
     if line >= 6.5:
-        expected_total -= 0.12
+        expected_total -= 0.08
 
-    return clamp(expected_total, 3.80, 7.40)
+    return clamp(expected_total, 4.20, 7.20)
 
 
 def model_prob_from_goal_edge(goal_edge):
-    """
-    Softer curve than paid-plan model because free-plan model has less information.
-    """
     return clamp(
-        1.0 / (1.0 + math.exp(-(goal_edge / 0.80))),
-        0.12,
-        0.88,
+        1.0 / (1.0 + math.exp(-(goal_edge / 0.95))),
+        0.16,
+        0.84,
     )
 
 
 def calculate_confidence_score(goal_edge, bookmakers_used, line, odds):
-    edge_component = clamp(abs(goal_edge) / 0.85, 0.0, 1.0) * 45
-    bookmaker_component = clamp(bookmakers_used / 8.0, 0.0, 1.0) * 30
+    edge_component = clamp(abs(goal_edge) / 0.95, 0.0, 1.0) * 42
+    bookmaker_component = clamp(bookmakers_used / 9.0, 0.0, 1.0) * 30
 
     line_component = 0
-    if line in {5.0, 5.5, 6.0, 6.5}:
-        line_component = 12
-    elif line in {4.5, 7.0}:
-        line_component = 8
+    if line in {5.5, 6.0}:
+        line_component = 14
+    elif line in {5.0, 6.5}:
+        line_component = 10
+    elif line in {4.5, 7.0, 7.5}:
+        line_component = 5
 
     odds_component = 0
-    if 1.75 <= odds <= 2.15:
-        odds_component = 13
-    elif 1.60 <= odds <= 2.45:
+    if 1.75 <= odds <= 2.10:
+        odds_component = 14
+    elif 1.60 <= odds <= 2.35:
         odds_component = 8
 
     score = edge_component + bookmaker_component + line_component + odds_component
-    return round(clamp(score, 1.0, 99.0), 1)
+    return round(clamp(score, 1.0, 94.0), 1)
 
 
 def calculate_quality_score(goal_edge, confidence_score, bookmakers_used, odds, edge_prob):
-    edge_component = clamp(abs(goal_edge) / 0.85, 0.0, 1.0) * 34
-    prob_edge_component = clamp(edge_prob / 0.10, 0.0, 1.0) * 24
+    edge_component = clamp(abs(goal_edge) / 0.95, 0.0, 1.0) * 34
+    prob_edge_component = clamp(edge_prob / 0.12, 0.0, 1.0) * 24
     confidence_component = clamp(confidence_score / 100.0, 0.0, 1.0) * 22
-    bookmaker_component = clamp(bookmakers_used / 8.0, 0.0, 1.0) * 12
+    bookmaker_component = clamp(bookmakers_used / 9.0, 0.0, 1.0) * 12
 
     odds_component = 0
-    if 1.75 <= odds <= 2.15:
+    if 1.75 <= odds <= 2.10:
         odds_component = 8
-    elif 1.60 <= odds <= 2.45:
+    elif 1.60 <= odds <= 2.35:
         odds_component = 5
 
     score = (
@@ -596,7 +671,7 @@ def calculate_quality_score(goal_edge, confidence_score, bookmakers_used, odds, 
         + odds_component
     )
 
-    return round(clamp(score, 1.0, 99.0), 1)
+    return round(clamp(score, 1.0, 97.0), 1)
 
 
 def build_candidate(
@@ -610,6 +685,15 @@ def build_candidate(
     bookmakers_used,
 ):
     cfg = BUCKETS[bucket]
+
+    if line is None:
+        return None
+
+    if line < MAIN_TOTAL_LINE_MIN or line > MAIN_TOTAL_LINE_MAX:
+        return None
+
+    if line not in VALID_MAIN_TOTAL_LINES:
+        return None
 
     median_odds = median_or_none(odds_list)
 
@@ -651,14 +735,15 @@ def build_candidate(
 
     home = get_team_name(game, "home")
     away = get_team_name(game, "away")
+    league = get_league_name(game)
 
     bet = f"Over {line}" if bucket == "over_main_total" else f"Under {line}"
     direction = "above" if bucket == "over_main_total" else "below"
 
     reasoning = (
-        f"{home} vs {away} projects {direction} the market total in the free-plan model. "
-        f"The signal is based on league baseline, main total line, bookmaker coverage, "
-        f"and median market pricing."
+        f"{home} vs {away} projects {direction} the main market total in the AI77 hockey model. "
+        f"The signal is based on league baseline, bookmaker-supported main total line, "
+        f"median market pricing, and a strict hockey total-line filter."
     )
 
     return {
@@ -669,7 +754,7 @@ def build_candidate(
         "date": local_dt.strftime("%Y-%m-%d") if local_dt else "",
         "time": local_dt.strftime("%H:%M") if local_dt else "",
         "sport": "hockey",
-        "league": get_league_name(game),
+        "league": league,
         "match": f"{home} - {away}",
         "bet": bet,
         "odds": round(median_odds, 2),
@@ -697,13 +782,17 @@ def append_to_results(payload):
 
     existing = {item.get("pick_id") for item in history if isinstance(item, dict)}
 
+    added = 0
+
     for picks in payload.get("buckets", {}).values():
         for pick in picks:
             if pick["pick_id"] not in existing:
                 history.append(pick.copy())
                 existing.add(pick["pick_id"])
+                added += 1
 
     save_json(RESULTS_FILE, history)
+    debug(f"HISTORY added={added} total={len(history)}")
 
 
 def build_predictions():
@@ -720,7 +809,7 @@ def build_predictions():
 
     if MAX_GAMES_TO_PROCESS > 0 and len(games) > MAX_GAMES_TO_PROCESS:
         games = games[:MAX_GAMES_TO_PROCESS]
-        debug(f"PROCESSING ONLY FIRST {len(games)} GAMES (free-plan mode)")
+        debug(f"PROCESSING FIRST {len(games)} FILTERED GAMES")
 
     candidates = defaultdict(list)
 
@@ -741,6 +830,10 @@ def build_predictions():
             away = get_team_name(game, "away")
             league = get_league_name(game)
 
+            if is_blocked_league(league):
+                debug(f"SKIP BLOCKED LEAGUE: {league} | {home} - {away}")
+                continue
+
             market = get_main_total_market(game_id)
 
             line = market.get("line")
@@ -755,6 +848,18 @@ def build_predictions():
             )
 
             if line is None or not over_odds or not under_odds:
+                continue
+
+            if line < MAIN_TOTAL_LINE_MIN or line > MAIN_TOTAL_LINE_MAX:
+                debug(f"SKIP BAD TOTAL LINE game_id={game_id}: line={line}")
+                continue
+
+            if line not in VALID_MAIN_TOTAL_LINES:
+                debug(f"SKIP NON-STANDARD TOTAL LINE game_id={game_id}: line={line}")
+                continue
+
+            if bookmakers_used < 5:
+                debug(f"SKIP LOW BOOKMAKERS game_id={game_id}: books={bookmakers_used}")
                 continue
 
             expected_total = calculate_expected_total_free_plan(
@@ -843,7 +948,7 @@ def build_predictions():
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
-        "model": "AI77 Hockey Totals Free Plan v1",
+        "model": "AI77 Hockey Totals Free Plan v2",
         "stake_mode": "flat_1_unit",
         "source": "API-Hockey",
         "timezone": TZ_NAME,
@@ -852,6 +957,11 @@ def build_predictions():
             "max": TIME_WINDOW_MAX_HOURS,
         },
         "free_plan_mode": True,
+        "main_total_line_filter": {
+            "min": MAIN_TOTAL_LINE_MIN,
+            "max": MAIN_TOTAL_LINE_MAX,
+            "allowed": sorted(list(VALID_MAIN_TOTAL_LINES)),
+        },
         "buckets": final,
     }
 
