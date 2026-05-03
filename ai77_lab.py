@@ -10,6 +10,7 @@ from zoneinfo import ZoneInfo
 
 import requests
 
+
 FOOTBALL_API_KEY = os.getenv("FOOTBALL_API_KEY")
 FOOTBALL_URL = "https://v3.football.api-sports.io"
 TZ_NAME = "Europe/Ljubljana"
@@ -28,22 +29,45 @@ API_MIN_INTERVAL_SECONDS = 6.2
 API_RETRY_ON_RATELIMIT = 2
 DEBUG_API = False
 
-MAX_PICKS_PER_FIXTURE = 3
+# Conservative exposure control
+MAX_PICKS_PER_FIXTURE = 1
 
-MIN_LEAGUE_LEARNING_SAMPLE = 8
-FULL_LEAGUE_LEARNING_SAMPLE = 30
-MAX_LEAGUE_LEARNING_ADJUSTMENT = 0.04
+# More conservative learning
+MIN_LEAGUE_LEARNING_SAMPLE = 15
+FULL_LEAGUE_LEARNING_SAMPLE = 60
+MAX_LEAGUE_LEARNING_ADJUSTMENT = 0.02
 
+# Conservative production-test buckets
+# Namenoma odstranjeni: home, away, over_2_5, over_3_5, btts_yes
 BUCKETS = {
-    "home": {"limit": 5, "min_edge": 0.018, "min_bookmakers": 3, "odds_min": 1.45, "odds_max": 4.80},
-    "draw": {"limit": 3, "min_edge": 0.020, "min_bookmakers": 3, "odds_min": 2.60, "odds_max": 4.80},
-    "away": {"limit": 5, "min_edge": 0.018, "min_bookmakers": 3, "odds_min": 1.45, "odds_max": 4.80},
-    "over_2_5": {"limit": 5, "min_edge": 0.022, "min_bookmakers": 3, "odds_min": 1.50, "odds_max": 4.80},
-    "under_2_5": {"limit": 5, "min_edge": 0.022, "min_bookmakers": 3, "odds_min": 1.50, "odds_max": 4.80},
-    "btts_yes": {"limit": 5, "min_edge": 0.024, "min_bookmakers": 4, "odds_min": 1.50, "odds_max": 4.80},
-    "btts_no": {"limit": 5, "min_edge": 0.024, "min_bookmakers": 4, "odds_min": 1.50, "odds_max": 4.80},
-    "over_3_5": {"limit": 5, "min_edge": 0.026, "min_bookmakers": 3, "odds_min": 1.65, "odds_max": 5.50},
-    "under_3_5": {"limit": 5, "min_edge": 0.024, "min_bookmakers": 3, "odds_min": 1.30, "odds_max": 3.80},
+    "draw": {
+        "limit": 2,
+        "min_edge": 0.045,
+        "min_bookmakers": 8,
+        "odds_min": 3.00,
+        "odds_max": 4.60,
+    },
+    "under_2_5": {
+        "limit": 3,
+        "min_edge": 0.075,
+        "min_bookmakers": 8,
+        "odds_min": 1.65,
+        "odds_max": 2.70,
+    },
+    "under_3_5": {
+        "limit": 4,
+        "min_edge": 0.045,
+        "min_bookmakers": 7,
+        "odds_min": 1.30,
+        "odds_max": 2.20,
+    },
+    "btts_no": {
+        "limit": 3,
+        "min_edge": 0.070,
+        "min_bookmakers": 7,
+        "odds_min": 1.65,
+        "odds_max": 2.70,
+    },
 }
 
 VALID_STATUSES = {"NS", "TBD", "PST"}
@@ -54,20 +78,56 @@ FIXTURE_ODDS_CACHE = {}
 LAST_API_CALL_TS = 0.0
 
 LEAGUE_BASELINES = {
-    "default": {"goals": 2.45, "draw": 0.27, "home_adv": 0.16, "strength": 1.00, "variance": 1.00},
-    "suomen cup": {"goals": 2.85, "draw": 0.24, "home_adv": 0.12, "strength": 0.94, "variance": 1.08},
-    "liga 1": {"goals": 2.35, "draw": 0.29, "home_adv": 0.17, "strength": 0.98, "variance": 0.96},
-    "liga de ascenso": {"goals": 2.30, "draw": 0.30, "home_adv": 0.16, "strength": 0.95, "variance": 0.95},
-    "championship": {"goals": 2.42, "draw": 0.28, "home_adv": 0.17, "strength": 1.03, "variance": 0.98},
-    "league one": {"goals": 2.48, "draw": 0.27, "home_adv": 0.16, "strength": 1.00, "variance": 1.00},
+    "default": {
+        "goals": 2.45,
+        "draw": 0.27,
+        "home_adv": 0.16,
+        "strength": 1.00,
+        "variance": 1.00,
+    },
+    "suomen cup": {
+        "goals": 2.85,
+        "draw": 0.24,
+        "home_adv": 0.12,
+        "strength": 0.94,
+        "variance": 1.08,
+    },
+    "liga 1": {
+        "goals": 2.35,
+        "draw": 0.29,
+        "home_adv": 0.17,
+        "strength": 0.98,
+        "variance": 0.96,
+    },
+    "liga de ascenso": {
+        "goals": 2.30,
+        "draw": 0.30,
+        "home_adv": 0.16,
+        "strength": 0.95,
+        "variance": 0.95,
+    },
+    "championship": {
+        "goals": 2.42,
+        "draw": 0.28,
+        "home_adv": 0.17,
+        "strength": 1.03,
+        "variance": 0.98,
+    },
+    "league one": {
+        "goals": 2.48,
+        "draw": 0.27,
+        "home_adv": 0.16,
+        "strength": 1.00,
+        "variance": 1.00,
+    },
 }
 
 QUALITY_WEIGHTS = {
-    "edge": 42,
-    "bookmakers": 14,
+    "edge": 34,
+    "bookmakers": 18,
     "odds_fit": 10,
     "confidence": 22,
-    "market_alignment": 12,
+    "market_alignment": 16,
 }
 
 
@@ -148,7 +208,12 @@ def api_get(endpoint, params):
         throttle_api()
 
         url = f"{FOOTBALL_URL}/{endpoint}"
-        res = requests.get(url, headers=football_headers(), params=params, timeout=REQUEST_TIMEOUT)
+        res = requests.get(
+            url,
+            headers=football_headers(),
+            params=params,
+            timeout=REQUEST_TIMEOUT,
+        )
         res.raise_for_status()
         data = res.json()
 
@@ -156,7 +221,8 @@ def api_get(endpoint, params):
             debug(f"API {endpoint} params={params}")
             debug(f"API errors={data.get('errors')}")
             debug(f"API results={data.get('results')}")
-            debug(f"API response_len={len(data.get('response', [])) if isinstance(data.get('response'), list) else 'n/a'}")
+            response = data.get("response", [])
+            debug(f"API response_len={len(response) if isinstance(response, list) else 'n/a'}")
 
         errors = data.get("errors") or {}
 
@@ -194,6 +260,61 @@ def soft_market_blend(model_prob, market_odds, strength=0.18):
     return (model_prob * (1 - strength)) + (implied * strength)
 
 
+def shrink_probability(prob, anchor, strength):
+    return (prob * (1 - strength)) + (anchor * strength)
+
+
+def apply_data_quality_shrinkage(prob, bucket, home_stats, away_stats, market_odds):
+    home_games = home_stats.get("games_used", 0) or 0
+    away_games = away_stats.get("games_used", 0) or 0
+    games_used = min(home_games, away_games)
+
+    market_median = median_or_none(market_odds)
+    market_prob = 1 / market_median if market_median and market_median > 1 else None
+
+    if bucket == "under_2_5":
+        anchor = 0.54
+    elif bucket == "under_3_5":
+        anchor = 0.68
+    elif bucket == "btts_no":
+        anchor = 0.52
+    elif bucket == "draw":
+        anchor = 0.28
+    else:
+        anchor = 0.50
+
+    if market_prob is not None:
+        anchor = (anchor * 0.55) + (market_prob * 0.45)
+
+    if games_used == 0:
+        return shrink_probability(prob, anchor, 0.42)
+    if games_used < 4:
+        return shrink_probability(prob, anchor, 0.25)
+    if games_used < 8:
+        return shrink_probability(prob, anchor, 0.12)
+
+    return prob
+
+
+def cap_bucket_probability(prob, bucket, home_stats, away_stats):
+    home_games = home_stats.get("games_used", 0) or 0
+    away_games = away_stats.get("games_used", 0) or 0
+    games_used = min(home_games, away_games)
+
+    if bucket == "under_2_5":
+        max_prob = 0.68 if games_used == 0 else 0.74
+    elif bucket == "btts_no":
+        max_prob = 0.67 if games_used == 0 else 0.73
+    elif bucket == "draw":
+        max_prob = 0.36
+    elif bucket == "under_3_5":
+        max_prob = 0.82 if games_used == 0 else 0.86
+    else:
+        max_prob = 0.78
+
+    return clamp(prob, 0.02, max_prob)
+
+
 def is_settled_result(result_value):
     return result_value in {"win", "loss", "storno"}
 
@@ -212,13 +333,17 @@ def settled_profit_for_pick(pick):
 
 
 def build_league_learning_table(history):
-    league_bucket = defaultdict(lambda: defaultdict(lambda: {
-        "settled_picks": 0,
-        "wins": 0,
-        "losses": 0,
-        "storno": 0,
-        "profit": 0.0
-    }))
+    league_bucket = defaultdict(
+        lambda: defaultdict(
+            lambda: {
+                "settled_picks": 0,
+                "wins": 0,
+                "losses": 0,
+                "storno": 0,
+                "profit": 0.0,
+            }
+        )
+    )
 
     for item in history:
         if not isinstance(item, dict):
@@ -257,16 +382,15 @@ def build_league_learning_table(history):
             if settled <= 0:
                 continue
 
-            staked = settled - row["storno"]
-            staked = max(staked, 1)
-
+            staked = max(settled - row["storno"], 1)
             roi = row["profit"] / staked
             hit_rate = row["wins"] / max((row["wins"] + row["losses"]), 1)
 
             sample_weight = clamp(
-                (settled - MIN_LEAGUE_LEARNING_SAMPLE) / max((FULL_LEAGUE_LEARNING_SAMPLE - MIN_LEAGUE_LEARNING_SAMPLE), 1),
+                (settled - MIN_LEAGUE_LEARNING_SAMPLE)
+                / max((FULL_LEAGUE_LEARNING_SAMPLE - MIN_LEAGUE_LEARNING_SAMPLE), 1),
                 0.0,
-                1.0
+                1.0,
             )
 
             roi_component = clamp(roi / 0.25, -1.0, 1.0)
@@ -274,7 +398,11 @@ def build_league_learning_table(history):
 
             blended_signal = (roi_component * 0.70) + (hit_component * 0.30)
             adjustment = blended_signal * sample_weight * MAX_LEAGUE_LEARNING_ADJUSTMENT
-            adjustment = clamp(adjustment, -MAX_LEAGUE_LEARNING_ADJUSTMENT, MAX_LEAGUE_LEARNING_ADJUSTMENT)
+            adjustment = clamp(
+                adjustment,
+                -MAX_LEAGUE_LEARNING_ADJUSTMENT,
+                MAX_LEAGUE_LEARNING_ADJUSTMENT,
+            )
 
             final_table[league_name][bucket] = {
                 "settled_picks": settled,
@@ -314,18 +442,29 @@ def debug_league_learning(league_learning):
 
 
 def calculate_confidence_score(model_prob, implied_prob, bookmakers_used, edge):
-    edge_component = clamp(edge / 0.12, 0.0, 1.0) * 45
-    separation_component = clamp(abs(model_prob - 0.5) / 0.30, 0.0, 1.0) * 18
-    bookmaker_component = clamp(bookmakers_used / 12.0, 0.0, 1.0) * 20
-    pricing_component = clamp((model_prob / max(implied_prob, 0.01)) - 1.0, 0.0, 1.0) * 17
+    edge_component = clamp(edge / 0.16, 0.0, 1.0) * 38
+    separation_component = clamp(abs(model_prob - 0.5) / 0.30, 0.0, 1.0) * 16
+    bookmaker_component = clamp(bookmakers_used / 12.0, 0.0, 1.0) * 24
+    pricing_component = clamp((model_prob / max(implied_prob, 0.01)) - 1.0, 0.0, 0.75) / 0.75 * 22
+
     score = edge_component + separation_component + bookmaker_component + pricing_component
     return round(clamp(score, 1.0, 99.0), 1)
+
+
+def edge_sanity_penalty(edge, bucket):
+    if bucket in {"under_2_5", "btts_no"} and edge > 0.22:
+        return 0.88
+    if bucket == "under_3_5" and edge > 0.18:
+        return 0.92
+    if bucket == "draw" and edge > 0.13:
+        return 0.90
+    return 1.0
 
 
 def calculate_quality_score(bucket, edge, bookmakers_used, odds, confidence_score, model_prob, implied_prob):
     cfg = BUCKETS[bucket]
 
-    edge_score = clamp(edge / max(cfg["min_edge"] * 2.4, 0.01), 0.0, 1.0)
+    edge_score = clamp(edge / max(cfg["min_edge"] * 2.8, 0.01), 0.0, 1.0)
     bookmaker_score = clamp(bookmakers_used / 12.0, 0.0, 1.0)
 
     odds_mid = (cfg["odds_min"] + cfg["odds_max"]) / 2
@@ -333,15 +472,19 @@ def calculate_quality_score(bucket, edge, bookmakers_used, odds, confidence_scor
     odds_fit = 1.0 - min(abs(odds - odds_mid) / odds_span, 1.0)
 
     confidence_component = clamp(confidence_score / 100.0, 0.0, 1.0)
-    market_alignment = 1.0 - clamp(abs(model_prob - implied_prob) / 0.40, 0.0, 1.0)
+
+    # Če se model preveč oddalji od marketa, ni vedno plus.
+    market_alignment = 1.0 - clamp(abs(model_prob - implied_prob) / 0.35, 0.0, 1.0)
 
     score = (
-        edge_score * QUALITY_WEIGHTS["edge"] +
-        bookmaker_score * QUALITY_WEIGHTS["bookmakers"] +
-        odds_fit * QUALITY_WEIGHTS["odds_fit"] +
-        confidence_component * QUALITY_WEIGHTS["confidence"] +
-        market_alignment * QUALITY_WEIGHTS["market_alignment"]
+        edge_score * QUALITY_WEIGHTS["edge"]
+        + bookmaker_score * QUALITY_WEIGHTS["bookmakers"]
+        + odds_fit * QUALITY_WEIGHTS["odds_fit"]
+        + confidence_component * QUALITY_WEIGHTS["confidence"]
+        + market_alignment * QUALITY_WEIGHTS["market_alignment"]
     )
+
+    score *= edge_sanity_penalty(edge, bucket)
 
     return round(clamp(score, 1.0, 99.0), 1)
 
@@ -371,7 +514,10 @@ def candidate_conflicts(existing_pick, new_pick):
 
     correlated_pairs = {
         tuple(sorted(("under_2_5", "btts_no"))),
+        tuple(sorted(("under_3_5", "btts_no"))),
+        tuple(sorted(("under_2_5", "under_3_5"))),
         tuple(sorted(("over_2_5", "btts_yes"))),
+        tuple(sorted(("over_2_5", "over_3_5"))),
     }
 
     pair = tuple(sorted([existing_bucket, new_bucket]))
@@ -385,12 +531,19 @@ def fetch_fixtures_in_window(start_time, end_time, tz_name):
 
     while current_date <= end_date:
         try:
-            data = api_get("fixtures", {"date": current_date.strftime("%Y-%m-%d"), "timezone": tz_name})
+            data = api_get(
+                "fixtures",
+                {
+                    "date": current_date.strftime("%Y-%m-%d"),
+                    "timezone": tz_name,
+                },
+            )
             daily = data.get("response", [])
             debug(f"FIXTURES {current_date}: {len(daily)}")
             fixtures.extend(daily)
         except Exception as e:
             debug(f"FIXTURES ERROR {current_date}: {e}")
+
         current_date += timedelta(days=1)
 
     filtered = []
@@ -401,18 +554,22 @@ def fetch_fixtures_in_window(start_time, end_time, tz_name):
             fixture_dt_raw = fixture.get("fixture", {}).get("date")
             if not fixture_dt_raw:
                 continue
+
             fixture_time = datetime.fromisoformat(fixture_dt_raw).astimezone(tz)
             status_short = fixture.get("fixture", {}).get("status", {}).get("short")
+
             if status_short not in VALID_STATUSES:
                 continue
             if fixture_time < start_time or fixture_time > end_time:
                 continue
+
             filtered.append(fixture)
         except Exception as e:
             debug(f"FIXTURE FILTER ERROR: {e}")
 
     filtered.sort(key=lambda f: f.get("fixture", {}).get("date", ""))
     debug(f"FILTERED FIXTURES: {len(filtered)}")
+
     return filtered
 
 
@@ -433,10 +590,11 @@ def get_recent_team_form(team_id):
         "wins_rate": 0.33,
         "draws_rate": 0.28,
         "losses_rate": 0.39,
-        "games_used": 0
+        "games_used": 0,
     }
 
-    # Free plan does not support last=10, so do not waste API requests.
+    # Free plan ne uporablja last=10, zato forma ostane fallback.
+    # Zato kasneje uporabimo shrinkage + močnejši market blend.
     if FREE_PLAN_MODE:
         TEAM_FORM_CACHE[team_id] = fallback
         return fallback
@@ -444,24 +602,36 @@ def get_recent_team_form(team_id):
     try:
         data = api_get("fixtures", {"team": team_id, "last": 10})
         fixtures = data.get("response", [])
-        home_scored, home_conceded, away_scored, away_conceded = [], [], [], []
+
+        home_scored, home_conceded = [], []
+        away_scored, away_conceded = [], []
         all_scored, all_conceded = [], []
-        over25 = over35 = btts = wins = draws = losses = valid_games = 0
+
+        over25 = 0
+        over35 = 0
+        btts = 0
+        wins = 0
+        draws = 0
+        losses = 0
+        valid_games = 0
 
         for f in fixtures:
             status = f.get("fixture", {}).get("status", {}).get("short")
             if status not in {"FT", "AET", "PEN"}:
                 continue
+
             gh = f.get("goals", {}).get("home")
             ga = f.get("goals", {}).get("away")
+
             if gh is None or ga is None:
                 continue
 
             home_team = f.get("teams", {}).get("home", {})
             away_team = f.get("teams", {}).get("away", {})
-            valid_games += 1
 
             total_goals = gh + ga
+            valid_games += 1
+
             if total_goals > 2.5:
                 over25 += 1
             if total_goals > 3.5:
@@ -473,19 +643,22 @@ def get_recent_team_form(team_id):
                 scored, conceded = gh, ga
                 home_scored.append(gh)
                 home_conceded.append(ga)
+
                 if gh > ga:
                     wins += 1
                 elif gh == ga:
                     draws += 1
                 else:
                     losses += 1
+
             elif away_team.get("id") == team_id:
                 scored, conceded = ga, gh
                 away_scored.append(ga)
                 away_conceded.append(gh)
+
                 if ga > gh:
                     wins += 1
-                elif ga == gh:
+                elif gh == ga:
                     draws += 1
                 else:
                     losses += 1
@@ -512,11 +685,12 @@ def get_recent_team_form(team_id):
             "wins_rate": wins / valid_games,
             "draws_rate": draws / valid_games,
             "losses_rate": losses / valid_games,
-            "games_used": valid_games
+            "games_used": valid_games,
         }
 
         TEAM_FORM_CACHE[team_id] = result
         return result
+
     except Exception:
         TEAM_FORM_CACHE[team_id] = fallback
         return fallback
@@ -534,18 +708,20 @@ def get_fixture_prediction_data(fixture_id):
         "winner_comment": None,
         "percent_home": None,
         "percent_draw": None,
-        "percent_away": None
+        "percent_away": None,
     }
 
     try:
         data = api_get("predictions", {"fixture": fixture_id})
         response = data.get("response", [])
+
         if not response:
             FIXTURE_PRED_CACHE[fixture_id] = result
             return result
 
         pred = response[0].get("predictions", {})
         result["advice"] = pred.get("advice", "")
+
         goals = pred.get("goals", {})
         result["goals_home"] = safe_float(goals.get("home"))
         result["goals_away"] = safe_float(goals.get("away"))
@@ -561,18 +737,31 @@ def get_fixture_prediction_data(fixture_id):
 
         FIXTURE_PRED_CACHE[fixture_id] = result
         return result
+
     except Exception:
         FIXTURE_PRED_CACHE[fixture_id] = result
         return result
 
 
 def is_h2h_bet_name(name):
-    return normalize_name(name) in {"match winner", "1x2", "winner", "fulltime result", "result", "match result"}
+    return normalize_name(name) in {
+        "match winner",
+        "1x2",
+        "winner",
+        "fulltime result",
+        "result",
+        "match result",
+    }
 
 
 def is_total_bet_name(name):
     n = normalize_name(name)
-    return "over/under" in n or "goals over/under" in n or "over under" in n or "total goals" in n
+    return (
+        "over/under" in n
+        or "goals over/under" in n
+        or "over under" in n
+        or "total goals" in n
+    )
 
 
 def is_btts_bet_name(name):
@@ -586,13 +775,17 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
 
     result = {
         "h2h": {"home": [], "draw": [], "away": []},
-        "totals": {2.5: {"over": [], "under": []}, 3.5: {"over": [], "under": []}},
+        "totals": {
+            2.5: {"over": [], "under": []},
+            3.5: {"over": [], "under": []},
+        },
         "btts": {"yes": [], "no": []},
     }
 
     try:
         data = api_get("odds", {"fixture": fixture_id})
         response = data.get("response", [])
+
         if not response:
             FIXTURE_ODDS_CACHE[fixture_id] = result
             return result
@@ -602,6 +795,7 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
         for item in response:
             for bookmaker in item.get("bookmakers", []):
                 bookmaker_id = bookmaker.get("id")
+
                 for bet in bookmaker.get("bets", []):
                     bet_name = bet.get("name", "")
                     values = bet.get("values", [])
@@ -610,21 +804,27 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
                         for v in values:
                             value_name = str(v.get("value", "")).strip()
                             odd = safe_float(v.get("odd"))
+
                             if odd is None:
                                 continue
+
                             norm = normalize_name(value_name)
                             mapped = None
+
                             if normalize_name(value_name) == normalize_name(home_name):
                                 mapped = "home"
                             elif normalize_name(value_name) == normalize_name(away_name):
                                 mapped = "away"
                             elif norm in {"draw", "x"}:
                                 mapped = "draw"
+
                             if not mapped:
                                 continue
+
                             key = (bookmaker_id, "h2h", mapped)
                             if key in seen_bookmaker_market:
                                 continue
+
                             seen_bookmaker_market.add(key)
                             result["h2h"][mapped].append(odd)
 
@@ -632,21 +832,28 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
                         for v in values:
                             value_name = str(v.get("value", "")).strip()
                             odd = safe_float(v.get("odd"))
+
                             if odd is None:
                                 continue
+
                             parts = value_name.split()
                             if len(parts) < 2:
                                 continue
+
                             side_raw = parts[0].strip().lower()
                             line = safe_float(parts[-1])
+
                             if line not in {2.5, 3.5}:
                                 continue
-                            side = "over" if side_raw == "over" else ("under" if side_raw == "under" else None)
+
+                            side = "over" if side_raw == "over" else "under" if side_raw == "under" else None
                             if not side:
                                 continue
+
                             key = (bookmaker_id, "totals", line, side)
                             if key in seen_bookmaker_market:
                                 continue
+
                             seen_bookmaker_market.add(key)
                             result["totals"][line][side].append(odd)
 
@@ -654,35 +861,40 @@ def get_fixture_odds_markets(fixture_id, home_name, away_name):
                         for v in values:
                             value_name = str(v.get("value", "")).strip().lower()
                             odd = safe_float(v.get("odd"))
+
                             if odd is None or value_name not in {"yes", "no"}:
                                 continue
+
                             key = (bookmaker_id, "btts", value_name)
                             if key in seen_bookmaker_market:
                                 continue
+
                             seen_bookmaker_market.add(key)
                             result["btts"][value_name].append(odd)
 
         FIXTURE_ODDS_CACHE[fixture_id] = result
         return result
+
     except Exception:
         FIXTURE_ODDS_CACHE[fixture_id] = result
         return result
 
 
 def has_any_supported_odds(odds):
-    if odds["h2h"]["home"] or odds["h2h"]["draw"] or odds["h2h"]["away"]:
+    if odds["h2h"]["draw"]:
         return True
-    if odds["totals"][2.5]["over"] or odds["totals"][2.5]["under"]:
+    if odds["totals"][2.5]["under"]:
         return True
-    if odds["totals"][3.5]["over"] or odds["totals"][3.5]["under"]:
+    if odds["totals"][3.5]["under"]:
         return True
-    if odds["btts"]["yes"] or odds["btts"]["no"]:
+    if odds["btts"]["no"]:
         return True
     return False
 
 
 def calculate_expected_goals(home_stats, away_stats, pred, league_name):
     baseline = get_league_baseline(league_name)
+
     league_goals = baseline["goals"]
     home_adv = baseline["home_adv"]
     league_strength = baseline["strength"]
@@ -716,14 +928,15 @@ def calculate_expected_goals(home_stats, away_stats, pred, league_name):
     current_total = expected_home + expected_away
     if current_total > 0:
         scale = league_goals / current_total
-        expected_home *= (0.80 + 0.20 * scale)
-        expected_away *= (0.80 + 0.20 * scale)
+        expected_home *= 0.80 + 0.20 * scale
+        expected_away *= 0.80 + 0.20 * scale
 
     expected_home *= league_strength
     expected_away *= league_strength
 
     pred_home = pred.get("goals_home")
     pred_away = pred.get("goals_away")
+
     if pred_home is not None and pred_away is not None:
         pred_weight = 0.16 if league_variance < 1.0 else 0.20
         expected_home = (expected_home * (1 - pred_weight)) + (pred_home * pred_weight)
@@ -738,11 +951,15 @@ def calculate_expected_goals(home_stats, away_stats, pred, league_name):
 def get_h2h_probs(expected_home, expected_away, pred, league_name):
     baseline = get_league_baseline(league_name)
     max_goals = 8
-    home_win = draw = away_win = 0.0
+
+    home_win = 0.0
+    draw = 0.0
+    away_win = 0.0
 
     for h in range(max_goals + 1):
         for a in range(max_goals + 1):
             p = poisson_pmf(h, expected_home) * poisson_pmf(a, expected_away)
+
             if h > a:
                 home_win += p
             elif h == a:
@@ -780,21 +997,24 @@ def get_h2h_probs(expected_home, expected_away, pred, league_name):
         ph /= 100.0
         pd /= 100.0
         pa /= 100.0
+
         sum_pred = ph + pd + pa
+
         if 0.95 < sum_pred < 1.05:
             home_win = home_win * 0.85 + ph * 0.15
             draw = draw * 0.88 + pd * 0.12
             away_win = away_win * 0.85 + pa * 0.15
 
     home_win = clamp(home_win, 0.16, 0.68)
-    draw = clamp(draw, 0.11, 0.34)
+    draw = clamp(draw, 0.11, 0.36)
     away_win = clamp(away_win, 0.16, 0.68)
 
     total = home_win + draw + away_win
+
     return {
         "home": home_win / total,
         "draw": draw / total,
-        "away": away_win / total
+        "away": away_win / total,
     }
 
 
@@ -803,11 +1023,14 @@ def get_total_probs(expected_total, league_name):
     variance = baseline["variance"]
 
     max_goals = 10
-    over25 = over35 = 0.0
+    over25 = 0.0
+    over35 = 0.0
+
     adjusted_total = expected_total * variance
 
     for g in range(max_goals + 1):
         p = poisson_pmf(g, adjusted_total)
+
         if g >= 3:
             over25 += p
         if g >= 4:
@@ -817,9 +1040,7 @@ def get_total_probs(expected_total, league_name):
     under35 = 1 - over35
 
     return {
-        "over_2_5": clamp(over25, 0.08, 0.82),
         "under_2_5": clamp(under25, 0.08, 0.82),
-        "over_3_5": clamp(over35, 0.04, 0.70),
         "under_3_5": clamp(under35, 0.18, 0.88),
     }
 
@@ -845,32 +1066,39 @@ def get_btts_probs(expected_home, expected_away, home_stats, away_stats, league_
 
     btts_yes = clamp(btts_yes, 0.16, 0.80)
 
-    return {"btts_yes": btts_yes, "btts_no": 1 - btts_yes}
+    return {
+        "btts_no": 1 - btts_yes,
+    }
 
 
 def h2h_reasoning(home, away, bet):
-    if bet == home:
-        return f"{home} grades better in the home-side model than the market median implies. The edge is modest but playable, with a stronger projected control profile than the current price suggests."
-    if bet == away:
-        return f"{away} looks slightly undervalued away from home. The model sees a better win probability than the market median, which keeps this as a live value side."
-    return "This matchup projects fairly balanced, which is exactly why the draw price becomes interesting. It remains a variance-heavy market, but the median line still leaves measurable value."
+    return (
+        "This matchup projects fairly balanced, which is why the draw price becomes interesting. "
+        "The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage."
+    )
 
 
 def totals_reasoning(home, away, bet):
-    if "Over" in bet:
-        return f"{home} vs {away} projects with enough scoring volume to justify an aggressive totals angle. The expected goals profile supports the market line being slightly too low."
-    return f"{home} vs {away} projects as a more controlled scoring environment than the market median suggests. The expected goals profile supports a lower-event outcome."
+    return (
+        f"{home} vs {away} projects as a controlled scoring environment after market-blended modelling. "
+        "The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters."
+    )
 
 
 def btts_reasoning(home, away, bet):
-    if bet == "BTTS Yes":
-        return f"Both teams rate with enough attacking involvement to keep a two-sided scoring game live. Recent BTTS tendencies and projected scoring output both support the Yes side."
-    return f"The matchup does not rate as strong enough for reliable two-sided scoring. At least one attack looks weaker than the market median is pricing."
+    return (
+        "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. "
+        "The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters."
+    )
 
 
 def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line, reasoning):
+    if bucket not in BUCKETS:
+        return None
+
     cfg = BUCKETS[bucket]
     median_odds = median_or_none(market_odds)
+
     if median_odds is None:
         return None
 
@@ -880,12 +1108,20 @@ def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line,
 
     if bookmakers_used < cfg["min_bookmakers"]:
         return None
+
     if median_odds < cfg["odds_min"] or median_odds > cfg["odds_max"]:
         return None
+
     if edge < cfg["min_edge"]:
         return None
 
-    confidence_score = calculate_confidence_score(model_prob, implied_prob, bookmakers_used, edge)
+    confidence_score = calculate_confidence_score(
+        model_prob=model_prob,
+        implied_prob=implied_prob,
+        bookmakers_used=bookmakers_used,
+        edge=edge,
+    )
+
     quality_score = calculate_quality_score(
         bucket=bucket,
         edge=edge,
@@ -893,7 +1129,7 @@ def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line,
         odds=median_odds,
         confidence_score=confidence_score,
         model_prob=model_prob,
-        implied_prob=implied_prob
+        implied_prob=implied_prob,
     )
 
     fixture_info = fixture["fixture"]
@@ -923,8 +1159,51 @@ def build_generic_candidate(bucket, fixture, market_odds, model_prob, bet, line,
         "confidence_score": confidence_score,
         "quality_score": quality_score,
         "reasoning": reasoning,
-        "result": "pending"
+        "result": "pending",
     }
+
+
+def apply_model_safety_layers(bucket, raw_prob, league_learning, league_name, home_stats, away_stats, market_odds):
+    # 1. Močnejši market blend v free-plan mode.
+    if bucket == "draw":
+        market_strength = 0.18 if FREE_PLAN_MODE else 0.06
+    elif bucket == "under_2_5":
+        market_strength = 0.34 if FREE_PLAN_MODE else 0.16
+    elif bucket == "under_3_5":
+        market_strength = 0.30 if FREE_PLAN_MODE else 0.14
+    elif bucket == "btts_no":
+        market_strength = 0.32 if FREE_PLAN_MODE else 0.15
+    else:
+        market_strength = 0.20 if FREE_PLAN_MODE else 0.10
+
+    prob = soft_market_blend(raw_prob, market_odds, strength=market_strength)
+
+    # 2. Data-quality shrinkage, ker FREE_PLAN_MODE nima realne forme.
+    prob = apply_data_quality_shrinkage(
+        prob=prob,
+        bucket=bucket,
+        home_stats=home_stats,
+        away_stats=away_stats,
+        market_odds=market_odds,
+    )
+
+    # 3. League learning je po novem manj agresiven.
+    prob = apply_league_learning(
+        model_prob=prob,
+        league_learning=league_learning,
+        league_name=league_name,
+        bucket=bucket,
+    )
+
+    # 4. Trdi capi proti fake edge-u.
+    prob = cap_bucket_probability(
+        prob=prob,
+        bucket=bucket,
+        home_stats=home_stats,
+        away_stats=away_stats,
+    )
+
+    return prob
 
 
 def build_lab_predictions():
@@ -967,8 +1246,9 @@ def build_lab_predictions():
             if not fixture_id or not home or not away or not home_id or not away_id:
                 continue
 
-            # First get odds. If no usable odds, skip fixture and save requests.
+            # Najprej odds, da ne kuri prediction requestov za tekme brez uporabnih marketov.
             odds = get_fixture_odds_markets(fixture_id, home, away)
+
             if not has_any_supported_odds(odds):
                 continue
 
@@ -976,65 +1256,132 @@ def build_lab_predictions():
             away_stats = get_recent_team_form(away_id)
             pred = get_fixture_prediction_data(fixture_id)
 
-            expected_home, expected_away, expected_total = calculate_expected_goals(home_stats, away_stats, pred, league_name)
+            expected_home, expected_away, expected_total = calculate_expected_goals(
+                home_stats=home_stats,
+                away_stats=away_stats,
+                pred=pred,
+                league_name=league_name,
+            )
 
-            h2h_probs = get_h2h_probs(expected_home, expected_away, pred, league_name)
-            total_probs = get_total_probs(expected_total, league_name)
-            btts_probs = get_btts_probs(expected_home, expected_away, home_stats, away_stats, league_name)
+            h2h_probs = get_h2h_probs(
+                expected_home=expected_home,
+                expected_away=expected_away,
+                pred=pred,
+                league_name=league_name,
+            )
 
-            h2h_probs["home"] = soft_market_blend(h2h_probs["home"], odds["h2h"]["home"], strength=0.08)
-            h2h_probs["draw"] = soft_market_blend(h2h_probs["draw"], odds["h2h"]["draw"], strength=0.06)
-            h2h_probs["away"] = soft_market_blend(h2h_probs["away"], odds["h2h"]["away"], strength=0.08)
+            total_probs = get_total_probs(
+                expected_total=expected_total,
+                league_name=league_name,
+            )
 
-            total_probs["over_2_5"] = soft_market_blend(total_probs["over_2_5"], odds["totals"][2.5]["over"], strength=0.16)
-            total_probs["under_2_5"] = soft_market_blend(total_probs["under_2_5"], odds["totals"][2.5]["under"], strength=0.16)
-            total_probs["over_3_5"] = soft_market_blend(total_probs["over_3_5"], odds["totals"][3.5]["over"], strength=0.14)
-            total_probs["under_3_5"] = soft_market_blend(total_probs["under_3_5"], odds["totals"][3.5]["under"], strength=0.14)
+            btts_probs = get_btts_probs(
+                expected_home=expected_home,
+                expected_away=expected_away,
+                home_stats=home_stats,
+                away_stats=away_stats,
+                league_name=league_name,
+            )
 
-            btts_probs["btts_yes"] = soft_market_blend(btts_probs["btts_yes"], odds["btts"]["yes"], strength=0.15)
-            btts_probs["btts_no"] = soft_market_blend(btts_probs["btts_no"], odds["btts"]["no"], strength=0.15)
+            # Draw
+            if "draw" in BUCKETS:
+                draw_prob = apply_model_safety_layers(
+                    bucket="draw",
+                    raw_prob=h2h_probs["draw"],
+                    league_learning=league_learning,
+                    league_name=league_name,
+                    home_stats=home_stats,
+                    away_stats=away_stats,
+                    market_odds=odds["h2h"]["draw"],
+                )
 
-            h2h_probs["home"] = apply_league_learning(h2h_probs["home"], league_learning, league_name, "home")
-            h2h_probs["draw"] = apply_league_learning(h2h_probs["draw"], league_learning, league_name, "draw")
-            h2h_probs["away"] = apply_league_learning(h2h_probs["away"], league_learning, league_name, "away")
+                d = build_generic_candidate(
+                    bucket="draw",
+                    fixture=fixture,
+                    market_odds=odds["h2h"]["draw"],
+                    model_prob=draw_prob,
+                    bet="Draw",
+                    line=None,
+                    reasoning=h2h_reasoning(home, away, "Draw"),
+                )
 
-            total_probs["over_2_5"] = apply_league_learning(total_probs["over_2_5"], league_learning, league_name, "over_2_5")
-            total_probs["under_2_5"] = apply_league_learning(total_probs["under_2_5"], league_learning, league_name, "under_2_5")
-            total_probs["over_3_5"] = apply_league_learning(total_probs["over_3_5"], league_learning, league_name, "over_3_5")
-            total_probs["under_3_5"] = apply_league_learning(total_probs["under_3_5"], league_learning, league_name, "under_3_5")
+                if d:
+                    candidates["draw"].append(d)
 
-            btts_probs["btts_yes"] = apply_league_learning(btts_probs["btts_yes"], league_learning, league_name, "btts_yes")
-            btts_probs["btts_no"] = apply_league_learning(btts_probs["btts_no"], league_learning, league_name, "btts_no")
+            # Under 2.5
+            if "under_2_5" in BUCKETS:
+                u25_prob = apply_model_safety_layers(
+                    bucket="under_2_5",
+                    raw_prob=total_probs["under_2_5"],
+                    league_learning=league_learning,
+                    league_name=league_name,
+                    home_stats=home_stats,
+                    away_stats=away_stats,
+                    market_odds=odds["totals"][2.5]["under"],
+                )
 
-            h = build_generic_candidate("home", fixture, odds["h2h"]["home"], h2h_probs["home"], home, None, h2h_reasoning(home, away, home))
-            d = build_generic_candidate("draw", fixture, odds["h2h"]["draw"], h2h_probs["draw"], "Draw", None, h2h_reasoning(home, away, "Draw"))
-            a = build_generic_candidate("away", fixture, odds["h2h"]["away"], h2h_probs["away"], away, None, h2h_reasoning(home, away, away))
-            if h:
-                candidates["home"].append(h)
-            if d:
-                candidates["draw"].append(d)
-            if a:
-                candidates["away"].append(a)
+                u25 = build_generic_candidate(
+                    bucket="under_2_5",
+                    fixture=fixture,
+                    market_odds=odds["totals"][2.5]["under"],
+                    model_prob=u25_prob,
+                    bet="Under 2.5",
+                    line=2.5,
+                    reasoning=totals_reasoning(home, away, "Under 2.5"),
+                )
 
-            o25 = build_generic_candidate("over_2_5", fixture, odds["totals"][2.5]["over"], total_probs["over_2_5"], "Over 2.5", 2.5, totals_reasoning(home, away, "Over 2.5"))
-            u25 = build_generic_candidate("under_2_5", fixture, odds["totals"][2.5]["under"], total_probs["under_2_5"], "Under 2.5", 2.5, totals_reasoning(home, away, "Under 2.5"))
-            o35 = build_generic_candidate("over_3_5", fixture, odds["totals"][3.5]["over"], total_probs["over_3_5"], "Over 3.5", 3.5, totals_reasoning(home, away, "Over 3.5"))
-            u35 = build_generic_candidate("under_3_5", fixture, odds["totals"][3.5]["under"], total_probs["under_3_5"], "Under 3.5", 3.5, totals_reasoning(home, away, "Under 3.5"))
-            if o25:
-                candidates["over_2_5"].append(o25)
-            if u25:
-                candidates["under_2_5"].append(u25)
-            if o35:
-                candidates["over_3_5"].append(o35)
-            if u35:
-                candidates["under_3_5"].append(u35)
+                if u25:
+                    candidates["under_2_5"].append(u25)
 
-            by = build_generic_candidate("btts_yes", fixture, odds["btts"]["yes"], btts_probs["btts_yes"], "BTTS Yes", None, btts_reasoning(home, away, "BTTS Yes"))
-            bn = build_generic_candidate("btts_no", fixture, odds["btts"]["no"], btts_probs["btts_no"], "BTTS No", None, btts_reasoning(home, away, "BTTS No"))
-            if by:
-                candidates["btts_yes"].append(by)
-            if bn:
-                candidates["btts_no"].append(bn)
+            # Under 3.5
+            if "under_3_5" in BUCKETS:
+                u35_prob = apply_model_safety_layers(
+                    bucket="under_3_5",
+                    raw_prob=total_probs["under_3_5"],
+                    league_learning=league_learning,
+                    league_name=league_name,
+                    home_stats=home_stats,
+                    away_stats=away_stats,
+                    market_odds=odds["totals"][3.5]["under"],
+                )
+
+                u35 = build_generic_candidate(
+                    bucket="under_3_5",
+                    fixture=fixture,
+                    market_odds=odds["totals"][3.5]["under"],
+                    model_prob=u35_prob,
+                    bet="Under 3.5",
+                    line=3.5,
+                    reasoning=totals_reasoning(home, away, "Under 3.5"),
+                )
+
+                if u35:
+                    candidates["under_3_5"].append(u35)
+
+            # BTTS No
+            if "btts_no" in BUCKETS:
+                btts_no_prob = apply_model_safety_layers(
+                    bucket="btts_no",
+                    raw_prob=btts_probs["btts_no"],
+                    league_learning=league_learning,
+                    league_name=league_name,
+                    home_stats=home_stats,
+                    away_stats=away_stats,
+                    market_odds=odds["btts"]["no"],
+                )
+
+                bn = build_generic_candidate(
+                    bucket="btts_no",
+                    fixture=fixture,
+                    market_odds=odds["btts"]["no"],
+                    model_prob=btts_no_prob,
+                    bet="BTTS No",
+                    line=None,
+                    reasoning=btts_reasoning(home, away, "BTTS No"),
+                )
+
+                if bn:
+                    candidates["btts_no"].append(bn)
 
         except Exception as e:
             debug(f"FIXTURE BUILD ERROR: {e}")
@@ -1046,18 +1393,26 @@ def build_lab_predictions():
     ordered_bucket_candidates = {
         bucket_name: sorted(
             candidates.get(bucket_name, []),
-            key=lambda x: (x["quality_score"], x["confidence_score"], x["edge"], x["odds"]),
-            reverse=True
+            key=lambda x: (
+                x["quality_score"],
+                x["confidence_score"],
+                x["edge"],
+                x["bookmakers_used"],
+                x["odds"],
+            ),
+            reverse=True,
         )
         for bucket_name in BUCKETS
     }
 
+    # En sam selection pass. Ni več drugega pass-a, ki povečuje exposure.
     for bucket_name, cfg in BUCKETS.items():
         for candidate in ordered_bucket_candidates[bucket_name]:
             if len(selected_by_bucket[bucket_name]) >= cfg["limit"]:
                 break
 
             fixture_id = candidate["fixture_id"]
+
             if fixture_pick_counts[fixture_id] >= MAX_PICKS_PER_FIXTURE:
                 continue
 
@@ -1069,24 +1424,6 @@ def build_lab_predictions():
             selected_all.append(candidate)
             fixture_pick_counts[fixture_id] += 1
 
-    for bucket_name, cfg in BUCKETS.items():
-        already_ids = {p["pick_id"] for p in selected_by_bucket[bucket_name]}
-        for candidate in ordered_bucket_candidates[bucket_name]:
-            if len(selected_by_bucket[bucket_name]) >= cfg["limit"]:
-                break
-
-            if candidate["pick_id"] in already_ids:
-                continue
-
-            fixture_id = candidate["fixture_id"]
-            if fixture_pick_counts[fixture_id] >= (MAX_PICKS_PER_FIXTURE + 1):
-                continue
-
-            selected_by_bucket[bucket_name].append(candidate)
-            selected_all.append(candidate)
-            fixture_pick_counts[fixture_id] += 1
-            already_ids.add(candidate["pick_id"])
-
     for bucket_name in BUCKETS:
         debug(
             f"FINAL BUCKET {bucket_name}: {len(selected_by_bucket[bucket_name])} picks "
@@ -1095,38 +1432,55 @@ def build_lab_predictions():
 
     return {
         "generated_at": datetime.now(tz).isoformat(),
-        "model": "AI77 Lab Buckets v3 + auto-learning + free-plan mode",
+        "model": "AI77 Lab Buckets v3.1 conservative + shrinkage + free-plan mode",
         "stake_mode": "flat_1_unit",
         "source": "API-Football",
         "timezone": TZ_NAME,
-        "window_hours": {"min": TIME_WINDOW_MIN_HOURS, "max": TIME_WINDOW_MAX_HOURS},
+        "window_hours": {
+            "min": TIME_WINDOW_MIN_HOURS,
+            "max": TIME_WINDOW_MAX_HOURS,
+        },
         "learning": {
             "enabled": True,
             "min_sample": MIN_LEAGUE_LEARNING_SAMPLE,
             "full_sample": FULL_LEAGUE_LEARNING_SAMPLE,
             "max_adjustment": MAX_LEAGUE_LEARNING_ADJUSTMENT,
-            "league_count": len(league_learning)
+            "league_count": len(league_learning),
         },
         "free_plan_mode": {
             "enabled": FREE_PLAN_MODE,
             "max_fixtures_to_process": MAX_FIXTURES_TO_PROCESS,
-            "api_min_interval_seconds": API_MIN_INTERVAL_SECONDS
+            "api_min_interval_seconds": API_MIN_INTERVAL_SECONDS,
+            "note": "Team form is fallback-only in free-plan mode; model uses stronger market blend and probability shrinkage.",
         },
-        "buckets": selected_by_bucket
+        "risk_controls": {
+            "max_picks_per_fixture": MAX_PICKS_PER_FIXTURE,
+            "enabled_buckets": list(BUCKETS.keys()),
+            "correlation_filter": True,
+            "probability_shrinkage": True,
+            "probability_caps": True,
+        },
+        "buckets": selected_by_bucket,
     }
 
 
 def append_to_lab_results(predictions_payload):
     history = load_json_file(LAB_RESULTS_FILE, [])
+
     if not isinstance(history, list):
         history = []
 
-    existing_ids = {item.get("pick_id") for item in history if isinstance(item, dict)}
+    existing_ids = {
+        item.get("pick_id")
+        for item in history
+        if isinstance(item, dict)
+    }
 
     for picks in predictions_payload.get("buckets", {}).values():
         for pick in picks:
             if pick["pick_id"] in existing_ids:
                 continue
+
             history.append(pick.copy())
             existing_ids.add(pick["pick_id"])
 
@@ -1137,6 +1491,7 @@ def main():
     payload = build_lab_predictions()
     save_json_file(LAB_PREDICTIONS_FILE, payload)
     append_to_lab_results(payload)
+
     total_picks = sum(len(v) for v in payload["buckets"].values())
     debug(f"SAVED {LAB_PREDICTIONS_FILE} with {total_picks} picks.")
 
