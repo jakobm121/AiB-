@@ -1,8 +1,8 @@
 {
   "totals": {
-    "picks": 11,
+    "picks": 18,
     "settled_picks": 11,
-    "pending_picks": 0,
+    "pending_picks": 7,
     "wins": 7,
     "losses": 4,
     "storno": 0,
@@ -13,9 +13,9 @@
   },
   "bucket_stats": [
     {
-      "picks": 9,
+      "picks": 15,
       "settled_picks": 9,
-      "pending_picks": 0,
+      "pending_picks": 6,
       "wins": 7,
       "losses": 2,
       "storno": 0,
@@ -26,9 +26,9 @@
       "bucket": "over_main_total"
     },
     {
-      "picks": 2,
+      "picks": 3,
       "settled_picks": 2,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 0,
       "losses": 2,
       "storno": 0,
@@ -54,9 +54,9 @@
       "league": "VHL"
     },
     {
-      "picks": 2,
+      "picks": 4,
       "settled_picks": 2,
-      "pending_picks": 0,
+      "pending_picks": 2,
       "wins": 2,
       "losses": 0,
       "storno": 0,
@@ -80,9 +80,9 @@
       "league": "NHL"
     },
     {
-      "picks": 1,
+      "picks": 3,
       "settled_picks": 1,
-      "pending_picks": 0,
+      "pending_picks": 2,
       "wins": 1,
       "losses": 0,
       "storno": 0,
@@ -91,6 +91,32 @@
       "roi_percent": 81.0,
       "avg_odds": 1.81,
       "league": "WCH IA"
+    },
+    {
+      "picks": 1,
+      "settled_picks": 0,
+      "pending_picks": 1,
+      "wins": 0,
+      "losses": 0,
+      "storno": 0,
+      "profit_units": 0,
+      "hit_rate_percent": 0.0,
+      "roi_percent": 0.0,
+      "avg_odds": 0.0,
+      "league": "DEL"
+    },
+    {
+      "picks": 1,
+      "settled_picks": 0,
+      "pending_picks": 1,
+      "wins": 0,
+      "losses": 0,
+      "storno": 0,
+      "profit_units": 0,
+      "hit_rate_percent": 0.0,
+      "roi_percent": 0.0,
+      "avg_odds": 0.0,
+      "league": "MHL"
     },
     {
       "picks": 2,
@@ -119,9 +145,9 @@
       "league": "AHL"
     },
     {
-      "picks": 1,
+      "picks": 2,
       "settled_picks": 1,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 0,
       "losses": 1,
       "storno": 0,
