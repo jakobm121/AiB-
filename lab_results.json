@@ -19,7 +19,7 @@
     "confidence_score": 50.7,
     "quality_score": 65.8,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "c87bb3eccab7932d69fe0b34e21aa11f",
@@ -41,7 +41,7 @@
     "confidence_score": 51.1,
     "quality_score": 64.7,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f025bf94bb4eb9de4886f58535f9ae55",
@@ -63,7 +63,7 @@
     "confidence_score": 73.3,
     "quality_score": 73.2,
     "reasoning": "Persib Bandung vs PSIM Yogyakarta projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "5ac135f3d113c56b81b95cf8e4a35934",
@@ -85,7 +85,7 @@
     "confidence_score": 62.5,
     "quality_score": 63.7,
     "reasoning": "PSM Makassar vs Bhayangkara FC projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2467becfe4b076d2f8d5426ff48e7afe",
@@ -107,7 +107,7 @@
     "confidence_score": 59.0,
     "quality_score": 60.2,
     "reasoning": "Persijap vs Persija projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "ff4bc83ceaf6fd5e4e8616af9809466d",
@@ -129,7 +129,7 @@
     "confidence_score": 58.7,
     "quality_score": 72.0,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e904b1528a7b519ae48a98a940cd0ef9",
@@ -151,7 +151,7 @@
     "confidence_score": 53.6,
     "quality_score": 68.5,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "3aaef5226548c8c289ea7e767c2f9ad3",
@@ -173,7 +173,7 @@
     "confidence_score": 63.0,
     "quality_score": 64.1,
     "reasoning": "Ruh Lviv vs Zorya Luhansk projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "cdd4431a9ba25c75cf67ff2dff35c380",
@@ -217,7 +217,7 @@
     "confidence_score": 59.1,
     "quality_score": 60.5,
     "reasoning": "Küçükçekmece Sinopspor vs Çorluspor 1947 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4d170b94ec5ca8e0c7cc2c3c504ddf4f",
@@ -239,6 +239,6 @@
     "confidence_score": 52.6,
     "quality_score": 57.2,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
