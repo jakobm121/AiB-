@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-03T21:16:56.674158+02:00",
+  "generated_at": "2026-05-04T11:30:37.354165+02:00",
   "model": "AI77 Hockey Totals Free Plan v2",
   "stake_mode": "flat_1_unit",
   "source": "API-Hockey",
@@ -23,60 +23,7 @@
     ]
   },
   "buckets": {
-    "over_main_total": [
-      {
-        "pick_id": "6f710c2446dadbb435546e402293b047",
-        "game_id": 425074,
-        "fixture_id": 425074,
-        "bucket": "over_main_total",
-        "date": "2026-05-03",
-        "time": "22:00",
-        "sport": "hockey",
-        "league": "AHL",
-        "match": "Chicago Wolves - Texas Stars",
-        "bet": "Over 5.5",
-        "odds": 1.92,
-        "market_odds_median": 1.92,
-        "model_prob": 0.6947,
-        "implied_prob": 0.5208,
-        "edge": 0.1738,
-        "goal_edge": 0.78,
-        "expected_total": 6.28,
-        "bookmakers_used": 9,
-        "line": 5.5,
-        "stake": 1,
-        "confidence_score": 92.5,
-        "quality_score": 92.3,
-        "reasoning": "Chicago Wolves vs Texas Stars projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-        "result": "pending"
-      },
-      {
-        "pick_id": "21c8aeb729088d926f3f5d0baa4782e0",
-        "game_id": 424451,
-        "fixture_id": 424451,
-        "bucket": "over_main_total",
-        "date": "2026-05-03",
-        "time": "22:00",
-        "sport": "hockey",
-        "league": "AHL",
-        "match": "Toronto Marlies - Laval Rocket",
-        "bet": "Over 5.5",
-        "odds": 1.93,
-        "market_odds_median": 1.93,
-        "model_prob": 0.6943,
-        "implied_prob": 0.5181,
-        "edge": 0.1762,
-        "goal_edge": 0.78,
-        "expected_total": 6.28,
-        "bookmakers_used": 9,
-        "line": 5.5,
-        "stake": 1,
-        "confidence_score": 92.5,
-        "quality_score": 92.2,
-        "reasoning": "Toronto Marlies vs Laval Rocket projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-        "result": "pending"
-      }
-    ],
+    "over_main_total": [],
     "under_main_total": []
   }
 }
