@@ -219,7 +219,9 @@
     "confidence_score": 85.8,
     "quality_score": 87.0,
     "reasoning": "Adler Mannheim vs Eisbaren Berlin projects above the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-04T02:07:34.726023+02:00",
+    "final_score": "1:4"
   },
   {
     "pick_id": "144dfddf84c7c4e9adf64841b24cde5f",
@@ -245,7 +247,9 @@
     "confidence_score": 71.8,
     "quality_score": 86.3,
     "reasoning": "China vs Spain projects below the market total in the free-plan model. The signal is based on league baseline, main total line, bookmaker coverage, and median market pricing.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-04T02:07:34.726064+02:00",
+    "final_score": "3:0"
   },
   {
     "pick_id": "21c8aeb729088d926f3f5d0baa4782e0",
@@ -271,7 +275,9 @@
     "confidence_score": 92.5,
     "quality_score": 92.2,
     "reasoning": "Toronto Marlies vs Laval Rocket projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-04T02:07:34.726085+02:00",
+    "final_score": "6:2"
   },
   {
     "pick_id": "6f710c2446dadbb435546e402293b047",
@@ -297,7 +303,9 @@
     "confidence_score": 92.4,
     "quality_score": 92.2,
     "reasoning": "Chicago Wolves vs Texas Stars projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "win",
+    "settled_at": "2026-05-04T02:07:34.726104+02:00",
+    "final_score": "4:5"
   },
   {
     "pick_id": "d6151ab4ec98714361912e89c3fa9422",
@@ -323,7 +331,9 @@
     "confidence_score": 91.9,
     "quality_score": 91.7,
     "reasoning": "Syracuse Crunch vs Cleveland Monsters projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-04T02:07:34.726123+02:00",
+    "final_score": "1:2"
   },
   {
     "pick_id": "2903e1794c2298765d60e6d8dc4f7f93",
@@ -349,6 +359,8 @@
     "confidence_score": 78.8,
     "quality_score": 81.4,
     "reasoning": "Manitoba Moose vs Grand Rapids Griffins projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-04T02:07:34.726139+02:00",
+    "final_score": "0:2"
   }
 ]
