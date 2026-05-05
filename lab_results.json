@@ -548,5 +548,27 @@
     "quality_score": 51.9,
     "reasoning": "Duhok vs Naft Maysan projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
     "result": "pending"
+  },
+  {
+    "pick_id": "2b800dadc1d32ef6166d26465cc9e8c2",
+    "fixture_id": 1512374,
+    "bucket": "draw",
+    "date": "2026-05-06",
+    "time": "00:00",
+    "league": "Reserve League",
+    "match": "River Plate Res. - Racing Club Res.",
+    "bet": "Draw",
+    "odds": 3.8,
+    "market_odds_median": 3.8,
+    "model_prob": 0.3241,
+    "implied_prob": 0.2632,
+    "edge": 0.061,
+    "bookmakers_used": 11,
+    "line": null,
+    "stake": 1,
+    "confidence_score": 52.7,
+    "quality_score": 67.8,
+    "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
+    "result": "pending"
   }
 ]
