@@ -195,7 +195,7 @@
     "confidence_score": 62.5,
     "quality_score": 63.7,
     "reasoning": "Hednesford Town vs Rylands projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "d2cc58afe489659180cbc343c9e6d75e",
@@ -261,7 +261,7 @@
     "confidence_score": 52.3,
     "quality_score": 67.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "bd20431cfbcfc75fb52fde844232a17b",
@@ -283,7 +283,7 @@
     "confidence_score": 51.4,
     "quality_score": 64.5,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "b079cafb661a4064a151ff2940200d54",
@@ -305,7 +305,7 @@
     "confidence_score": 79.1,
     "quality_score": 76.1,
     "reasoning": "Sporting CP vs Guimaraes projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f38f2ab1d7e54bb156c3ffd14ae9d493",
@@ -327,7 +327,7 @@
     "confidence_score": 63.0,
     "quality_score": 64.1,
     "reasoning": "San Luis vs Union San Felipe projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "77f8e0a4d309d7ad015fb9bcdc8bf861",
@@ -349,7 +349,7 @@
     "confidence_score": 51.8,
     "quality_score": 54.2,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b5896c94f116669da23862ab12830b6d",
@@ -371,6 +371,6 @@
     "confidence_score": 46.9,
     "quality_score": 49.6,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
