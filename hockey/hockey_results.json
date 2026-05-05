@@ -362,5 +362,31 @@
     "result": "loss",
     "settled_at": "2026-05-04T02:07:34.726139+02:00",
     "final_score": "0:2"
+  },
+  {
+    "pick_id": "54720b65a75790ac88fbeca2af2e0e58",
+    "game_id": 419593,
+    "fixture_id": 419593,
+    "bucket": "under_main_total",
+    "date": "2026-05-05",
+    "time": "13:30",
+    "sport": "hockey",
+    "league": "WCH IB",
+    "match": "Estonia - China",
+    "bet": "Under 6.5",
+    "odds": 1.75,
+    "market_odds_median": 1.75,
+    "model_prob": 0.7823,
+    "implied_prob": 0.5731,
+    "edge": 0.2093,
+    "goal_edge": 1.22,
+    "expected_total": 5.28,
+    "bookmakers_used": 8,
+    "line": 6.5,
+    "stake": 1,
+    "confidence_score": 86.7,
+    "quality_score": 92.7,
+    "reasoning": "Estonia vs China projects below the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
+    "result": "pending"
   }
 ]
