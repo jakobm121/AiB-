@@ -387,6 +387,8 @@
     "confidence_score": 86.7,
     "quality_score": 92.7,
     "reasoning": "Estonia vs China projects below the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-06T02:09:50.151597+02:00",
+    "final_score": "3:4"
   }
 ]
