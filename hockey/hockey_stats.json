@@ -1,8 +1,8 @@
 {
   "totals": {
-    "picks": 14,
+    "picks": 17,
     "settled_picks": 14,
-    "pending_picks": 0,
+    "pending_picks": 3,
     "wins": 6,
     "losses": 8,
     "storno": 0,
@@ -13,9 +13,9 @@
   },
   "bucket_stats": [
     {
-      "picks": 10,
+      "picks": 12,
       "settled_picks": 10,
-      "pending_picks": 0,
+      "pending_picks": 2,
       "wins": 5,
       "losses": 5,
       "storno": 0,
@@ -26,9 +26,9 @@
       "bucket": "over_main_total"
     },
     {
-      "picks": 4,
+      "picks": 5,
       "settled_picks": 4,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 1,
       "losses": 3,
       "storno": 0,
@@ -41,9 +41,9 @@
   ],
   "league_stats": [
     {
-      "picks": 1,
+      "picks": 3,
       "settled_picks": 1,
-      "pending_picks": 0,
+      "pending_picks": 2,
       "wins": 1,
       "losses": 0,
       "storno": 0,
@@ -67,9 +67,9 @@
       "league": "WCH IA"
     },
     {
-      "picks": 7,
+      "picks": 8,
       "settled_picks": 7,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 3,
       "losses": 4,
       "storno": 0,

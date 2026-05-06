@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-06T22:00:38.888490+02:00",
+  "generated_at": "2026-05-07T00:47:45.432832+02:00",
   "model": "AI77 Hockey Totals Free Plan v2",
   "stake_mode": "flat_1_unit",
   "source": "API-Hockey",
@@ -23,7 +23,87 @@
     ]
   },
   "buckets": {
-    "over_main_total": [],
-    "under_main_total": []
+    "over_main_total": [
+      {
+        "pick_id": "e4321ef1ccac4db455e1987b0e15e931",
+        "game_id": 424427,
+        "fixture_id": 424427,
+        "bucket": "over_main_total",
+        "date": "2026-05-07",
+        "time": "03:05",
+        "sport": "hockey",
+        "league": "AHL",
+        "match": "Colorado Eagles - Henderson Silver Knights",
+        "bet": "Over 5.5",
+        "odds": 1.86,
+        "market_odds_median": 1.86,
+        "model_prob": 0.6986,
+        "implied_prob": 0.5376,
+        "edge": 0.1609,
+        "goal_edge": 0.8,
+        "expected_total": 6.3,
+        "bookmakers_used": 9,
+        "line": 5.5,
+        "stake": 1,
+        "confidence_score": 93.3,
+        "quality_score": 93.1,
+        "reasoning": "Colorado Eagles vs Henderson Silver Knights projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
+        "result": "pending"
+      },
+      {
+        "pick_id": "994a3cd7cf9ec35f713a8ed0613b105c",
+        "game_id": 425103,
+        "fixture_id": 425103,
+        "bucket": "over_main_total",
+        "date": "2026-05-07",
+        "time": "03:30",
+        "sport": "hockey",
+        "league": "NHL",
+        "match": "Vegas Golden Knights - Anaheim Ducks",
+        "bet": "Over 5.5",
+        "odds": 1.62,
+        "market_odds_median": 1.62,
+        "model_prob": 0.6631,
+        "implied_prob": 0.6192,
+        "edge": 0.0439,
+        "goal_edge": 0.64,
+        "expected_total": 6.14,
+        "bookmakers_used": 10,
+        "line": 5.5,
+        "stake": 1,
+        "confidence_score": 80.4,
+        "quality_score": 66.5,
+        "reasoning": "Vegas Golden Knights vs Anaheim Ducks projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
+        "result": "pending"
+      }
+    ],
+    "under_main_total": [
+      {
+        "pick_id": "c0abdb1274957ce3c8183eece387d80c",
+        "game_id": 425102,
+        "fixture_id": 425102,
+        "bucket": "under_main_total",
+        "date": "2026-05-07",
+        "time": "01:00",
+        "sport": "hockey",
+        "league": "NHL",
+        "match": "Buffalo Sabres - Montreal Canadiens",
+        "bet": "Under 6.5",
+        "odds": 1.6,
+        "market_odds_median": 1.6,
+        "model_prob": 0.6608,
+        "implied_prob": 0.625,
+        "edge": 0.0358,
+        "goal_edge": 0.63,
+        "expected_total": 5.87,
+        "bookmakers_used": 11,
+        "line": 6.5,
+        "stake": 1,
+        "confidence_score": 76.0,
+        "quality_score": 63.6,
+        "reasoning": "Buffalo Sabres vs Montreal Canadiens projects below the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
+        "result": "pending"
+      }
+    ]
   }
 }
