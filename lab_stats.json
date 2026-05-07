@@ -3,17 +3,17 @@
   "stats_generated": true,
   "overall": {
     "picks": 43,
-    "settled_picks": 32,
-    "wins": 14,
-    "losses": 18,
+    "settled_picks": 42,
+    "wins": 18,
+    "losses": 24,
     "storno": 0,
-    "pending": 11,
+    "pending": 1,
     "avg_odds": 2.55,
     "avg_edge": 0.0941,
-    "profit": 5.58,
-    "staked": 32.0,
-    "hit_rate": 43.75,
-    "roi": 17.44
+    "profit": 7.13,
+    "staked": 42.0,
+    "hit_rate": 42.86,
+    "roi": 16.98
   },
   "by_bucket": {
     "home": {
@@ -32,17 +32,17 @@
     },
     "draw": {
       "picks": 15,
-      "settled_picks": 11,
-      "wins": 6,
-      "losses": 5,
+      "settled_picks": 15,
+      "wins": 8,
+      "losses": 7,
       "storno": 0,
-      "pending": 4,
+      "pending": 0,
       "avg_odds": 3.8,
       "avg_edge": 0.0659,
-      "profit": 11.48,
-      "staked": 11.0,
-      "hit_rate": 54.55,
-      "roi": 104.36
+      "profit": 15.1,
+      "staked": 15.0,
+      "hit_rate": 53.33,
+      "roi": 100.67
     },
     "away": {
       "picks": 0,
@@ -74,17 +74,17 @@
     },
     "under_2_5": {
       "picks": 22,
-      "settled_picks": 17,
-      "wins": 7,
-      "losses": 10,
+      "settled_picks": 22,
+      "wins": 8,
+      "losses": 14,
       "storno": 0,
-      "pending": 5,
+      "pending": 0,
       "avg_odds": 1.91,
       "avg_edge": 0.1149,
-      "profit": -3.42,
-      "staked": 17.0,
-      "hit_rate": 41.18,
-      "roi": -20.12
+      "profit": -6.34,
+      "staked": 22.0,
+      "hit_rate": 36.36,
+      "roi": -28.82
     },
     "btts_yes": {
       "picks": 0,
@@ -102,17 +102,17 @@
     },
     "btts_no": {
       "picks": 5,
-      "settled_picks": 3,
-      "wins": 0,
+      "settled_picks": 4,
+      "wins": 1,
       "losses": 3,
       "storno": 0,
-      "pending": 2,
+      "pending": 1,
       "avg_odds": 1.8,
       "avg_edge": 0.0866,
-      "profit": -3.0,
-      "staked": 3.0,
-      "hit_rate": 0.0,
-      "roi": -100.0
+      "profit": -2.15,
+      "staked": 4.0,
+      "hit_rate": 25.0,
+      "roi": -53.75
     },
     "over_3_5": {
       "picks": 0,

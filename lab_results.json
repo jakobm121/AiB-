@@ -591,7 +591,7 @@
     "confidence_score": 60.9,
     "quality_score": 72.4,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "5c509fcc67441398237dc28cce1f067d",
@@ -701,7 +701,7 @@
     "confidence_score": 50.4,
     "quality_score": 64.1,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "c410700196f4536310538fc1bc66e68d",
@@ -723,7 +723,7 @@
     "confidence_score": 75.1,
     "quality_score": 76.8,
     "reasoning": "Al Wahda FC vs Al-Wasl FC projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "da2ba28ce15b4435fbe8f0b2754f8487",
@@ -745,7 +745,7 @@
     "confidence_score": 67.5,
     "quality_score": 69.2,
     "reasoning": "Shkëndija Haraçinë vs Shkendija projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "63ab589d4ddc0205f71f26e9b42cfb9b",
@@ -811,7 +811,7 @@
     "confidence_score": 51.6,
     "quality_score": 66.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "25af239c320c6149d4f2b20114733f59",
@@ -833,7 +833,7 @@
     "confidence_score": 58.9,
     "quality_score": 64.9,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "81fb63ae89c00726d31a04fbb228272d",
@@ -855,7 +855,7 @@
     "confidence_score": 56.5,
     "quality_score": 57.6,
     "reasoning": "Central Córdoba SdE Res. vs Lanús Res. projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d33abfdbdec320f820131be918698f62",
@@ -877,7 +877,7 @@
     "confidence_score": 51.4,
     "quality_score": 52.5,
     "reasoning": "Talleres Córdoba Res. vs Atlético Tucumán Res. projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7f16a2aa5a299337e902d40c32a54b0c",
@@ -899,7 +899,7 @@
     "confidence_score": 51.2,
     "quality_score": 52.4,
     "reasoning": "Portmore United vs Tivoli Gardens projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "226bb8af349ec7b53f74087fd6057dfe",
@@ -921,7 +921,7 @@
     "confidence_score": 52.3,
     "quality_score": 55.2,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "91755e9cca0fb8b7f2ac29560cf818f6",
