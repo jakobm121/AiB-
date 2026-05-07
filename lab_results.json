@@ -944,5 +944,27 @@
     "quality_score": 50.6,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
     "result": "pending"
+  },
+  {
+    "pick_id": "7dde01398d5bf93bef0f87ea913239e1",
+    "fixture_id": 1526310,
+    "bucket": "draw",
+    "date": "2026-05-07",
+    "time": "13:00",
+    "league": "C-League",
+    "match": "Svay Rieng - Boeung Ket",
+    "bet": "Draw",
+    "odds": 3.49,
+    "market_odds_median": 3.49,
+    "model_prob": 0.3495,
+    "implied_prob": 0.2865,
+    "edge": 0.0629,
+    "bookmakers_used": 10,
+    "line": null,
+    "stake": 1,
+    "confidence_score": 49.4,
+    "quality_score": 62.1,
+    "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
+    "result": "pending"
   }
 ]
