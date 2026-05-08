@@ -943,7 +943,7 @@
     "confidence_score": 44.5,
     "quality_score": 50.6,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7dde01398d5bf93bef0f87ea913239e1",
@@ -965,7 +965,7 @@
     "confidence_score": 49.4,
     "quality_score": 62.1,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "56ee4c27a26fea49f7be12a115abfe6f",
@@ -987,7 +987,7 @@
     "confidence_score": 74.4,
     "quality_score": 75.4,
     "reasoning": "Al Nasr U23 vs Shabab Al-Ahli Dubai U23 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "b3c944edc8531c6219c301ecab32df96",
@@ -1009,7 +1009,7 @@
     "confidence_score": 66.0,
     "quality_score": 67.5,
     "reasoning": "Al Ain U23 vs Al Sharjah U23 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "1ff0310afc3ffa9e43ed3c2ead0b496d",
@@ -1031,7 +1031,7 @@
     "confidence_score": 63.9,
     "quality_score": 65.1,
     "reasoning": "Al Jazeera vs Al Salt projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "81fd16eb303d827a59f05e1c6ecc1c2e",
@@ -1053,7 +1053,7 @@
     "confidence_score": 63.0,
     "quality_score": 70.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "32da1c5101ea641bb13099327ac2a845",
@@ -1075,7 +1075,7 @@
     "confidence_score": 58.5,
     "quality_score": 68.4,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "29a18116ad8c0dfa5f0989756cc91062",
@@ -1097,7 +1097,7 @@
     "confidence_score": 74.5,
     "quality_score": 75.4,
     "reasoning": "Birmingham Legion vs Miami FC projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "04450c5e8be6f3e214687032eb204447",
@@ -1119,7 +1119,7 @@
     "confidence_score": 61.4,
     "quality_score": 62.9,
     "reasoning": "Vasco da Gama U20 vs Santos U20 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d1e9265be0753184f977987dc4634639",
@@ -1141,7 +1141,7 @@
     "confidence_score": 58.5,
     "quality_score": 59.8,
     "reasoning": "Flamengo U20 vs Palmeiras U20 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "39b3fce6cba7f2fd611f54e25cf18fd5",
@@ -1163,7 +1163,7 @@
     "confidence_score": 56.9,
     "quality_score": 59.6,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "15498282ca08582fae6ceb944684cffd",
@@ -1185,6 +1185,6 @@
     "confidence_score": 49.9,
     "quality_score": 57.3,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   }
 ]
