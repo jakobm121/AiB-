@@ -1,8 +1,8 @@
 {
   "totals": {
-    "picks": 17,
+    "picks": 18,
     "settled_picks": 17,
-    "pending_picks": 0,
+    "pending_picks": 1,
     "wins": 7,
     "losses": 10,
     "storno": 0,
@@ -13,9 +13,9 @@
   },
   "bucket_stats": [
     {
-      "picks": 12,
+      "picks": 13,
       "settled_picks": 12,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 5,
       "losses": 7,
       "storno": 0,
@@ -41,9 +41,9 @@
   ],
   "league_stats": [
     {
-      "picks": 1,
+      "picks": 2,
       "settled_picks": 1,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 1,
       "losses": 0,
       "storno": 0,

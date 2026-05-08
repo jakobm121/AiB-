@@ -474,5 +474,31 @@
     "result": "win",
     "settled_at": "2026-05-08T02:12:00.987808+02:00",
     "final_score": "4:2"
+  },
+  {
+    "pick_id": "a98fc75d2294d9289aaec89bd77a330f",
+    "game_id": 419406,
+    "fixture_id": 419406,
+    "bucket": "over_main_total",
+    "date": "2026-05-08",
+    "time": "19:30",
+    "sport": "hockey",
+    "league": "WCH IA",
+    "match": "Poland - Lithuania",
+    "bet": "Over 4.5",
+    "odds": 1.71,
+    "market_odds_median": 1.71,
+    "model_prob": 0.7421,
+    "implied_prob": 0.5848,
+    "edge": 0.1573,
+    "goal_edge": 1.0,
+    "expected_total": 5.5,
+    "bookmakers_used": 8,
+    "line": 4.5,
+    "stake": 1,
+    "confidence_score": 81.7,
+    "quality_score": 91.6,
+    "reasoning": "Poland vs Lithuania projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
+    "result": "pending"
   }
 ]
