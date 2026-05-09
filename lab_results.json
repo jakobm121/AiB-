@@ -1207,7 +1207,7 @@
     "confidence_score": 60.0,
     "quality_score": 69.8,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "85717ebc71d3d2da5b38077f1eb5858b",
@@ -1251,7 +1251,7 @@
     "confidence_score": 68.0,
     "quality_score": 69.4,
     "reasoning": "Semen Padang vs Persik Kediri projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1de320c459fe94cf8d048f50617de0be",
@@ -1317,7 +1317,7 @@
     "confidence_score": 74.4,
     "quality_score": 75.4,
     "reasoning": "Karkonosze Jelenia Góra vs Goczałkowice Zdrój projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "b44798ba08064739f1ed9c7a699b7df2",
@@ -1339,7 +1339,7 @@
     "confidence_score": 71.1,
     "quality_score": 71.3,
     "reasoning": "Ślęza Wrocław vs Miedź Legnica II projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4b8cb5f7ac537a3a2f17013222b5396b",
@@ -1361,7 +1361,7 @@
     "confidence_score": 71.1,
     "quality_score": 71.3,
     "reasoning": "Blansko vs Uničov projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "280b1d5af5d499c40eb49ea50c353b61",
@@ -1383,7 +1383,7 @@
     "confidence_score": 62.3,
     "quality_score": 74.8,
     "reasoning": "Unie Hlubina vs Zbrojovka Brno II projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "3f7ee3fbdb83942b582d889801064b85",
@@ -1427,7 +1427,7 @@
     "confidence_score": 47.0,
     "quality_score": 53.1,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c64d9be7d3b7b2233a824f7225cbed99",
@@ -1449,7 +1449,7 @@
     "confidence_score": 70.5,
     "quality_score": 81.7,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "5354149108cf7791c1e6518788f1d395",
@@ -1471,7 +1471,7 @@
     "confidence_score": 71.4,
     "quality_score": 75.7,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "ddc95157d0246f0cdfa5a2ff1042834a",
@@ -1493,7 +1493,7 @@
     "confidence_score": 75.5,
     "quality_score": 75.0,
     "reasoning": "Leiknir R. vs Afturelding projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3963487d7ead9d725d1dd9b0b368176b",
@@ -1515,7 +1515,7 @@
     "confidence_score": 81.1,
     "quality_score": 74.7,
     "reasoning": "IA Akranes vs Keflavik projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3b9380764eca990c9188881697ad73cd",
@@ -1537,7 +1537,7 @@
     "confidence_score": 55.5,
     "quality_score": 56.6,
     "reasoning": "UTC Cajamarca vs FC Cajamarca projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3a9a6c753b36e9276d89d4aca2c8424c",
@@ -1559,7 +1559,7 @@
     "confidence_score": 76.1,
     "quality_score": 86.1,
     "reasoning": "IR Reykjavik vs Grindavik projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1113c38bbe3af0e490e2ca09b11bef83",
@@ -1581,6 +1581,6 @@
     "confidence_score": 45.5,
     "quality_score": 50.0,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
