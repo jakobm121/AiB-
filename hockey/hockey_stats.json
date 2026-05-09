@@ -1,28 +1,28 @@
 {
   "totals": {
     "picks": 18,
-    "settled_picks": 17,
-    "pending_picks": 1,
+    "settled_picks": 18,
+    "pending_picks": 0,
     "wins": 7,
-    "losses": 10,
+    "losses": 11,
     "storno": 0,
-    "profit_units": -4.23,
-    "hit_rate_percent": 41.2,
-    "roi_percent": -24.9,
-    "avg_odds": 1.84
+    "profit_units": -5.23,
+    "hit_rate_percent": 38.9,
+    "roi_percent": -29.1,
+    "avg_odds": 1.83
   },
   "bucket_stats": [
     {
       "picks": 13,
-      "settled_picks": 12,
-      "pending_picks": 1,
+      "settled_picks": 13,
+      "pending_picks": 0,
       "wins": 5,
-      "losses": 7,
+      "losses": 8,
       "storno": 0,
-      "profit_units": -2.56,
-      "hit_rate_percent": 41.7,
-      "roi_percent": -21.3,
-      "avg_odds": 1.91,
+      "profit_units": -3.56,
+      "hit_rate_percent": 38.5,
+      "roi_percent": -27.4,
+      "avg_odds": 1.9,
       "bucket": "over_main_total"
     },
     {
@@ -41,19 +41,6 @@
   ],
   "league_stats": [
     {
-      "picks": 2,
-      "settled_picks": 1,
-      "pending_picks": 1,
-      "wins": 1,
-      "losses": 0,
-      "storno": 0,
-      "profit_units": 0.81,
-      "hit_rate_percent": 100.0,
-      "roi_percent": 81.0,
-      "avg_odds": 1.81,
-      "league": "WCH IA"
-    },
-    {
       "picks": 3,
       "settled_picks": 3,
       "pending_picks": 0,
@@ -65,6 +52,19 @@
       "roi_percent": 13.7,
       "avg_odds": 1.68,
       "league": "NHL"
+    },
+    {
+      "picks": 2,
+      "settled_picks": 2,
+      "pending_picks": 0,
+      "wins": 1,
+      "losses": 1,
+      "storno": 0,
+      "profit_units": -0.19,
+      "hit_rate_percent": 50.0,
+      "roi_percent": -9.5,
+      "avg_odds": 1.76,
+      "league": "WCH IA"
     },
     {
       "picks": 8,

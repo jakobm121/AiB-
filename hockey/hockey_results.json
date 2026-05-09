@@ -499,6 +499,8 @@
     "confidence_score": 81.7,
     "quality_score": 91.6,
     "reasoning": "Poland vs Lithuania projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-09T02:14:35.695424+02:00",
+    "final_score": "1:2"
   }
 ]
