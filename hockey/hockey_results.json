@@ -502,5 +502,31 @@
     "result": "loss",
     "settled_at": "2026-05-09T02:14:35.695424+02:00",
     "final_score": "1:2"
+  },
+  {
+    "pick_id": "5b6a5f92fab9b8ada2491375d00d45d9",
+    "game_id": 425125,
+    "fixture_id": 425125,
+    "bucket": "over_main_total",
+    "date": "2026-05-09",
+    "time": "21:00",
+    "sport": "hockey",
+    "league": "AHL",
+    "match": "Laval Rocket - Toronto Marlies",
+    "bet": "Over 5.5",
+    "odds": 1.92,
+    "market_odds_median": 1.92,
+    "model_prob": 0.6947,
+    "implied_prob": 0.5208,
+    "edge": 0.1738,
+    "goal_edge": 0.78,
+    "expected_total": 6.28,
+    "bookmakers_used": 9,
+    "line": 5.5,
+    "stake": 1,
+    "confidence_score": 92.5,
+    "quality_score": 92.3,
+    "reasoning": "Laval Rocket vs Toronto Marlies projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
+    "result": "pending"
   }
 ]

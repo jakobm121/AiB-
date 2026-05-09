@@ -1,8 +1,8 @@
 {
   "totals": {
-    "picks": 18,
+    "picks": 19,
     "settled_picks": 18,
-    "pending_picks": 0,
+    "pending_picks": 1,
     "wins": 7,
     "losses": 11,
     "storno": 0,
@@ -13,9 +13,9 @@
   },
   "bucket_stats": [
     {
-      "picks": 13,
+      "picks": 14,
       "settled_picks": 13,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 5,
       "losses": 8,
       "storno": 0,
@@ -67,9 +67,9 @@
       "league": "WCH IA"
     },
     {
-      "picks": 8,
+      "picks": 9,
       "settled_picks": 8,
-      "pending_picks": 0,
+      "pending_picks": 1,
       "wins": 3,
       "losses": 5,
       "storno": 0,
