@@ -1,0 +1,51 @@
+name: Aggregate totals
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout AiB site repo
+        uses: actions/checkout@v4
+        with:
+          path: AiB
+
+      - name: Checkout Ai data repo
+        uses: actions/checkout@v4
+        with:
+          repository: jakobm121/Ai
+          path: Ai
+          token: ${{ secrets.AI_REPO_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run totals aggregator
+        run: |
+          cd AiB
+          python scripts/aggregate_totals.py
+
+      - name: Commit aggregated totals
+        run: |
+          cd AiB
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add public/data/totals.json
+
+          if git diff --cached --quiet; then
+            echo "No totals changes to commit."
+          else
+            git commit -m "Update aggregated totals"
+            git push
+          fi
