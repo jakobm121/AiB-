@@ -7,12 +7,14 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parents[1]
 
-# Kam aggregator shrani podatke za uradno stran
-OUTPUT_DIR = BASE_DIR / "data" / "public"
+# Kam aggregator shrani podatke za uradno stran:
+# AiB/public/data/...
+OUTPUT_DIR = BASE_DIR / "public" / "data"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# Vir podatkov.
-# Lokalno lahko kasneje nastaviš AI_REPO_DIR na pot do Ai repoja.
+# Vir podatkov:
+# V GitHub Actions bo AI_REPO_DIR=../Ai
+# Lokalno lahko kasneje nastaviš drugače.
 AI_REPO_DIR = os.getenv("AI_REPO_DIR", "../Ai")
 
 SOURCE_PREDICTIONS = Path(AI_REPO_DIR) / "data" / "tennis_totals_predictions.json"
@@ -27,7 +29,6 @@ MAX_DAYS_AHEAD = 3
 
 ALLOWED_BUCKETS = {"total_games"}
 ALLOWED_SIDES = {"under", "over"}
-ALLOWED_RESULTS = {"win", "loss", "void", "push", "pending"}
 
 
 def load_json(path: Path):
@@ -35,8 +36,13 @@ def load_json(path: Path):
         print(f"Missing file: {path}")
         return []
 
-    with path.open("r", encoding="utf-8") as f:
-        data = json.load(f)
+    try:
+        with path.open("r", encoding="utf-8") as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"Could not read JSON: {path}")
+        print(e)
+        return []
 
     if isinstance(data, list):
         return data
@@ -51,6 +57,8 @@ def load_json(path: Path):
 
 
 def save_json(path: Path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+
     with path.open("w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -78,17 +86,23 @@ def normalize_pick(item):
         "fixture_id": item.get("fixture_id") or item.get("event_key"),
         "sport": item.get("sport", "tennis"),
         "model_version": item.get("model_version"),
+
         "date": item.get("date"),
         "time": item.get("time"),
         "event_ts": event_dt.isoformat() if event_dt else None,
+
         "match": item.get("match"),
         "bet": item.get("bet"),
         "bucket": item.get("bucket"),
         "side": item.get("side"),
         "market": item.get("market"),
         "line": item.get("line"),
+
         "odds": item.get("odds"),
         "best_bookmaker": item.get("best_bookmaker"),
+        "market_median_odds": item.get("market_median_odds"),
+        "bookmakers_used": item.get("bookmakers_used"),
+
         "model_prob": item.get("model_prob"),
         "implied_prob": item.get("implied_prob"),
         "edge": item.get("edge"),
@@ -96,13 +110,16 @@ def normalize_pick(item):
         "expected_margin": item.get("expected_margin"),
         "confidence": item.get("confidence"),
         "quality_score": item.get("quality_score"),
+
         "stake": item.get("stake"),
         "stake_label": item.get("stake_label"),
+
         "tournament": item.get("tournament"),
         "round": item.get("round"),
         "event_type": item.get("event_type"),
         "tour_level": item.get("tour_level"),
         "gender": item.get("gender"),
+
         "created_at": item.get("created_at"),
     }
 
@@ -140,32 +157,53 @@ def is_safe_upcoming_pick(item, now):
     if not event_dt:
         return False
 
-    # Ne objavi tekem, ki so se že začele ali se začnejo prehitro
+    # Ne objavi tekem, ki so se že začele ali se začnejo prehitro.
     if event_dt <= now + timedelta(minutes=MIN_MINUTES_BEFORE_START):
         return False
 
-    # Ne objavi predaleč v prihodnost
+    # Ne objavi predaleč v prihodnost.
     if event_dt > now + timedelta(days=MAX_DAYS_AHEAD):
         return False
 
-    # Ne objavi, če je pick že settled ali ima rezultat
+    # Ne objavi, če je pick že settled ali ima rezultat.
     result = item.get("result")
     if result and result != "pending":
         return False
 
-    if item.get("settled_at") or item.get("final_score") or item.get("total_games") is not None:
+    if item.get("settled_at"):
+        return False
+
+    if item.get("final_score"):
+        return False
+
+    if item.get("total_games") is not None:
         return False
 
     return True
 
 
+def pick_sort_score(item):
+    return (
+        item.get("quality_score") or 0,
+        item.get("confidence") or 0,
+        item.get("edge") or 0,
+        item.get("odds") or 0,
+    )
+
+
 def dedupe_picks(items):
     """
     Če se ista tekma pojavi večkrat, pustimo najboljši pick.
+
+    Ključ namenoma NE vključuje line, ker nočemo na strani prikazati
+    iste tekme dvakrat, recimo:
+    OVER 20.5 in OVER 21.5 za isti match.
+
     Prioriteta:
     1. višji quality_score
     2. višji confidence
     3. višji edge
+    4. višja kvota
     """
     best = {}
 
@@ -174,26 +212,15 @@ def dedupe_picks(items):
             item.get("fixture_id") or item.get("event_key"),
             item.get("bucket"),
             item.get("side"),
-            item.get("line"),
         )
 
         old = best.get(key)
+
         if old is None:
             best[key] = item
             continue
 
-        old_score = (
-            old.get("quality_score") or 0,
-            old.get("confidence") or 0,
-            old.get("edge") or 0,
-        )
-        new_score = (
-            item.get("quality_score") or 0,
-            item.get("confidence") or 0,
-            item.get("edge") or 0,
-        )
-
-        if new_score > old_score:
+        if pick_sort_score(item) > pick_sort_score(old):
             best[key] = item
 
     return list(best.values())
@@ -201,6 +228,7 @@ def dedupe_picks(items):
 
 def aggregate_predictions():
     now = datetime.now(TZ)
+
     raw = load_json(SOURCE_PREDICTIONS)
 
     safe = [item for item in raw if is_safe_upcoming_pick(item, now)]
@@ -210,6 +238,8 @@ def aggregate_predictions():
         key=lambda x: (
             parse_event_datetime(x) or datetime.max.replace(tzinfo=TZ),
             -(x.get("quality_score") or 0),
+            -(x.get("confidence") or 0),
+            -(x.get("edge") or 0),
         )
     )
 
@@ -237,14 +267,17 @@ def is_valid_result_pick(item):
 
 def normalize_result(item):
     base = normalize_pick(item)
+
     base.update({
         "result": item.get("result"),
         "profit": item.get("profit"),
         "settled_at": item.get("settled_at"),
         "settled_status": item.get("settled_status"),
+        "event_winner": item.get("event_winner"),
         "final_score": item.get("final_score"),
         "total_games": item.get("total_games"),
     })
+
     return base
 
 
@@ -269,15 +302,22 @@ def aggregate_results():
 
     wins = sum(1 for x in public_items if x.get("result") == "win")
     losses = sum(1 for x in public_items if x.get("result") == "loss")
-    total = wins + losses
+    pushes = sum(1 for x in public_items if x.get("result") in {"push", "void"})
+
+    settled_total = wins + losses
+    all_total = wins + losses + pushes
+
     profit = round(sum(float(x.get("profit") or 0) for x in public_items), 3)
-    roi = round((profit / total) * 100, 2) if total else 0
+    roi = round((profit / settled_total) * 100, 2) if settled_total else 0
+    win_rate = round((wins / settled_total) * 100, 2) if settled_total else 0
 
     stats = {
-        "total_picks": total,
+        "total_picks": all_total,
+        "settled_picks": settled_total,
         "wins": wins,
         "losses": losses,
-        "win_rate": round((wins / total) * 100, 2) if total else 0,
+        "pushes": pushes,
+        "win_rate": win_rate,
         "profit": profit,
         "roi": roi,
         "updated_at": datetime.now(TZ).isoformat(),
