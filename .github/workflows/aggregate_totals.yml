@@ -1,4 +1,4 @@
-name: Aggregate totals
+name: Update Totals Data
 
 on:
   workflow_dispatch:
@@ -9,42 +9,56 @@ permissions:
   contents: write
 
 jobs:
-  aggregate:
+  update-totals:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout AiB site repo
+      - name: Checkout AiB repo
         uses: actions/checkout@v4
         with:
           path: AiB
 
-      - name: Checkout Ai data repo
+      - name: Checkout Ai repo
         uses: actions/checkout@v4
         with:
           repository: jakobm121/Ai
           path: Ai
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
+      - name: Prepare output folder
+        run: |
+          mkdir -p AiB/public/data
+
       - name: Run totals aggregator
         run: |
-          cd AiB
-          python scripts/aggregate_totals.py
+          python AiB/scripts/aggregate_totals.py \
+            --predictions Ai/data/tennis_totals_predictions.json \
+            --results Ai/data/tennis_totals_results.json \
+            --output AiB/public/data/totals.json
 
-      - name: Commit aggregated totals
+      - name: Show generated file
+        run: |
+          echo "AiB public/data:"
+          ls -la AiB/public/data
+          echo "Totals preview:"
+          head -c 1000 AiB/public/data/totals.json || true
+
+      - name: Commit updated totals
         run: |
           cd AiB
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add public/data/totals.json
 
           if git diff --cached --quiet; then
-            echo "No totals changes to commit."
+            echo "No changes to commit"
           else
-            git commit -m "Update aggregated totals"
+            git commit -m "Update totals data"
             git push
           fi
