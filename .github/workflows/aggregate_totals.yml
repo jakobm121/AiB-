@@ -23,7 +23,6 @@ jobs:
         with:
           repository: jakobm121/Ai
           path: Ai
-          token: ${{ secrets.AI_REPO_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v5
