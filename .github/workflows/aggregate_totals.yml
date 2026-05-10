@@ -1,4 +1,4 @@
-name: Update Totals Data
+name: Aggregate Totals
 
 on:
   workflow_dispatch:
@@ -9,16 +9,16 @@ permissions:
   contents: write
 
 jobs:
-  update-totals:
+  aggregate-totals:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout AiB repo
+      - name: Checkout AiB
         uses: actions/checkout@v4
         with:
           path: AiB
 
-      - name: Checkout Ai repo
+      - name: Checkout Ai
         uses: actions/checkout@v4
         with:
           repository: jakobm121/Ai
@@ -29,57 +29,66 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Debug repo files
+      - name: Show files before
         run: |
-          echo "=== ROOT ==="
+          echo "=== root ==="
           ls -la
 
           echo "=== AiB ==="
-          find AiB -maxdepth 3 -type f | sort
+          ls -la AiB
 
-          echo "=== Ai ==="
-          find Ai -maxdepth 4 -type f | sort
+          echo "=== AiB/scripts ==="
+          ls -la AiB/scripts || true
 
-      - name: Prepare output folder
-        run: |
-          mkdir -p AiB/public/data
+          echo "=== Ai/data ==="
+          ls -la Ai/data || true
+
+          echo "=== AiB/public/data before ==="
+          ls -la AiB/public/data || true
 
       - name: Run totals aggregator
         run: |
-          python AiB/scripts/aggregate_totals.py \
-            --predictions Ai/data/tennis_totals_predictions.json \
-            --results Ai/data/tennis_totals_results.json \
-            --output AiB/public/data/totals.json
+          cd AiB
+          AI_REPO_DIR=../Ai python scripts/aggregate_totals.py
 
-      - name: Verify totals output
+      - name: Verify output
         run: |
-          echo "=== AiB/public/data ==="
-          ls -la AiB/public/data || true
+          echo "=== AiB/public/data after ==="
+          ls -la AiB/public/data
 
-          if [ ! -f AiB/public/data/totals.json ]; then
-            echo "ERROR: totals.json was not created."
-            echo "Check paths:"
-            echo "- AiB/scripts/aggregate_totals.py"
-            echo "- Ai/data/tennis_totals_predictions.json"
-            echo "- Ai/data/tennis_totals_results.json"
+          if [ ! -f AiB/public/data/totals_predictions.json ]; then
+            echo "ERROR: totals_predictions.json was not created."
             exit 1
           fi
 
-          echo "totals.json created successfully"
-          head -c 1000 AiB/public/data/totals.json
+          if [ ! -f AiB/public/data/totals_results.json ]; then
+            echo "ERROR: totals_results.json was not created."
+            exit 1
+          fi
 
-      - name: Commit updated totals
+          if [ ! -f AiB/public/data/totals_stats.json ]; then
+            echo "ERROR: totals_stats.json was not created."
+            exit 1
+          fi
+
+          echo "All totals files created."
+          wc -c AiB/public/data/totals_predictions.json
+          wc -c AiB/public/data/totals_results.json
+          wc -c AiB/public/data/totals_stats.json
+
+      - name: Commit updated totals data
         run: |
           cd AiB
 
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/
+          git add public/data/totals_predictions.json public/data/totals_results.json public/data/totals_stats.json
 
           if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update totals data"
-            git push
+            echo "No changes to commit."
+            exit 0
           fi
+
+          git commit -m "Update totals public data"
+          git push
