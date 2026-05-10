@@ -1,27 +1,27 @@
 {
   "totals": {
     "picks": 19,
-    "settled_picks": 18,
-    "pending_picks": 1,
+    "settled_picks": 19,
+    "pending_picks": 0,
     "wins": 7,
-    "losses": 11,
+    "losses": 12,
     "storno": 0,
-    "profit_units": -5.23,
-    "hit_rate_percent": 38.9,
-    "roi_percent": -29.1,
-    "avg_odds": 1.83
+    "profit_units": -6.23,
+    "hit_rate_percent": 36.8,
+    "roi_percent": -32.8,
+    "avg_odds": 1.84
   },
   "bucket_stats": [
     {
       "picks": 14,
-      "settled_picks": 13,
-      "pending_picks": 1,
+      "settled_picks": 14,
+      "pending_picks": 0,
       "wins": 5,
-      "losses": 8,
+      "losses": 9,
       "storno": 0,
-      "profit_units": -3.56,
-      "hit_rate_percent": 38.5,
-      "roi_percent": -27.4,
+      "profit_units": -4.56,
+      "hit_rate_percent": 35.7,
+      "roi_percent": -32.6,
       "avg_odds": 1.9,
       "bucket": "over_main_total"
     },
@@ -68,15 +68,15 @@
     },
     {
       "picks": 9,
-      "settled_picks": 8,
-      "pending_picks": 1,
+      "settled_picks": 9,
+      "pending_picks": 0,
       "wins": 3,
-      "losses": 5,
+      "losses": 6,
       "storno": 0,
-      "profit_units": -2.18,
-      "hit_rate_percent": 37.5,
-      "roi_percent": -27.3,
-      "avg_odds": 2.0,
+      "profit_units": -3.18,
+      "hit_rate_percent": 33.3,
+      "roi_percent": -35.3,
+      "avg_odds": 1.99,
       "league": "AHL"
     },
     {

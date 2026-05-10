@@ -527,6 +527,8 @@
     "confidence_score": 92.5,
     "quality_score": 92.3,
     "reasoning": "Laval Rocket vs Toronto Marlies projects above the main market total in the AI77 hockey model. The signal is based on league baseline, bookmaker-supported main total line, median market pricing, and a strict hockey total-line filter.",
-    "result": "pending"
+    "result": "loss",
+    "settled_at": "2026-05-10T02:08:16.514892+02:00",
+    "final_score": "2:3"
   }
 ]
