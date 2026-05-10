@@ -29,6 +29,17 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Debug repo files
+        run: |
+          echo "=== ROOT ==="
+          ls -la
+
+          echo "=== AiB ==="
+          find AiB -maxdepth 3 -type f | sort
+
+          echo "=== Ai ==="
+          find Ai -maxdepth 4 -type f | sort
+
       - name: Prepare output folder
         run: |
           mkdir -p AiB/public/data
@@ -40,12 +51,22 @@ jobs:
             --results Ai/data/tennis_totals_results.json \
             --output AiB/public/data/totals.json
 
-      - name: Show generated file
+      - name: Verify totals output
         run: |
-          echo "AiB public/data:"
-          ls -la AiB/public/data
-          echo "Totals preview:"
-          head -c 1000 AiB/public/data/totals.json || true
+          echo "=== AiB/public/data ==="
+          ls -la AiB/public/data || true
+
+          if [ ! -f AiB/public/data/totals.json ]; then
+            echo "ERROR: totals.json was not created."
+            echo "Check paths:"
+            echo "- AiB/scripts/aggregate_totals.py"
+            echo "- Ai/data/tennis_totals_predictions.json"
+            echo "- Ai/data/tennis_totals_results.json"
+            exit 1
+          fi
+
+          echo "totals.json created successfully"
+          head -c 1000 AiB/public/data/totals.json
 
       - name: Commit updated totals
         run: |
@@ -54,7 +75,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/totals.json
+          git add public/data/
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
