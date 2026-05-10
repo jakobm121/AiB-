@@ -15,8 +15,8 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # Lokalno lahko kasneje nastaviš AI_REPO_DIR na pot do Ai repoja.
 AI_REPO_DIR = os.getenv("AI_REPO_DIR", "../Ai")
 
-SOURCE_PREDICTIONS = Path(AI_REPO_DIR) / "predictions_totals.json"
-SOURCE_RESULTS = Path(AI_REPO_DIR) / "results_totals.json"
+SOURCE_PREDICTIONS = Path(AI_REPO_DIR) / "data" / "tennis_totals_predictions.json"
+SOURCE_RESULTS = Path(AI_REPO_DIR) / "data" / "tennis_totals_results.json"
 
 TZ = ZoneInfo("Europe/Ljubljana")
 
