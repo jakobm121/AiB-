@@ -29,7 +29,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Show files before
+      - name: Show files before run
         run: |
           echo "=== root ==="
           ls -la
@@ -71,10 +71,17 @@ jobs:
             exit 1
           fi
 
+          if [ ! -f AiB/public/data/totals_public_pick_ids.json ]; then
+            echo "ERROR: totals_public_pick_ids.json was not created."
+            exit 1
+          fi
+
           echo "All totals files created."
+
           wc -c AiB/public/data/totals_predictions.json
           wc -c AiB/public/data/totals_results.json
           wc -c AiB/public/data/totals_stats.json
+          wc -c AiB/public/data/totals_public_pick_ids.json
 
       - name: Commit updated totals data
         run: |
@@ -83,7 +90,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          git add public/data/totals_predictions.json public/data/totals_results.json public/data/totals_stats.json
+          git add public/data/totals_predictions.json \
+                  public/data/totals_results.json \
+                  public/data/totals_stats.json \
+                  public/data/totals_public_pick_ids.json
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
