@@ -19,6 +19,10 @@ AI_REPO_DIR = os.getenv("AI_REPO_DIR", "../Ai")
 SOURCE_PREDICTIONS = Path(AI_REPO_DIR) / "data" / "tennis_totals_predictions.json"
 SOURCE_RESULTS = Path(AI_REPO_DIR) / "data" / "tennis_totals_results.json"
 
+# Registry vseh pickov, ki so bili kdaj objavljeni na public strani.
+# Results/statistika se potem računa samo za te picke.
+PUBLIC_PICK_IDS_FILE = OUTPUT_DIR / "totals_public_pick_ids.json"
+
 TZ = ZoneInfo("Europe/Ljubljana")
 
 # Safety nastavitve
@@ -89,6 +93,19 @@ def normalize_side(value):
     return str(value or "").strip().lower()
 
 
+def load_public_pick_ids():
+    data = load_json(PUBLIC_PICK_IDS_FILE)
+
+    if isinstance(data, list):
+        return set(str(x) for x in data if x)
+
+    return set()
+
+
+def save_public_pick_ids(pick_ids):
+    save_json(PUBLIC_PICK_IDS_FILE, sorted(str(x) for x in pick_ids if x))
+
+
 def get_nested_float(item, path, default=None):
     cur = item
 
@@ -146,6 +163,8 @@ def passes_public_quality_filter(item):
         if line > OVER_MAX_LINE:
             return False
 
+        # Če prediction JSON ima form over rate, ga uporabimo.
+        # Če ga nima, ga ne blokiramo, da ne ubijemo vseh overjev zaradi manjkajočega polja.
         over_rate = combined_over_21_5_rate(item)
         if over_rate is not None and over_rate < OVER_MIN_COMBINED_OVER_21_5_RATE:
             return False
@@ -355,10 +374,23 @@ def aggregate_predictions():
 
     public_items = [normalize_pick(item) for item in safe]
 
+    # Shrani registry pickov, ki so bili dejansko objavljeni.
+    # To je ključno, da results/statistika ne vključuje vseh Ai rezultatov,
+    # ampak samo public picke.
+    public_pick_ids = load_public_pick_ids()
+
+    for item in public_items:
+        pick_id = item.get("pick_id")
+        if pick_id:
+            public_pick_ids.add(str(pick_id))
+
+    save_public_pick_ids(public_pick_ids)
+
     save_json(OUTPUT_DIR / "totals_predictions.json", public_items)
 
     print(f"Loaded predictions: {len(raw)}")
     print(f"Published predictions: {len(public_items)}")
+    print(f"Public registry size: {len(public_pick_ids)}")
 
 
 def is_valid_result_pick(item):
@@ -394,7 +426,14 @@ def normalize_result(item):
 def aggregate_results():
     raw = load_json(SOURCE_RESULTS)
 
-    valid = [item for item in raw if is_valid_result_pick(item)]
+    public_pick_ids = load_public_pick_ids()
+
+    valid = [
+        item for item in raw
+        if is_valid_result_pick(item)
+        and str(item.get("pick_id")) in public_pick_ids
+    ]
+
     valid = dedupe_picks(valid)
 
     valid.sort(
@@ -430,6 +469,7 @@ def aggregate_results():
         "win_rate": win_rate,
         "profit": profit,
         "roi": roi,
+        "public_registry_size": len(public_pick_ids),
         "updated_at": datetime.now(TZ).isoformat(),
     }
 
@@ -437,6 +477,7 @@ def aggregate_results():
 
     print(f"Loaded results: {len(raw)}")
     print(f"Published results: {len(public_items)}")
+    print(f"Public registry size: {len(public_pick_ids)}")
     print(f"Stats: {stats}")
 
 
