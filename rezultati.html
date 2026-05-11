@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="bs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rezultati | AI77 Sports Lab®</title>
+  <meta name="description" content="AI77 public rezultati i detaljna statistika.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="rezultati">
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI77</span>
+      <span><strong>Sports Lab®</strong><small>Platinum Tennis Desk</small></span>
+    </a>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Otvori meni">☰</button>
+    <nav class="nav" data-nav><a class="" href="index.html">Home</a>
+<a class="" href="prognoze.html">Prognoze</a>
+<a class="active" href="rezultati.html">Rezultati</a>
+<a class="" href="platforme.html">Platforme</a>
+<a class="" href="strategija.html">Strategija</a></nav>
+  </div>
+</header>
+<main>
+  <section class="hero compact-hero">
+    <div class="container">
+      <div class="eyebrow">Results Terminal</div>
+      <h1>Rezultati.</h1>
+      <p class="lead">Public istorija, profit curve i segmenti statistike. Ovo je data-heavy dio AI77 stranice.</p>
+      <div class="stat-grid six">
+        <article class="stat-card"><span>Profit</span><strong data-stat="profit">—</strong><small>public</small></article>
+        <article class="stat-card"><span>ROI</span><strong data-stat="roi">—</strong><small>public stake</small></article>
+        <article class="stat-card"><span>Win rate</span><strong data-stat="win_rate">—</strong><small>settled W/L</small></article>
+        <article class="stat-card"><span>Pickovi</span><strong data-stat="total_picks">—</strong><small>registry</small></article>
+        <article class="stat-card"><span>Ulog</span><strong data-stat="total_staked">—</strong><small>total</small></article>
+        <article class="stat-card"><span>Avg koef</span><strong data-stat="avg_odds">—</strong><small>settled</small></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="container panel">
+      <div class="section-head compact">
+        <span class="eyebrow">Profit curve</span>
+        <h2>Public rezultat kroz vrijeme</h2>
+        <p data-results-count>Učitavam istoriju...</p>
+      </div>
+      <canvas id="profitChart" class="profit-chart" height="290"></canvas>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Detailed analytics</span>
+          <h2>Segmenti statistike</h2>
+        </div>
+        <p>Rezultati po strani, liniji, tour levelu, stake snazi i danima.</p>
+      </div>
+
+      <div class="tabbar" data-tabs>
+        <button class="active" data-tab="side">Strana</button>
+        <button data-tab="line">Linija</button>
+        <button data-tab="tour">Tour</button>
+        <button data-tab="stake">Stake</button>
+        <button data-tab="daily">Dani</button>
+      </div>
+
+      <div class="panel">
+        <div class="tab-panel active" data-tab-panel="side"><div class="table-wrap" data-table="by_side"></div></div>
+        <div class="tab-panel" data-tab-panel="line"><div class="table-wrap" data-table="by_line"></div></div>
+        <div class="tab-panel" data-tab-panel="tour"><div class="table-wrap" data-table="by_tour_level"></div></div>
+        <div class="tab-panel" data-tab-panel="stake"><div class="table-wrap" data-table="by_stake_label"></div></div>
+        <div class="tab-panel" data-tab-panel="daily"><div class="table-wrap" data-daily-table></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">History</span>
+          <h2>Zadnji rezultati</h2>
+        </div>
+        <p>Pregled zadnjih public pickova sa finalnim rezultatom i profitom.</p>
+      </div>
+      <div class="result-grid" data-recent-results></div>
+    </div>
+  </section>
+</main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>AI77 Sports Lab®</strong>
+      <p>Javni pickovi, realna statistika i odgovoran pristup. 18+</p>
+    </div>
+    <div class="footer-links">
+      <a href="prognoze.html">Prognoze</a>
+      <a href="rezultati.html">Rezultati</a>
+      <a href="platforme.html">Platforme</a>
+      <a href="strategija.html">Strategija</a>
+    </div>
+    <p class="fineprint">Nema garantovanih rezultata. Koef se može promijeniti. Uvijek provjeri liniju, pravila i uslove platforme prije odluke. Sadržaj je informativan i ne predstavlja finansijski savjet.</p>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
