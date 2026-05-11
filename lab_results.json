@@ -1625,7 +1625,7 @@
     "confidence_score": 53.3,
     "quality_score": 66.2,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "storno"
   },
   {
     "pick_id": "0428ced34cdd893e9a9df0fea60ade97",
@@ -1999,7 +1999,7 @@
     "confidence_score": 57.9,
     "quality_score": 67.8,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3e76e000086e5432e81086709cec2a03",
@@ -2021,7 +2021,7 @@
     "confidence_score": 73.5,
     "quality_score": 75.3,
     "reasoning": "Slavia Praha II vs Táborsko projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2255950b414f482cd0f7c1b529a3a1d7",
@@ -2043,7 +2043,7 @@
     "confidence_score": 68.9,
     "quality_score": 70.4,
     "reasoning": "Viktoria Žižkov vs Sparta Praha II projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "af7888b9e41d80d8f47fb2a254633056",
@@ -2065,7 +2065,7 @@
     "confidence_score": 61.2,
     "quality_score": 62.7,
     "reasoning": "Slovácko II vs Vsetín projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b99891e342a7ee8443f785097e7be9bd",
@@ -2087,7 +2087,7 @@
     "confidence_score": 73.9,
     "quality_score": 66.5,
     "reasoning": "AC Taipei vs Ming Chuan University projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "f5db8cf00769f220c90339e2b8ac82d5",
@@ -2109,7 +2109,7 @@
     "confidence_score": 74.7,
     "quality_score": 64.7,
     "reasoning": "Havířov vs Pustá Polom projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "09c2464f33f6b7ae4f0e586d638224b6",
@@ -2153,7 +2153,7 @@
     "confidence_score": 61.9,
     "quality_score": 70.0,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "811a02aad90ddbb8faa880d98a02445b",
@@ -2175,7 +2175,7 @@
     "confidence_score": 53.6,
     "quality_score": 66.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "bd671afe2634d1ea51ef89511f044ef8",
@@ -2197,7 +2197,7 @@
     "confidence_score": 68.0,
     "quality_score": 69.4,
     "reasoning": "Primorje vs Mura projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "8e470e17e88cd15ff88892d75a2dfef5",
@@ -2219,7 +2219,7 @@
     "confidence_score": 62.8,
     "quality_score": 63.8,
     "reasoning": "Crystal Palace vs Everton projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3efa8c6911d747d547e6a0c6fc8332b5",
@@ -2241,7 +2241,7 @@
     "confidence_score": 58.2,
     "quality_score": 59.1,
     "reasoning": "Fiorentina vs Genoa projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "0c775d1791e6263f3923ac427bfc14d2",
@@ -2263,7 +2263,7 @@
     "confidence_score": 74.7,
     "quality_score": 75.5,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c8176ca01f947097d28eaa1cef38c94e",
@@ -2285,7 +2285,7 @@
     "confidence_score": 59.2,
     "quality_score": 72.4,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "010dbb028cef4ff4449a173c83a0d68c",
@@ -2329,7 +2329,7 @@
     "confidence_score": 76.3,
     "quality_score": 77.4,
     "reasoning": "Metz vs Lorient projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "ef141103c91f9c219cf7256d6c053e81",
@@ -2351,7 +2351,7 @@
     "confidence_score": 77.3,
     "quality_score": 77.1,
     "reasoning": "Le Havre vs Marseille projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "54994cdc92eee21864a1ab9bd67ced0e",
@@ -2373,7 +2373,7 @@
     "confidence_score": 83.4,
     "quality_score": 76.7,
     "reasoning": "Barcelona vs Real Madrid projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "504dc651bca60070a9fed5a3163372d0",
@@ -2417,7 +2417,7 @@
     "confidence_score": 52.3,
     "quality_score": 58.6,
     "reasoning": "Angers vs Strasbourg projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4a0b2fcd8d710eeadc9c520b336e34f7",
@@ -2461,7 +2461,7 @@
     "confidence_score": 58.2,
     "quality_score": 66.3,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "5e942bf077f6be34b21221a2a93488f6",
@@ -2483,6 +2483,6 @@
     "confidence_score": 59.2,
     "quality_score": 66.2,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
