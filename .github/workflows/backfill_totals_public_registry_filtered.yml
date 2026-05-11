@@ -1,0 +1,103 @@
+name: Backfill Totals Public Registry Filtered
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backfill-totals-public-registry-filtered:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout AiB
+        uses: actions/checkout@v4
+        with:
+          path: AiB
+
+      - name: Checkout Ai
+        uses: actions/checkout@v4
+        with:
+          repository: jakobm121/Ai
+          path: Ai
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run filtered public registry backfill
+        run: |
+          cd AiB
+          AI_REPO_DIR=../Ai python scripts/aggregate_totals.py --backfill-public-registry
+
+      - name: Verify output
+        run: |
+          echo "=== AiB/public/data ==="
+          ls -la AiB/public/data
+
+          if [ ! -f AiB/public/data/totals_public_pick_ids.json ]; then
+            echo "ERROR: totals_public_pick_ids.json was not created."
+            exit 1
+          fi
+
+          if [ ! -f AiB/public/data/totals_results.json ]; then
+            echo "ERROR: totals_results.json was not created."
+            exit 1
+          fi
+
+          if [ ! -f AiB/public/data/totals_stats.json ]; then
+            echo "ERROR: totals_stats.json was not created."
+            exit 1
+          fi
+
+          if [ ! -f AiB/public/data/totals_backtest_report.json ]; then
+            echo "ERROR: totals_backtest_report.json was not created."
+            exit 1
+          fi
+
+          echo "=== Backtest preview ==="
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          report = json.loads(Path("AiB/public/data/totals_backtest_report.json").read_text(encoding="utf-8"))
+          stats = json.loads(Path("AiB/public/data/totals_stats.json").read_text(encoding="utf-8"))
+
+          print("raw_results:", report.get("raw_results"))
+          print("filtered_candidates_before_dedupe:", report.get("filtered_candidates_before_dedupe"))
+          print("filtered_after_dedupe:", report.get("filtered_after_dedupe"))
+          print("registry_size_after:", report.get("registry_size_after"))
+
+          print("stats total_picks:", stats.get("total_picks"))
+          print("stats settled_picks:", stats.get("settled_picks"))
+          print("stats wins:", stats.get("wins"))
+          print("stats losses:", stats.get("losses"))
+          print("stats win_rate:", stats.get("win_rate"))
+          print("stats profit:", stats.get("profit"))
+          print("stats roi:", stats.get("roi"))
+
+          print("by_side:", json.dumps(stats.get("by_side"), ensure_ascii=False, indent=2))
+          PY
+
+      - name: Commit filtered public registry and totals data
+        run: |
+          cd AiB
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add public/data/totals_public_pick_ids.json \
+                  public/data/totals_predictions.json \
+                  public/data/totals_results.json \
+                  public/data/totals_stats.json \
+                  public/data/totals_backtest_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "Backfill filtered totals public registry"
+          git push
