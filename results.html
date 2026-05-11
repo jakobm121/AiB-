@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI77 Sports Lab® | Bookmakeri</title>
+  <title>AI77 Sports Lab® | Rezultati</title>
   <meta name="description" content="AI77 Sports Lab — premium tenis totals inteligencija za Balkan.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="reviews">
+<body data-page="results">
 
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="AI77 Sports Lab">
@@ -39,41 +39,33 @@
 <main>
   <section class="page-hero">
     <div class="container">
-      <span class="eyebrow">Bookmakeri</span>
-      <h1 class="page-title"><span class="gold-text">Platforme</span> za korisnike iz regije.</h1>
-      <p class="page-lead">Pregled bookmaker platformi treba služiti za poređenje kvota, ponude, uslova i korisničkog iskustva. Uvijek pročitaj uslove bonusa prije registracije.</p>
+      <span class="eyebrow"><span class="pulse"></span> Public record</span>
+      <h1 class="page-title"><span class="gold-text">Transparentni</span> rezultati.</h1>
+      <p class="page-lead">AI77 koristi public registry sistem. U statistiku ulaze samo pickovi koji su ranije bili objavljeni na javnoj stranici — ne kompletan interni model output.</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container cards-grid three">
-      <article class="book-card">
-        <div class="card-top"><h3>Sportaza</h3><span class="badge badge-over">Partner</span></div>
-        <p class="rating">Rating: 4.6/5</p>
-        <p>Široka sportska ponuda, live betting i bonus opcije za nove korisnike.</p>
-        <ul class="book-list"><li>tenis marketi</li><li>mobilna verzija</li><li>bonus za nove igrače</li></ul>
-        <a class="btn btn-primary" href="#" rel="nofollow noopener">Pogledaj ponudu</a>
-      </article>
-      <article class="book-card">
-        <div class="card-top"><h3>20Bet</h3><span class="badge badge-over">Review</span></div>
-        <p class="rating">Rating: 4.4/5</p>
-        <p>Moderniji sportsbook sa solidnom ponudom tenisa i čestim promocijama.</p>
-        <ul class="book-list"><li>live klađenje</li><li>brza registracija</li><li>promocije</li></ul>
-        <a class="btn btn-secondary" href="#" rel="nofollow noopener">Detalji</a>
-      </article>
-      <article class="book-card">
-        <div class="card-top"><h3>22Bet</h3><span class="badge badge-over">Review</span></div>
-        <p class="rating">Rating: 4.3/5</p>
-        <p>Veliki izbor sportova i marketa, pogodno za korisnike koji traže duboku ponudu.</p>
-        <ul class="book-list"><li>široka ponuda</li><li>tenis kvote</li><li>cashout opcije</li></ul>
-        <a class="btn btn-secondary" href="#" rel="nofollow noopener">Detalji</a>
-      </article>
+    <div class="container stats-grid">
+      <div class="stat-card"><small>Total public</small><strong id="resTotal">--</strong><em>uključuje push/void</em></div>
+      <div class="stat-card"><small>Settled</small><strong id="resSettled">--</strong><em>win/loss</em></div>
+      <div class="stat-card"><small>Win rate</small><strong id="resWinRate">--</strong><em>public record</em></div>
+      <div class="stat-card"><small>Profit / ROI</small><strong id="resProfitRoi">--</strong><em>u jedinicama</em></div>
     </div>
   </section>
 
   <section class="section">
     <div class="container notice">
-      <strong>18+ | Uslovi važe.</strong> Bonus ponude se mogu promijeniti. AI77 ne garantuje dostupnost, isplatu ili profit. Provjeri pravila bookmaker platforme i igraj odgovorno.
+      <strong>Pravilo praćenja:</strong> rezultat se računa samo ako je pick prethodno bio dio public feeda. Ovo sprječava naknadno dodavanje historije i čuva transparentan public track record.
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div><span class="kicker">Recent results</span><h2>Zadnji settled public pickovi</h2><p>Profit, score i total games se prikazuju iz public results feeda.</p></div>
+      </div>
+      <div id="resultsList" class="cards-grid three"></div>
     </div>
   </section>
 </main>

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AI77 Sports Lab® | Bookmakeri</title>
+  <title>AI77 Sports Lab® | Public Pickovi</title>
   <meta name="description" content="AI77 Sports Lab — premium tenis totals inteligencija za Balkan.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="reviews">
+<body data-page="predictions">
 
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="AI77 Sports Lab">
@@ -39,41 +39,48 @@
 <main>
   <section class="page-hero">
     <div class="container">
-      <span class="eyebrow">Bookmakeri</span>
-      <h1 class="page-title"><span class="gold-text">Platforme</span> za korisnike iz regije.</h1>
-      <p class="page-lead">Pregled bookmaker platformi treba služiti za poređenje kvota, ponude, uslova i korisničkog iskustva. Uvijek pročitaj uslove bonusa prije registracije.</p>
+      <span class="eyebrow"><span class="pulse"></span> Live public feed</span>
+      <h1 class="page-title"><span class="gold-text">Današnji AI77</span> public pickovi.</h1>
+      <p class="page-lead">Ovdje se prikazuju samo tenis totals pickovi koji su prošli public quality filter. Ako nema validnih kvota ili je meč preblizu početku, pick se ne objavljuje.</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container cards-grid three">
-      <article class="book-card">
-        <div class="card-top"><h3>Sportaza</h3><span class="badge badge-over">Partner</span></div>
-        <p class="rating">Rating: 4.6/5</p>
-        <p>Široka sportska ponuda, live betting i bonus opcije za nove korisnike.</p>
-        <ul class="book-list"><li>tenis marketi</li><li>mobilna verzija</li><li>bonus za nove igrače</li></ul>
-        <a class="btn btn-primary" href="#" rel="nofollow noopener">Pogledaj ponudu</a>
-      </article>
-      <article class="book-card">
-        <div class="card-top"><h3>20Bet</h3><span class="badge badge-over">Review</span></div>
-        <p class="rating">Rating: 4.4/5</p>
-        <p>Moderniji sportsbook sa solidnom ponudom tenisa i čestim promocijama.</p>
-        <ul class="book-list"><li>live klađenje</li><li>brza registracija</li><li>promocije</li></ul>
-        <a class="btn btn-secondary" href="#" rel="nofollow noopener">Detalji</a>
-      </article>
-      <article class="book-card">
-        <div class="card-top"><h3>22Bet</h3><span class="badge badge-over">Review</span></div>
-        <p class="rating">Rating: 4.3/5</p>
-        <p>Veliki izbor sportova i marketa, pogodno za korisnike koji traže duboku ponudu.</p>
-        <ul class="book-list"><li>široka ponuda</li><li>tenis kvote</li><li>cashout opcije</li></ul>
-        <a class="btn btn-secondary" href="#" rel="nofollow noopener">Detalji</a>
-      </article>
+    <div class="container stats-grid">
+      <div class="stat-card"><small>Aktivni pickovi</small><strong id="predActive">--</strong><em>ukupno</em></div>
+      <div class="stat-card"><small>Under pickovi</small><strong id="predUnder">--</strong><em>public</em></div>
+      <div class="stat-card"><small>Over pickovi</small><strong id="predOver">--</strong><em>premium-only</em></div>
+      <div class="stat-card"><small>Sljedeći meč</small><strong id="predNext">--</strong><em>vrijeme</em></div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container notice">
-      <strong>18+ | Uslovi važe.</strong> Bonus ponude se mogu promijeniti. AI77 ne garantuje dostupnost, isplatu ili profit. Provjeri pravila bookmaker platforme i igraj odgovorno.
+    <div class="container">
+      <div class="section-head">
+        <div><span class="kicker">Pickovi</span><h2>Aktivni totals market</h2><p>Filteri rade client-side i ne mijenjaju official feed.</p></div>
+      </div>
+      <div class="filters" id="predictionFilters">
+        <button class="filter-btn active" data-filter="all">Svi</button>
+        <button class="filter-btn" data-filter="under">Under</button>
+        <button class="filter-btn" data-filter="over">Over</button>
+        <button class="filter-btn" data-filter="atp">ATP</button>
+        <button class="filter-btn" data-filter="wta">WTA</button>
+        <button class="filter-btn" data-filter="challenger">Challenger</button>
+      </div>
+      <div id="predictionsList" class="cards-grid three"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container panel">
+      <div class="section-head">
+        <div><span class="kicker">Stake labels</span><h2>Stake je model signal, ne finansijski savjet.</h2><p>Trenutni totals model koristi quality-based stake. Zato na stranici prikazujemo stvarni stake i stake label iz JSON-a, bez izmišljene unit skale.</p></div>
+      </div>
+      <div class="method-grid">
+        <article class="method-card"><div class="num">S</div><h3>Strong</h3><p>Kvalitetan signal koji je prošao public filter, uz kontrolisan rizik i validan market.</p></article>
+        <article class="method-card"><div class="num">T</div><h3>Top Rated</h3><p>Najviši nivo povjerenja u trenutnom model outputu, kada ga sistem tako označi.</p></article>
+        <article class="method-card"><div class="num">!</div><h3>Bankroll disciplina</h3><p>Korisnik sam određuje bankroll i rizik. Ne chase-aj poraze i ne povećavaj ulog impulsivno.</p></article>
+      </div>
     </div>
   </section>
 </main>
