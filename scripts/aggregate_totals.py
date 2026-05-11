@@ -27,16 +27,15 @@ ALLOWED_BUCKETS = {"total_games"}
 ALLOWED_SIDES = {"under", "over"}
 SETTLED_RESULTS = {"win", "loss", "push", "void"}
 
-# Underji ostanejo mehkejši, ker so bolj stabilni.
+# Underji ostanejo mehkejši, ker so po zgodovini stabilni.
 MIN_PUBLIC_EDGE = 0.025
 MIN_PUBLIC_QUALITY_SCORE = 55
 MIN_PUBLIC_CONFIDENCE = 52
 
 # Overji so tiered.
-# Ideja:
-# - 20.5 lahko gre skozi strogo, ampak še normalno.
-# - 21.5 mora imeti močnejši signal.
-# - 22.5 gre skozi samo ultra redko.
+# 20.5 gre skozi strogo, ampak še normalno.
+# 21.5 mora imeti močnejši signal.
+# 22.5 gre skozi samo ultra redko in pri stakingu ostane capped.
 OVER_TIER_FILTERS = [
     {
         "max_line": 20.5,
@@ -249,9 +248,11 @@ def calculate_public_stake(item):
     AI77 Public Stake.
 
     Namen:
-    - ne uporabljamo slepo starega internega stake-a;
     - public profit/statistika se računata po tej logiki;
-    - max stake je 1.00u, ker je zgodovina še kratka in tenis totals ima varianco.
+    - max stake je 1.00u;
+    - Top Rated je zdaj strožji, ker je zgodovina pokazala,
+      da je Strong segment boljši od starega Top Rated segmenta;
+    - izbor pickov se NE spreminja, spreminja se samo stake.
     """
     side = normalize_side(item.get("side"))
 
@@ -270,14 +271,21 @@ def calculate_public_stake(item):
     if side == "under":
         margin_abs = abs(expected_margin)
 
+        # Strožji Top Rated:
+        # - višji quality/confidence/edge
+        # - margin vsaj 3.00
+        # - line 20.5 ne dobi več 1.00u, ker je zgodovinsko slabši segment
         if (
-            quality_score >= 82
-            and confidence >= 86
-            and edge >= 0.075
-            and margin_abs >= 2.60
+            quality_score >= 86
+            and confidence >= 88
+            and edge >= 0.085
+            and margin_abs >= 3.00
             and odds <= 2.20
+            and line != 20.5
         ):
             stake = 1.00
+
+        # Strong ostane skoraj enak, ker je bil najboljši segment.
         elif (
             quality_score >= 74
             and confidence >= 78
@@ -285,27 +293,21 @@ def calculate_public_stake(item):
             and margin_abs >= 2.00
         ):
             stake = 0.75
+
         else:
             stake = 0.50
 
     elif side == "over":
+        # Overji ostanejo bolj previdni.
+        # Za zdaj over ne dobi 1.00u, dokler ni več zgodovine.
         if (
-            line <= 21.5
-            and quality_score >= 89
-            and confidence >= 91
-            and edge >= 0.105
-            and expected_margin >= 2.40
-            and (gap is None or gap <= 0.35)
-            and (over_rate is None or over_rate >= 0.65)
-        ):
-            stake = 1.00
-        elif (
             line <= 21.5
             and quality_score >= 84
             and confidence >= 87
             and edge >= 0.090
             and expected_margin >= 1.80
             and (gap is None or gap <= 0.45)
+            and (over_rate is None or over_rate >= 0.55)
         ):
             stake = 0.75
         else:
@@ -318,12 +320,25 @@ def calculate_public_stake(item):
     if odds and odds > 2.20:
         stake = cap_stake(stake, 0.75)
 
-    if side == "over" and odds and odds > 2.05:
-        stake = cap_stake(stake, 0.50)
+    # 20.5 je bil zgodovinsko profitabilen, ampak slabši od 19.5/21.5,
+    # zato ga ne napihujemo preveč.
+    if line == 20.5:
+        if side == "under":
+            stake = cap_stake(stake, 0.75)
+        elif side == "over":
+            stake = cap_stake(stake, 0.50)
+
+    # Overji ostanejo capped.
+    if side == "over":
+        stake = cap_stake(stake, 0.75)
+
+        if odds and odds > 2.05:
+            stake = cap_stake(stake, 0.50)
 
     if gap is not None and gap > 0.55:
         stake = cap_stake(stake, 0.50)
 
+    # 22.5 ima več variance, zato max 0.50u.
     if line >= 22.5:
         stake = cap_stake(stake, 0.50)
 
