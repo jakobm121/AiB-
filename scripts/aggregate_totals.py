@@ -16,12 +16,10 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # V GitHub Actions bo AI_REPO_DIR=../Ai
 # Lokalno lahko kasneje nastaviš drugače.
 AI_REPO_DIR = os.getenv("AI_REPO_DIR", "../Ai")
-
 SOURCE_PREDICTIONS = Path(AI_REPO_DIR) / "data" / "tennis_totals_predictions.json"
 SOURCE_RESULTS = Path(AI_REPO_DIR) / "data" / "tennis_totals_results.json"
 
 TZ = ZoneInfo("Europe/Ljubljana")
-
 
 # Safety nastavitve
 MIN_MINUTES_BEFORE_START = 15
@@ -29,6 +27,21 @@ MAX_DAYS_AHEAD = 3
 
 ALLOWED_BUCKETS = {"total_games"}
 ALLOWED_SIDES = {"under", "over"}
+
+# Public quality filter
+# Underje pustimo relativno normalno, ker delajo dobro.
+MIN_PUBLIC_EDGE = 0.025
+MIN_PUBLIC_QUALITY_SCORE = 55
+MIN_PUBLIC_CONFIDENCE = 52
+
+# Overji so premium-only.
+OVER_MAX_LINE = 20.5
+OVER_MIN_EDGE = 0.080
+OVER_MIN_QUALITY_SCORE = 78
+OVER_MIN_CONFIDENCE = 83
+OVER_MIN_EXPECTED_MARGIN = 1.35
+OVER_MIN_COMBINED_OVER_21_5_RATE = 0.40
+OVER_MAX_MARKET_GAP = 0.55
 
 
 def load_json(path: Path):
@@ -63,6 +76,94 @@ def save_json(path: Path, data):
         json.dump(data, f, ensure_ascii=False, indent=2)
 
 
+def to_float(value, default=None):
+    try:
+        if value is None or value == "":
+            return default
+        return float(value)
+    except Exception:
+        return default
+
+
+def normalize_side(value):
+    return str(value or "").strip().lower()
+
+
+def get_nested_float(item, path, default=None):
+    cur = item
+
+    for key in path:
+        if not isinstance(cur, dict):
+            return default
+        cur = cur.get(key)
+
+    return to_float(cur, default)
+
+
+def combined_over_21_5_rate(item):
+    first = get_nested_float(item, ("first_form", "last_10", "over_21_5_rate"), None)
+    second = get_nested_float(item, ("second_form", "last_10", "over_21_5_rate"), None)
+
+    values = [x for x in (first, second) if x is not None]
+
+    if not values:
+        return None
+
+    return sum(values) / len(values)
+
+
+def market_gap(item):
+    direct = to_float(item.get("market_gap"), None)
+    if direct is not None:
+        return direct
+
+    return get_nested_float(item, ("market_info", "market_gap"), None)
+
+
+def passes_public_quality_filter(item):
+    side = normalize_side(item.get("side"))
+
+    edge = to_float(item.get("edge"), None)
+    quality_score = to_float(item.get("quality_score"), None)
+    confidence = to_float(item.get("confidence"), None)
+    line = to_float(item.get("line"), None)
+    expected_margin = to_float(item.get("expected_margin"), None)
+
+    if edge is None or quality_score is None or confidence is None:
+        return False
+
+    if side == "under":
+        return (
+            edge >= MIN_PUBLIC_EDGE
+            and quality_score >= MIN_PUBLIC_QUALITY_SCORE
+            and confidence >= MIN_PUBLIC_CONFIDENCE
+        )
+
+    if side == "over":
+        if line is None or expected_margin is None:
+            return False
+
+        if line > OVER_MAX_LINE:
+            return False
+
+        over_rate = combined_over_21_5_rate(item)
+        if over_rate is not None and over_rate < OVER_MIN_COMBINED_OVER_21_5_RATE:
+            return False
+
+        gap = market_gap(item)
+        if gap is not None and gap > OVER_MAX_MARKET_GAP:
+            return False
+
+        return (
+            edge >= OVER_MIN_EDGE
+            and quality_score >= OVER_MIN_QUALITY_SCORE
+            and confidence >= OVER_MIN_CONFIDENCE
+            and expected_margin >= OVER_MIN_EXPECTED_MARGIN
+        )
+
+    return False
+
+
 def parse_event_datetime(item):
     date_str = item.get("date")
     time_str = item.get("time")
@@ -86,23 +187,19 @@ def normalize_pick(item):
         "fixture_id": item.get("fixture_id") or item.get("event_key"),
         "sport": item.get("sport", "tennis"),
         "model_version": item.get("model_version"),
-
         "date": item.get("date"),
         "time": item.get("time"),
         "event_ts": event_dt.isoformat() if event_dt else None,
-
         "match": item.get("match"),
         "bet": item.get("bet"),
         "bucket": item.get("bucket"),
         "side": item.get("side"),
         "market": item.get("market"),
         "line": item.get("line"),
-
         "odds": item.get("odds"),
         "best_bookmaker": item.get("best_bookmaker"),
         "market_median_odds": item.get("market_median_odds"),
         "bookmakers_used": item.get("bookmakers_used"),
-
         "model_prob": item.get("model_prob"),
         "implied_prob": item.get("implied_prob"),
         "edge": item.get("edge"),
@@ -110,16 +207,13 @@ def normalize_pick(item):
         "expected_margin": item.get("expected_margin"),
         "confidence": item.get("confidence"),
         "quality_score": item.get("quality_score"),
-
         "stake": item.get("stake"),
         "stake_label": item.get("stake_label"),
-
         "tournament": item.get("tournament"),
         "round": item.get("round"),
         "event_type": item.get("event_type"),
         "tour_level": item.get("tour_level"),
         "gender": item.get("gender"),
-
         "created_at": item.get("created_at"),
     }
 
@@ -154,6 +248,7 @@ def is_safe_upcoming_pick(item, now):
         return False
 
     event_dt = parse_event_datetime(item)
+
     if not event_dt:
         return False
 
@@ -179,15 +274,29 @@ def is_safe_upcoming_pick(item, now):
     if item.get("total_games") is not None:
         return False
 
+    if not passes_public_quality_filter(item):
+        return False
+
     return True
 
 
 def pick_sort_score(item):
+    side = normalize_side(item.get("side"))
+    line = to_float(item.get("line"), 0) or 0
+
+    # Underjev NE spreminjamo po line-u, ker so trenutno dobri.
+    # Overji pa naj pri isti tekmi preferirajo nižji line.
+    if side == "over":
+        line_score = -line
+    else:
+        line_score = 0
+
     return (
-        item.get("quality_score") or 0,
-        item.get("confidence") or 0,
-        item.get("edge") or 0,
-        item.get("odds") or 0,
+        line_score,
+        to_float(item.get("quality_score"), 0) or 0,
+        to_float(item.get("confidence"), 0) or 0,
+        to_float(item.get("edge"), 0) or 0,
+        to_float(item.get("odds"), 0) or 0,
     )
 
 
@@ -195,15 +304,16 @@ def dedupe_picks(items):
     """
     Če se ista tekma pojavi večkrat, pustimo najboljši pick.
 
-    Ključ namenoma NE vključuje line, ker nočemo na strani prikazati
-    iste tekme dvakrat, recimo:
+    Ključ namenoma NE vključuje line, ker nočemo na strani prikazati iste tekme dvakrat,
+    recimo:
     OVER 20.5 in OVER 21.5 za isti match.
 
-    Prioriteta:
-    1. višji quality_score
-    2. višji confidence
-    3. višji edge
-    4. višja kvota
+    Under:
+    - ostane po obstoječi logiki quality/confidence/edge/odds.
+
+    Over:
+    - najprej preferira nižji line,
+    - potem quality/confidence/edge/odds.
     """
     best = {}
 
@@ -237,9 +347,9 @@ def aggregate_predictions():
     safe.sort(
         key=lambda x: (
             parse_event_datetime(x) or datetime.max.replace(tzinfo=TZ),
-            -(x.get("quality_score") or 0),
-            -(x.get("confidence") or 0),
-            -(x.get("edge") or 0),
+            -(to_float(x.get("quality_score"), 0) or 0),
+            -(to_float(x.get("confidence"), 0) or 0),
+            -(to_float(x.get("edge"), 0) or 0),
         )
     )
 
