@@ -1,0 +1,4 @@
+- name: Backfill public totals pick IDs
+  run: |
+    cd AiB
+    AI_REPO_DIR=../Ai python scripts/backfill_public_pick_ids.py
