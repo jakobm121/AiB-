@@ -3,7 +3,7 @@ name: Aggregate Totals
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+  - cron: "30 9,14,18,22 * * *"
 
 permissions:
   contents: write
