@@ -1,12 +1,12 @@
 {
-  "total_picks": 0,
-  "settled_picks": 0,
-  "wins": 0,
+  "total_picks": 3,
+  "settled_picks": 3,
+  "wins": 3,
   "losses": 0,
   "pushes": 0,
-  "win_rate": 0,
-  "profit": 0,
-  "roi": 0,
+  "win_rate": 100.0,
+  "profit": 1.715,
+  "roi": 57.17,
   "public_registry_size": 4,
-  "updated_at": "2026-05-11T22:47:30.995562+02:00"
+  "updated_at": "2026-05-11T22:53:59.976089+02:00"
 }
