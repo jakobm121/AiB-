@@ -1,959 +1,559 @@
-const DATA_CANDIDATES = {
-  predictions: [
-    "public/data/totals_predictions.json",
-    "./public/data/totals_predictions.json",
-    "data/totals_predictions.json",
-    "./data/totals_predictions.json",
+const DATA_PATHS = {
+  stats: [
+    'public/data/totals_stats.json',
+    './public/data/totals_stats.json',
+    'data/totals_stats.json',
+    './data/totals_stats.json'
   ],
   results: [
-    "public/data/totals_results.json",
-    "./public/data/totals_results.json",
-    "data/totals_results.json",
-    "./data/totals_results.json",
+    'public/data/totals_results.json',
+    './public/data/totals_results.json',
+    'data/totals_results.json',
+    './data/totals_results.json'
   ],
-  stats: [
-    "public/data/totals_stats.json",
-    "./public/data/totals_stats.json",
-    "data/totals_stats.json",
-    "./data/totals_stats.json",
-  ],
+  picks: [
+    'public/data/totals_predictions.json',
+    './public/data/totals_predictions.json',
+    'data/totals_predictions.json',
+    './data/totals_predictions.json'
+  ]
 };
 
-const SETTLED_RESULTS = ["win", "loss", "push", "void"];
+const PARTNERS = {
+  sportaza: 'https://stzns.naralvin.com',
+  bet22: 'https://moy.auraodin.com',
+  bet20: 'https://promo.20bet.partners',
+  onexbet: 'https://refpa.top',
+  sevensigns: 'https://media.toxtren.com',
+  fivegringos: 'https://media.toxtren.com',
+  woosports: 'https://media.toxtren.com'
+};
 
-let FULL_HISTORY_RESULTS = [];
-let FULL_HISTORY_FILTER = "all";
-
-function qs(selector, root = document) {
-  return root.querySelector(selector);
-}
-
-function qsa(selector, root = document) {
-  return Array.from(root.querySelectorAll(selector));
-}
-
-async function loadJsonFromCandidates(paths, fallback) {
-  for (const path of paths) {
-    try {
-      const response = await fetch(path, { cache: "no-store" });
-
-      if (!response.ok) {
-        continue;
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.warn(`Could not load ${path}`, error);
-    }
+const PLATFORM_DATA = [
+  {
+    name: 'Sportaza',
+    tag: 'Premium balans za početak',
+    rating: 'AI77 izbor',
+    url: PARTNERS.sportaza,
+    text: 'Dobra opcija za korisnike koji žele jednostavan pristup, tenis ponudu i stabilan mobilni flow.',
+    details: 'Sportaza je postavljena kao partner spotlight jer se dobro uklapa u platform rotation pristup: provjera koef, dostupnost linija i praktičan ulaz.'
+  },
+  {
+    name: '22Bet',
+    tag: 'Široka sportska ponuda',
+    rating: 'Partner panel',
+    url: PARTNERS.bet22,
+    text: 'Opcija za korisnike koji žele veliki izbor sportskih marketa i dodatnu alternativu u rotaciji.',
+    details: '22Bet može biti koristan kao druga ili treća platforma kada želiš provjeriti da li postoji bolji koef ili dostupna ista linija.'
+  },
+  {
+    name: '20Bet',
+    tag: 'Mobilni pristup',
+    rating: 'Rotation opcija',
+    url: PARTNERS.bet20,
+    text: 'Jednostavna platforma za korisnike koji preferiraju brz mobilni pregled i osnovnu sportsku ponudu.',
+    details: 'Koristi se kao dio rotacije, posebno kada želiš ne držati sve aktivnosti na jednom mjestu.'
+  },
+  {
+    name: '1xBet',
+    tag: 'Veliki izbor marketa',
+    rating: 'Market coverage',
+    url: PARTNERS.onexbet,
+    text: 'Poznata opcija sa širokim izborom sportova i marketa, korisna za provjeru alternativnih linija.',
+    details: 'Kod ovakvih platformi najvažnije je provjeriti koeficijent, liniju i uslove prije svake odluke.'
+  },
+  {
+    name: '7Signs',
+    tag: 'Bonus oriented',
+    rating: 'Dodatna opcija',
+    url: PARTNERS.sevensigns,
+    text: 'Alternativna platforma za korisnike koji žele više opcija u rotaciji.',
+    details: 'Nije cilj koristiti sve platforme odjednom, nego imati rezervne opcije kada je ponuda ili koef bolji.'
+  },
+  {
+    name: '5Gringos',
+    tag: 'Promo focused',
+    rating: 'Dodatna opcija',
+    url: PARTNERS.fivegringos,
+    text: 'Može poslužiti kao dodatna opcija za one koji žele širu platform rotation listu.',
+    details: 'Prije korištenja uvijek provjeri uslove, limite, dostupnost tržišta i način isplate.'
+  },
+  {
+    name: 'Woosports',
+    tag: 'Sports entertainment',
+    rating: 'Dodatna opcija',
+    url: PARTNERS.woosports,
+    text: 'Još jedna opcija za diversifikaciju i provjeru ponude.',
+    details: 'Kao i kod svih platformi, koristi je odgovorno i samo ako razumiješ pravila.'
   }
+];
 
-  return fallback;
-}
-
-function toNumber(value, fallback = 0) {
-  const n = Number(value);
-  return Number.isFinite(n) ? n : fallback;
-}
-
-function normalizeText(value) {
-  return String(value || "").trim().toLowerCase();
-}
-
-function fmtNumber(value, decimals = 2) {
-  const n = Number(value);
-
-  if (!Number.isFinite(n)) {
-    return "—";
-  }
-
-  return n.toLocaleString("bs-BA", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
-}
-
-function fmtInteger(value) {
-  const n = Number(value);
-
-  if (!Number.isFinite(n)) {
-    return "—";
-  }
-
-  return n.toLocaleString("bs-BA", {
-    maximumFractionDigits: 0,
-  });
-}
-
-function fmtPercent(value) {
-  const n = Number(value);
-
-  if (!Number.isFinite(n)) {
-    return "—";
-  }
-
-  return `${fmtNumber(n, 2)}%`;
+function fmtNumber(value, suffix = '') {
+  if (value === undefined || value === null || value === '') return '—';
+  const num = Number(value);
+  if (!Number.isFinite(num)) return String(value);
+  return `${num.toLocaleString('bs-BA', { maximumFractionDigits: 3 })}${suffix}`;
 }
 
 function fmtProfit(value) {
+  if (value === undefined || value === null || value === '') return '—';
+  const num = Number(value);
+  if (!Number.isFinite(num)) return '—';
+  return `${num >= 0 ? '+' : ''}${num.toLocaleString('bs-BA', { maximumFractionDigits: 3 })}u`;
+}
+
+function pctFromProb(value) {
   const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  return fmtNumber(n > 1 ? n : n * 100, '%');
+}
 
-  if (!Number.isFinite(n)) {
-    return "—";
+async function fetchFirst(paths) {
+  for (const path of paths) {
+    try {
+      const res = await fetch(`${path}?v=${Date.now()}`, { cache: 'no-store' });
+      if (res.ok) return await res.json();
+    } catch (err) {}
   }
-
-  return `${n > 0 ? "+" : ""}${fmtNumber(n, 2)}u`;
+  return null;
 }
 
-function fmtStake(value) {
-  const n = Number(value);
-
-  if (!Number.isFinite(n)) {
-    return "—";
-  }
-
-  return `${fmtNumber(n, 2)}u`;
+function setupMenu() {
+  const btn = document.querySelector('[data-menu-toggle]');
+  const nav = document.querySelector('[data-nav]');
+  if (!btn || !nav) return;
+  btn.addEventListener('click', () => nav.classList.toggle('open'));
 }
 
-function fmtKoef(value) {
-  const n = Number(value);
-
-  if (!Number.isFinite(n)) {
-    return "—";
-  }
-
-  return fmtNumber(n, 2);
-}
-
-function fmtEdge(value) {
-  const n = Number(value);
-
-  if (!Number.isFinite(n)) {
-    return "—";
-  }
-
-  return `${n >= 0 ? "+" : ""}${fmtNumber(n * 100, 2)}%`;
-}
-
-function formatStatValue(key, value) {
-  const cleanKey = String(key || "").toLowerCase();
-
-  if (cleanKey.includes("roi") || cleanKey.includes("rate")) {
-    return fmtPercent(value);
-  }
-
-  if (cleanKey.includes("profit")) {
-    return fmtProfit(value);
-  }
-
-  if (cleanKey.includes("staked")) {
-    return fmtStake(value);
-  }
-
-  if (cleanKey.includes("odds")) {
-    return fmtKoef(value);
-  }
-
-  if (cleanKey.includes("stake")) {
-    return fmtStake(value);
-  }
-
-  if (
-    cleanKey.includes("picks") ||
-    cleanKey.includes("wins") ||
-    cleanKey.includes("losses") ||
-    cleanKey.includes("pushes") ||
-    cleanKey.includes("size")
-  ) {
-    return fmtInteger(value);
-  }
-
-  return fmtNumber(value, 2);
-}
-
-function resultBadgeClass(result) {
-  const r = normalizeText(result);
-
-  if (r === "win") return "badge-win";
-  if (r === "loss") return "badge-loss";
-  if (r === "push") return "badge-push";
-  if (r === "void") return "badge-push";
-
-  return "badge-neutral";
-}
-
-function sideBadgeClass(side) {
-  const s = normalizeText(side);
-
-  if (s === "under") return "badge-under";
-  if (s === "over") return "badge-over";
-
-  return "badge-neutral";
-}
-
-function stakeBadgeClass(label) {
-  const l = normalizeText(label);
-
-  if (l.includes("top")) return "badge-top";
-  if (l.includes("strong")) return "badge-strong";
-  if (l.includes("standard")) return "badge-standard";
-
-  return "badge-neutral";
-}
-
-function getResultProfit(item) {
-  return toNumber(item.public_profit ?? item.profit, 0);
-}
-
-function getResultStake(item) {
-  return toNumber(item.public_stake ?? item.stake, 0);
-}
-
-function getResultLabel(item) {
-  return item.public_stake_label || item.stake_label || "";
-}
-
-function getBetLabel(item) {
-  if (item.bet) return item.bet;
-
-  const side = String(item.side || "").toUpperCase();
-  const line = item.line ?? "";
-
-  return `${side} ${line}`.trim() || "—";
-}
-
-function getDateTimeLabel(item) {
-  return `${item.date || ""} ${item.time || ""}`.trim() || "—";
-}
-
-function sortResultsDesc(results) {
-  return [...results].sort((a, b) => {
-    const aKey = `${a.date || ""} ${a.time || ""} ${a.match || ""}`;
-    const bKey = `${b.date || ""} ${b.time || ""} ${b.match || ""}`;
-
-    return bKey.localeCompare(aKey);
-  });
-}
-
-function sortResultsAsc(results) {
-  return [...results].sort((a, b) => {
-    const aKey = `${a.date || ""} ${a.time || ""} ${a.match || ""}`;
-    const bKey = `${b.date || ""} ${b.time || ""} ${b.match || ""}`;
-
-    return aKey.localeCompare(bKey);
+function setupTabs() {
+  document.querySelectorAll('[data-tabs]').forEach((wrap) => {
+    const buttons = wrap.querySelectorAll('[data-tab]');
+    const panels = document.querySelectorAll('[data-tab-panel]');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        buttons.forEach((b) => b.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active'));
+        button.classList.add('active');
+        const target = document.querySelector(`[data-tab-panel="${button.dataset.tab}"]`);
+        if (target) target.classList.add('active');
+      });
+    });
   });
 }
 
 function fillStats(stats) {
-  qsa("[data-stat]").forEach((el) => {
+  if (!stats) return;
+  document.querySelectorAll('[data-stat]').forEach((el) => {
     const key = el.dataset.stat;
-
-    if (!key) return;
-
-    const value = stats?.[key];
-    el.textContent = formatStatValue(key, value);
+    const value = stats[key];
+    if (key === 'profit') el.textContent = fmtProfit(value);
+    else if (key === 'roi' || key === 'win_rate') el.textContent = fmtNumber(value, '%');
+    else if (key === 'total_staked') el.textContent = `${fmtNumber(value)}u`;
+    else el.textContent = fmtNumber(value);
+  });
+  document.querySelectorAll('[data-updated]').forEach((el) => {
+    el.textContent = stats.updated_at ? new Date(stats.updated_at).toLocaleString('bs-BA') : '—';
   });
 }
 
-function buildMiniStats(items) {
-  const bucket = {
-    total_picks: 0,
-    settled_picks: 0,
-    wins: 0,
-    losses: 0,
-    pushes: 0,
-    profit: 0,
-    total_staked: 0,
-    win_rate: 0,
-    roi: 0,
-    avg_odds: 0,
-    avg_stake: 0,
-  };
+function stakeBadgeClass(label) {
+  const l = String(label || '').toLowerCase();
+  if (l.includes('top')) return 'platinum';
+  if (l.includes('strong')) return 'gold';
+  return 'silver';
+}
 
-  const oddsValues = [];
-  const stakeValues = [];
+function renderPicks(picks) {
+  const root = document.querySelector('[data-picks]');
+  if (!root) return;
 
-  items.forEach((item) => {
-    const result = normalizeText(item.result);
-    const odds = Number(item.odds);
-    const stake = getResultStake(item);
-    const profit = getResultProfit(item);
+  if (!Array.isArray(picks) || !picks.length) {
+    root.innerHTML = `
+      <article class="empty-card">
+        <h3>Nema aktivnih public pickova.</h3>
+        <p>AI77 ne forsira selekcije kada filter ne daje dovoljno jak signal. Pogledaj javnu istoriju ili provjeri kasnije.</p>
+        <div class="inline-actions" style="justify-content:center">
+          <a class="btn primary" href="rezultati.html">Pogledaj rezultate</a>
+          <a class="btn" href="platforme.html">Provjerene platforme</a>
+        </div>
+      </article>
+    `;
+    return;
+  }
 
-    if (!SETTLED_RESULTS.includes(result)) return;
+  const sorted = picks.slice().sort((a,b) => `${a.date || ''} ${a.time || ''}`.localeCompare(`${b.date || ''} ${b.time || ''}`));
 
-    bucket.total_picks += 1;
+  root.innerHTML = sorted.map((p) => {
+    const label = p.public_stake_label || p.stake_label || 'Standard';
+    const stake = p.public_stake ?? p.stake;
+    const bet = p.bet || `${String(p.side || '').toUpperCase()} ${p.line}`;
+    const platform = PARTNERS.sportaza;
+    return `
+      <article class="pick-card">
+        <div class="pick-top">
+          <div class="badges">
+            <span class="badge">Public pick</span>
+            <span class="badge ${String(p.side || '').toLowerCase() === 'over' ? 'gold' : 'silver'}">Total games</span>
+          </div>
+          <strong>${p.time || ''}</strong>
+        </div>
 
-    if (Number.isFinite(odds)) {
-      oddsValues.push(odds);
-    }
+        <h3>${p.match || 'Tennis match'}</h3>
+        <div class="pick-sub">${p.tournament || 'Tennis'}${p.round ? ' · ' + p.round : ''}</div>
 
-    if (result === "win" || result === "loss") {
-      bucket.settled_picks += 1;
-      bucket.total_staked += stake;
-      bucket.profit += profit;
-      stakeValues.push(stake);
+        <div class="pick-bet">${bet}</div>
 
-      if (result === "win") bucket.wins += 1;
-      if (result === "loss") bucket.losses += 1;
-    }
+        <div class="pick-meta">
+          <span>Koef <strong>${fmtNumber(p.odds)}</strong></span>
+          <span>Ulog <strong>${fmtNumber(stake)}u</strong></span>
+          <span>Snaga <strong><em class="badge ${stakeBadgeClass(label)}">${label}</em></strong></span>
+          <span>Edge <strong>${pctFromProb(p.edge)}</strong></span>
+        </div>
 
-    if (result === "push" || result === "void") {
-      bucket.pushes += 1;
-    }
-  });
+        <a class="btn primary btn-full" href="${platform}" target="_blank" rel="nofollow sponsored noopener">Provjeri ponudu</a>
+        <p class="card-note">Koef se može promijeniti. Uvijek provjeri liniju prije ulaza.</p>
+      </article>
+    `;
+  }).join('');
+}
 
-  bucket.win_rate = bucket.settled_picks
-    ? (bucket.wins / bucket.settled_picks) * 100
-    : 0;
-
-  bucket.roi = bucket.total_staked
-    ? (bucket.profit / bucket.total_staked) * 100
-    : 0;
-
-  bucket.avg_odds = oddsValues.length
-    ? oddsValues.reduce((a, b) => a + b, 0) / oddsValues.length
-    : 0;
-
-  bucket.avg_stake = stakeValues.length
-    ? stakeValues.reduce((a, b) => a + b, 0) / stakeValues.length
-    : 0;
-
-  return bucket;
+function tableFromGroup(group) {
+  if (!group || typeof group !== 'object') return '<p class="muted">Nema podataka.</p>';
+  const rows = Object.entries(group).map(([name, s]) => `
+    <tr>
+      <td>${name}</td>
+      <td>${s.wins ?? 0}-${s.losses ?? 0}</td>
+      <td>${fmtProfit(s.profit)}</td>
+      <td>${fmtNumber(s.roi, '%')}</td>
+      <td>${s.total_picks ?? 0}</td>
+      <td>${fmtNumber(s.avg_odds)}</td>
+    </tr>
+  `).join('');
+  return `
+    <table class="data-table">
+      <thead><tr><th>Segment</th><th>W-L</th><th>Profit</th><th>ROI</th><th>Pickovi</th><th>Avg koef</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
 }
 
 function fillDetailTables(stats) {
-  qsa("[data-table]").forEach((root) => {
-    const key = root.dataset.table;
-    const group = stats?.[key];
-
-    if (!key || !group || typeof group !== "object") {
-      root.innerHTML = `
-        <div class="empty-card">
-          <h3>Nema podataka.</h3>
-          <p>Statistika za ovu sekciju još nije dostupna.</p>
-        </div>
-      `;
-      return;
-    }
-
-    const rows = Object.entries(group)
-      .map(([label, item]) => {
-        return `
-          <tr>
-            <td><strong>${label}</strong></td>
-            <td>${fmtInteger(item.total_picks)}</td>
-            <td>${fmtInteger(item.settled_picks)}</td>
-            <td>${fmtInteger(item.wins)}</td>
-            <td>${fmtInteger(item.losses)}</td>
-            <td>${fmtInteger(item.pushes)}</td>
-            <td>${fmtPercent(item.win_rate)}</td>
-            <td>${fmtProfit(item.profit)}</td>
-            <td>${fmtPercent(item.roi)}</td>
-            <td>${fmtStake(item.total_staked)}</td>
-          </tr>
-        `;
-      })
-      .join("");
-
-    root.innerHTML = `
-      <div class="history-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Segment</th>
-              <th>Picki</th>
-              <th>Settled</th>
-              <th>Win</th>
-              <th>Loss</th>
-              <th>Void/Push</th>
-              <th>Win rate</th>
-              <th>Profit</th>
-              <th>ROI</th>
-              <th>Ulog</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    `;
+  if (!stats) return;
+  document.querySelectorAll('[data-table]').forEach((el) => {
+    el.innerHTML = tableFromGroup(stats[el.dataset.table]);
   });
+}
+
+function dailyStats(results) {
+  const days = new Map();
+  (results || []).forEach((item) => {
+    const result = String(item.result || '').toLowerCase();
+    if (!['win', 'loss'].includes(result)) return;
+    const date = item.date || 'unknown';
+    if (!days.has(date)) days.set(date, { total_picks: 0, wins: 0, losses: 0, profit: 0, staked: 0 });
+    const d = days.get(date);
+    d.total_picks += 1;
+    if (result === 'win') d.wins += 1;
+    if (result === 'loss') d.losses += 1;
+    d.profit += Number(item.public_profit ?? item.profit ?? 0);
+    d.staked += Number(item.public_stake ?? item.stake ?? 0);
+  });
+  return Array.from(days.entries()).sort((a,b) => b[0].localeCompare(a[0])).map(([date,d]) => ({ date, ...d, roi: d.staked ? d.profit/d.staked*100 : 0 }));
 }
 
 function fillDailyTable(results) {
-  const root = qs("[data-daily-table]");
-
-  if (!root) return;
-
-  const grouped = {};
-
-  results.forEach((item) => {
-    const date = item.date || "unknown";
-
-    if (!grouped[date]) {
-      grouped[date] = [];
-    }
-
-    grouped[date].push(item);
-  });
-
-  const rows = Object.entries(grouped)
-    .sort(([a], [b]) => b.localeCompare(a))
-    .map(([date, items]) => {
-      const s = buildMiniStats(items);
-
-      return `
-        <tr>
-          <td><strong>${date}</strong></td>
-          <td>${fmtInteger(s.total_picks)}</td>
-          <td>${fmtInteger(s.settled_picks)}</td>
-          <td>${fmtInteger(s.wins)}</td>
-          <td>${fmtInteger(s.losses)}</td>
-          <td>${fmtInteger(s.pushes)}</td>
-          <td>${fmtPercent(s.win_rate)}</td>
-          <td>${fmtProfit(s.profit)}</td>
-          <td>${fmtPercent(s.roi)}</td>
-          <td>${fmtStake(s.total_staked)}</td>
-        </tr>
-      `;
-    })
-    .join("");
-
-  root.innerHTML = rows
-    ? `
-      <div class="history-table-wrap">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Dan</th>
-              <th>Picki</th>
-              <th>Settled</th>
-              <th>Win</th>
-              <th>Loss</th>
-              <th>Void/Push</th>
-              <th>Win rate</th>
-              <th>Profit</th>
-              <th>ROI</th>
-              <th>Ulog</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      </div>
-    `
-    : `
-      <div class="empty-card">
-        <h3>Nema dnevne statistike.</h3>
-        <p>Rezultati će se prikazati nakon prvog settle-a.</p>
-      </div>
-    `;
+  const el = document.querySelector('[data-daily-table]');
+  if (!el) return;
+  const rows = dailyStats(results).map((d) => `
+    <tr><td>${d.date}</td><td>${d.wins}-${d.losses}</td><td>${fmtProfit(d.profit)}</td><td>${fmtNumber(d.roi, '%')}</td><td>${d.total_picks}</td><td>${fmtNumber(d.staked)}u</td></tr>
+  `).join('');
+  el.innerHTML = rows ? `<table class="data-table"><thead><tr><th>Dan</th><th>W-L</th><th>Profit</th><th>ROI</th><th>Pickovi</th><th>Ulog</th></tr></thead><tbody>${rows}</tbody></table>` : '<p class="muted">Dnevna statistika nije dostupna.</p>';
 }
 
-function resultCard(item) {
-  const result = normalizeText(item.result);
-  const label = getResultLabel(item);
+function drawProfitChart(results) {
+  const canvas = document.getElementById('profitChart');
+  if (!canvas || !Array.isArray(results)) return;
+  const countEl = document.querySelector('[data-results-count]');
+  if (countEl) countEl.textContent = `${results.length} zapisa u public istoriji`;
 
-  return `
-    <article class="result-mini-card">
-      <div class="result-mini-top">
-        <div>
-          <p class="eyebrow">${getDateTimeLabel(item)} · ${item.tournament || "Tennis"}</p>
-          <h3>${item.match || "—"}</h3>
-        </div>
-        <span class="badge ${resultBadgeClass(result)}">${result.toUpperCase() || "—"}</span>
-      </div>
+  const ctx = canvas.getContext('2d');
+  const ratio = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  canvas.width = rect.width * ratio;
+  canvas.height = rect.height * ratio;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  ctx.clearRect(0, 0, rect.width, rect.height);
 
-      <div class="mini-grid">
-        <div>
-          <span>Tip</span>
-          <strong>${getBetLabel(item)}</strong>
-        </div>
-        <div>
-          <span>Koef</span>
-          <strong>${fmtKoef(item.odds)}</strong>
-        </div>
-        <div>
-          <span>Ulog</span>
-          <strong>${fmtStake(getResultStake(item))}</strong>
-        </div>
-        <div>
-          <span>Snaga</span>
-          <strong>${label || "—"}</strong>
-        </div>
-        <div>
-          <span>Profit</span>
-          <strong>${fmtProfit(getResultProfit(item))}</strong>
-        </div>
-        <div>
-          <span>Score</span>
-          <strong>${item.final_score || "—"}</strong>
-        </div>
-      </div>
-    </article>
-  `;
+  const sorted = results.slice()
+    .filter((x) => ['win','loss','push','void'].includes(String(x.result || '').toLowerCase()))
+    .sort((a,b) => `${a.date || ''} ${a.time || ''}`.localeCompare(`${b.date || ''} ${b.time || ''}`));
+
+  let cum = 0;
+  const points = sorted.map((r,i) => {
+    cum += Number(r.public_profit ?? r.profit ?? 0);
+    return { x:i, y:cum };
+  });
+
+  if (!points.length) {
+    ctx.fillStyle = 'rgba(170,163,154,.9)';
+    ctx.font = '14px Inter, sans-serif';
+    ctx.fillText('Nema rezultata za graf.', 24, 40);
+    return;
+  }
+
+  const pad = 30;
+  const minY = Math.min(0, ...points.map(p => p.y));
+  const maxY = Math.max(0, ...points.map(p => p.y));
+  const spanY = maxY - minY || 1;
+  const xFor = (i) => pad + (i / Math.max(1, points.length - 1)) * (rect.width - pad*2);
+  const yFor = (y) => rect.height - pad - ((y - minY) / spanY) * (rect.height - pad*2);
+
+  ctx.strokeStyle = 'rgba(239,227,202,.12)';
+  ctx.lineWidth = 1;
+  for (let i=0;i<4;i++){
+    const y = pad + i*(rect.height-pad*2)/3;
+    ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(rect.width-pad,y); ctx.stroke();
+  }
+
+  const zeroY = yFor(0);
+  ctx.strokeStyle = 'rgba(241,223,184,.2)';
+  ctx.beginPath(); ctx.moveTo(pad,zeroY); ctx.lineTo(rect.width-pad,zeroY); ctx.stroke();
+
+  ctx.strokeStyle = '#c8a75f';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  points.forEach((p,i) => {
+    const x = xFor(i), y = yFor(p.y);
+    if (i === 0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+
+  const last = points[points.length-1];
+  ctx.fillStyle = 'rgba(241,223,184,.95)';
+  ctx.beginPath(); ctx.arc(xFor(points.length-1), yFor(last.y), 4, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = 'rgba(170,163,154,.92)';
+  ctx.font = '12px Inter, sans-serif';
+  ctx.fillText('Start 0u', pad, rect.height - 8);
+  ctx.fillText(`Final ${fmtProfit(last.y)}`, Math.max(pad, rect.width - 140), 18);
 }
 
 function renderRecentResults(results) {
-  const root = qs("[data-recent-results]");
-
+  const root = document.querySelector('[data-recent-results]');
   if (!root) return;
-
-  const items = sortResultsDesc(results)
-    .filter((item) => SETTLED_RESULTS.includes(normalizeText(item.result)))
+  const items = (Array.isArray(results) ? results : [])
+    .filter((x) => ['win','loss','void','push'].includes(String(x.result || '').toLowerCase()))
+    .sort((a,b) => `${b.date || ''} ${b.time || ''}`.localeCompare(`${a.date || ''} ${a.time || ''}`))
     .slice(0, 12);
 
   if (!items.length) {
-    root.innerHTML = `
-      <div class="empty-card">
-        <h3>Još nema rezultata.</h3>
-        <p>Rezultati će se prikazati nakon settle-a objavljenih pickova.</p>
-      </div>
-    `;
+    root.innerHTML = '<article class="empty-card">Nema rezultata za prikaz.</article>';
     return;
   }
 
-  root.innerHTML = items.map(resultCard).join("");
-}
-
-function predictionCard(item) {
-  const side = normalizeText(item.side);
-  const label = item.public_stake_label || item.stake_label || "";
-
-  return `
-    <article class="pick-card">
-      <div class="pick-card-top">
-        <div>
-          <p class="eyebrow">${getDateTimeLabel(item)} · ${item.tournament || "Tennis"}</p>
-          <h3>${item.match || "—"}</h3>
+  root.innerHTML = items.map((r) => {
+    const result = String(r.result || '').toLowerCase();
+    return `
+      <article class="result-card">
+        <div class="result-top">
+          <span>${r.date || ''} · ${r.time || ''}</span>
+          <span class="badge ${result}">${result}</span>
         </div>
-        <span class="badge ${sideBadgeClass(side)}">${getBetLabel(item)}</span>
-      </div>
-
-      <div class="mini-grid">
-        <div>
-          <span>Koef</span>
-          <strong>${fmtKoef(item.odds)}</strong>
-        </div>
-        <div>
-          <span>Bookmaker</span>
-          <strong>${item.best_bookmaker || "—"}</strong>
-        </div>
-        <div>
-          <span>Confidence</span>
-          <strong>${fmtNumber(item.confidence, 1)}</strong>
-        </div>
-        <div>
-          <span>Quality</span>
-          <strong>${fmtNumber(item.quality_score, 1)}</strong>
-        </div>
-        <div>
-          <span>Edge</span>
-          <strong>${fmtEdge(item.edge)}</strong>
-        </div>
-        <div>
-          <span>Ulog</span>
-          <strong>${fmtStake(item.public_stake ?? item.stake)}</strong>
-        </div>
-      </div>
-
-      <div class="pick-actions">
-        <span class="badge ${stakeBadgeClass(label)}">${label || "Standard"}</span>
-        <a class="btn primary" href="platforme.html">Gdje igrati</a>
-      </div>
-    </article>
-  `;
-}
-
-function renderPredictions(predictions) {
-  const roots = [
-    qs("[data-predictions]"),
-    qs("[data-predictions-list]"),
-    qs("[data-current-picks]"),
-  ].filter(Boolean);
-
-  if (!roots.length) return;
-
-  const items = Array.isArray(predictions) ? predictions : [];
-
-  roots.forEach((root) => {
-    if (!items.length) {
-      root.innerHTML = `
-        <div class="empty-card">
-          <h3>Trenutno nema aktivnih pickova.</h3>
-          <p>Sistem čeka nove markete koji prolaze public filter.</p>
-        </div>
-      `;
-      return;
-    }
-
-    root.innerHTML = items.map(predictionCard).join("");
-  });
-}
-
-function fillPredictionStats(predictions) {
-  const items = Array.isArray(predictions) ? predictions : [];
-
-  qsa("[data-pred-stat]").forEach((el) => {
-    const key = el.dataset.predStat;
-
-    if (key === "active") {
-      el.textContent = fmtInteger(items.length);
-      return;
-    }
-
-    if (key === "under") {
-      el.textContent = fmtInteger(items.filter((x) => normalizeText(x.side) === "under").length);
-      return;
-    }
-
-    if (key === "over") {
-      el.textContent = fmtInteger(items.filter((x) => normalizeText(x.side) === "over").length);
-      return;
-    }
-
-    if (key === "next") {
-      el.textContent = items[0]?.time || "—";
-      return;
-    }
-  });
-}
-
-function isHistoryVisible(el) {
-  if (!el) return false;
-
-  const style = window.getComputedStyle(el);
-
-  return (
-    !el.hasAttribute("hidden") &&
-    !el.classList.contains("hidden") &&
-    style.display !== "none" &&
-    style.visibility !== "hidden"
-  );
-}
-
-function showHistoryElement(el) {
-  if (!el) return;
-
-  el.removeAttribute("hidden");
-  el.classList.remove("hidden");
-  el.style.display = "";
-  el.style.visibility = "";
-  el.style.opacity = "";
-}
-
-function hideHistoryElement(el) {
-  if (!el) return;
-
-  el.setAttribute("hidden", "");
-  el.classList.add("hidden");
-}
-
-function renderFullHistoryTable() {
-  const root = qs("[data-full-history-table]");
-
-  if (!root) return;
-
-  const filtered = FULL_HISTORY_RESULTS
-    .filter((item) => SETTLED_RESULTS.includes(normalizeText(item.result)))
-    .filter((item) => {
-      const result = normalizeText(item.result);
-
-      if (FULL_HISTORY_FILTER === "all") {
-        return true;
-      }
-
-      return result === FULL_HISTORY_FILTER;
-    });
-
-  const sorted = sortResultsDesc(filtered);
-
-  const counter = qs("[data-full-history-count]");
-  if (counter) {
-    counter.textContent = `${fmtInteger(sorted.length)} rezultata`;
-  }
-
-  if (!sorted.length) {
-    root.innerHTML = `
-      <div class="empty-card">
-        <h3>Nema rezultata za izabrani filter.</h3>
-        <p>Promijeni filter ili provjeri da li je totals_results.json pravilno generisan.</p>
-      </div>
+        <h3>${r.match || 'Match'}</h3>
+        <p>${r.tournament || 'Tennis'}</p>
+        <div class="result-score">${r.final_score || '—'}</div>
+        <p>${r.bet || ''} · koef ${fmtNumber(r.odds)} · ${fmtNumber(r.public_stake ?? r.stake)}u</p>
+        <strong class="result-profit ${result}">${fmtProfit(r.public_profit ?? r.profit)}</strong>
+      </article>
     `;
-    return;
-  }
-
-  const rows = sorted
-    .map((item) => {
-      const result = normalizeText(item.result);
-      const profit = getResultProfit(item);
-      const stake = getResultStake(item);
-      const label = getResultLabel(item);
-
-      return `
-        <tr>
-          <td>${item.date || "—"}</td>
-          <td>${item.time || "—"}</td>
-          <td>
-            <strong>${item.match || "—"}</strong>
-            <small>${item.tournament || ""}${item.round ? " · " + item.round : ""}</small>
-          </td>
-          <td>${getBetLabel(item)}</td>
-          <td>${fmtKoef(item.odds)}</td>
-          <td>${fmtStake(stake)}</td>
-          <td>${label ? `<span class="badge ${stakeBadgeClass(label)}">${label}</span>` : "—"}</td>
-          <td><span class="badge ${resultBadgeClass(result)}">${result.toUpperCase()}</span></td>
-          <td><strong>${fmtProfit(profit)}</strong></td>
-          <td>${item.final_score || "—"}</td>
-        </tr>
-      `;
-    })
-    .join("");
-
-  root.innerHTML = `
-    <div class="history-table-wrap">
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Datum</th>
-            <th>Vrijeme</th>
-            <th>Meč</th>
-            <th>Tip</th>
-            <th>Koef</th>
-            <th>Ulog</th>
-            <th>Snaga</th>
-            <th>Status</th>
-            <th>Profit</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>
-  `;
+  }).join('');
 }
+
+let FULL_HISTORY_RESULTS = [];
+let FULL_HISTORY_FILTER = 'all';
 
 function setupFullHistory(results) {
   FULL_HISTORY_RESULTS = Array.isArray(results) ? results : [];
 
-  const toggle = qs("[data-history-toggle]");
-  const wrap = qs("[data-full-history]");
-  const tools = qs("[data-history-tools]");
-  const table = qs("[data-full-history-table]");
+  const toggle = document.querySelector('[data-history-toggle]');
+  const wrap = document.querySelector('[data-full-history]');
+  const table = document.querySelector('[data-full-history-table]');
+  const tools = document.querySelector('[data-history-tools]');
+  const count = document.querySelector('[data-full-history-count]');
 
-  if (!toggle || !wrap) return;
+  if (!toggle || !wrap || !table) return;
 
-  hideHistoryElement(wrap);
-  hideHistoryElement(tools);
+  wrap.hidden = true;
+  if (tools) tools.hidden = true;
+  table.innerHTML = '';
 
-  if (table) {
-    table.innerHTML = "";
+  const settledCount = FULL_HISTORY_RESULTS.filter((x) =>
+    ['win', 'loss', 'void', 'push'].includes(String(x.result || '').toLowerCase())
+  ).length;
+
+  if (count) {
+    count.textContent = `${settledCount} rezultata`;
   }
 
-  toggle.addEventListener("click", (event) => {
-    event.preventDefault();
+  toggle.addEventListener('click', () => {
+    const isHidden = wrap.hidden;
 
-    const currentlyVisible = isHistoryVisible(wrap);
+    if (isHidden) {
+      wrap.hidden = false;
+      if (tools) tools.hidden = false;
+      toggle.textContent = 'Sakrij rezultate';
+      renderFullHistoryTable();
 
-    if (currentlyVisible) {
-      hideHistoryElement(wrap);
-      hideHistoryElement(tools);
-      toggle.textContent = "Prikaži sve rezultate";
-      toggle.setAttribute("aria-expanded", "false");
-      return;
+      setTimeout(() => {
+        wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    } else {
+      wrap.hidden = true;
+      if (tools) tools.hidden = true;
+      toggle.textContent = 'Prikaži sve rezultate';
     }
-
-    showHistoryElement(wrap);
-    showHistoryElement(tools);
-    toggle.textContent = "Sakrij rezultate";
-    toggle.setAttribute("aria-expanded", "true");
-
-    renderFullHistoryTable();
-
-    setTimeout(() => {
-      wrap.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }, 50);
   });
 
-  qsa("[data-history-filter]").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
+  document.querySelectorAll('[data-history-filter]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-history-filter]').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
 
-      qsa("[data-history-filter]").forEach((b) => {
-        b.classList.remove("active");
-      });
+      FULL_HISTORY_FILTER = btn.dataset.historyFilter || 'all';
 
-      button.classList.add("active");
-
-      FULL_HISTORY_FILTER = button.dataset.historyFilter || "all";
-
-      showHistoryElement(wrap);
-      showHistoryElement(tools);
-
-      toggle.textContent = "Sakrij rezultate";
-      toggle.setAttribute("aria-expanded", "true");
+      wrap.hidden = false;
+      if (tools) tools.hidden = false;
+      toggle.textContent = 'Sakrij rezultate';
 
       renderFullHistoryTable();
     });
   });
 }
 
-function drawProfitChart(results) {
-  const canvas =
-    qs("[data-profit-chart]") ||
-    qs("#profitChart") ||
-    qs("canvas[data-chart='profit']");
+function renderFullHistoryTable() {
+  const table = document.querySelector('[data-full-history-table]');
+  const count = document.querySelector('[data-full-history-count]');
+  if (!table) return;
 
-  if (!canvas || typeof canvas.getContext !== "function") return;
+  let items = FULL_HISTORY_RESULTS
+    .filter((x) => ['win', 'loss', 'void', 'push'].includes(String(x.result || '').toLowerCase()))
+    .sort((a, b) =>
+      `${b.date || ''} ${b.time || ''}`.localeCompare(`${a.date || ''} ${a.time || ''}`)
+    );
 
-  const ctx = canvas.getContext("2d");
-  const width = canvas.clientWidth || 720;
-  const height = canvas.clientHeight || 280;
-
-  canvas.width = width * window.devicePixelRatio;
-  canvas.height = height * window.devicePixelRatio;
-
-  ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-  ctx.clearRect(0, 0, width, height);
-
-  const items = sortResultsAsc(results).filter((item) =>
-    SETTLED_RESULTS.includes(normalizeText(item.result))
-  );
-
-  if (!items.length) return;
-
-  let cumulative = 0;
-
-  const points = items.map((item, index) => {
-    cumulative += getResultProfit(item);
-
-    return {
-      xIndex: index,
-      yValue: cumulative,
-    };
-  });
-
-  const values = points.map((p) => p.yValue);
-  const minY = Math.min(0, ...values);
-  const maxY = Math.max(0, ...values);
-  const pad = 28;
-
-  const yRange = maxY - minY || 1;
-
-  function xFor(index) {
-    if (points.length === 1) return width / 2;
-    return pad + (index / (points.length - 1)) * (width - pad * 2);
+  if (FULL_HISTORY_FILTER !== 'all') {
+    items = items.filter((x) => String(x.result || '').toLowerCase() === FULL_HISTORY_FILTER);
   }
 
-  function yFor(value) {
-    return height - pad - ((value - minY) / yRange) * (height - pad * 2);
+  if (count) {
+    count.textContent = `${items.length} rezultata`;
   }
 
-  ctx.lineWidth = 1;
-  ctx.globalAlpha = 0.25;
-
-  for (let i = 0; i <= 4; i += 1) {
-    const y = pad + (i / 4) * (height - pad * 2);
-    ctx.beginPath();
-    ctx.moveTo(pad, y);
-    ctx.lineTo(width - pad, y);
-    ctx.stroke();
+  if (!items.length) {
+    table.innerHTML = '<article class="empty-card">Nema rezultata za izabrani filter.</article>';
+    return;
   }
 
-  ctx.globalAlpha = 1;
-  ctx.lineWidth = 2;
-  ctx.beginPath();
+  const rows = items.map((r) => {
+    const result = String(r.result || '').toLowerCase();
+    const label = r.public_stake_label || r.stake_label || 'Standard';
 
-  points.forEach((point, index) => {
-    const x = xFor(index);
-    const y = yFor(point.yValue);
+    return `
+      <tr>
+        <td>${r.date || '—'}</td>
+        <td>${r.time || '—'}</td>
+        <td>
+          <strong>${r.match || 'Match'}</strong>
+          <small>${r.tournament || ''}${r.round ? ' · ' + r.round : ''}</small>
+        </td>
+        <td>${r.bet || ''}</td>
+        <td>${fmtNumber(r.odds)}</td>
+        <td>${fmtNumber(r.public_stake ?? r.stake)}u</td>
+        <td><span class="badge ${stakeBadgeClass(label)}">${label}</span></td>
+        <td><span class="badge ${result}">${result}</span></td>
+        <td><strong class="result-profit ${result}">${fmtProfit(r.public_profit ?? r.profit)}</strong></td>
+        <td>${r.final_score || '—'}</td>
+      </tr>
+    `;
+  }).join('');
 
-    if (index === 0) {
-      ctx.moveTo(x, y);
-    } else {
-      ctx.lineTo(x, y);
-    }
-  });
-
-  ctx.stroke();
-
-  const last = points[points.length - 1];
-  ctx.beginPath();
-  ctx.arc(xFor(last.xIndex), yFor(last.yValue), 4, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.font = "12px system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
-  ctx.globalAlpha = 0.8;
-  ctx.fillText(fmtProfit(last.yValue), pad, pad - 8);
-  ctx.globalAlpha = 1;
+  table.innerHTML = `
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Datum</th>
+          <th>Vrijeme</th>
+          <th>Meč</th>
+          <th>Tip</th>
+          <th>Koef</th>
+          <th>Ulog</th>
+          <th>Snaga</th>
+          <th>Status</th>
+          <th>Profit</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
 }
 
-function setupDisclosureButtons() {
-  qsa("[data-toggle-target]").forEach((button) => {
-    const targetSelector = button.dataset.toggleTarget;
-    const target = targetSelector ? qs(targetSelector) : null;
+function renderPlatforms() {
+  const root = document.querySelector('[data-platforms]');
+  if (!root) return;
+  root.innerHTML = PLATFORM_DATA.map((p) => `
+    <article class="platform-card">
+      <span class="badge gold">${p.tag}</span>
+      <h3>${p.name}</h3>
+      <div class="rating">${p.rating}</div>
+      <p>${p.text}</p>
+      <details class="details">
+        <summary>Detalji</summary>
+        <p>${p.details}</p>
+      </details>
+      <a class="btn primary btn-full" href="${p.url}" target="_blank" rel="nofollow sponsored noopener">Otvori platformu</a>
+    </article>
+  `).join('');
+}
 
-    if (!target) return;
+async function initData() {
+  const page = document.body.dataset.page;
+  const stats = await fetchFirst(DATA_PATHS.stats);
+  fillStats(stats);
 
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
+  if (page === 'prognoze') {
+    const picks = await fetchFirst(DATA_PATHS.picks) || [];
+    renderPicks(picks);
+  }
 
-      const visible = isHistoryVisible(target);
+  if (page === 'rezultati') {
+    fillDetailTables(stats);
+    const results = await fetchFirst(DATA_PATHS.results) || [];
+    fillDailyTable(results);
+    drawProfitChart(results);
+    renderRecentResults(results);
+    setupFullHistory(results);
+    window.addEventListener('resize', () => drawProfitChart(results));
+  }
 
-      if (visible) {
-        hideHistoryElement(target);
-        button.setAttribute("aria-expanded", "false");
-
-        if (button.dataset.closedText) {
-          button.textContent = button.dataset.closedText;
-        }
-
-        return;
+  if (page === 'home') {
+    const picks = await fetchFirst(DATA_PATHS.picks) || [];
+    const previewRoot = document.querySelector('[data-picks-preview]');
+    if (previewRoot) {
+      if (Array.isArray(picks) && picks.length) {
+        previewRoot.innerHTML = '';
+        previewRoot.setAttribute('data-picks', '');
+        renderPicks(picks.slice(0,3));
+      } else {
+        previewRoot.innerHTML = '<p class="muted">Trenutno nema aktivnih public pickova. AI77 čeka bolji signal.</p>';
       }
-
-      showHistoryElement(target);
-      button.setAttribute("aria-expanded", "true");
-
-      if (button.dataset.openText) {
-        button.textContent = button.dataset.openText;
-      }
-    });
-  });
-}
-
-function activateNavigation() {
-  const page = document.body.dataset.page || "";
-
-  qsa("[data-nav]").forEach((link) => {
-    if (link.dataset.nav === page) {
-      link.classList.add("active");
     }
-  });
+  }
+
+  renderPlatforms();
 }
 
-async function init() {
-  activateNavigation();
-  setupDisclosureButtons();
-
-  const [predictions, results, stats] = await Promise.all([
-    loadJsonFromCandidates(DATA_CANDIDATES.predictions, []),
-    loadJsonFromCandidates(DATA_CANDIDATES.results, []),
-    loadJsonFromCandidates(DATA_CANDIDATES.stats, {}),
-  ]);
-
-  const safePredictions = Array.isArray(predictions) ? predictions : [];
-  const safeResults = Array.isArray(results) ? results : [];
-  const safeStats = stats && typeof stats === "object" && !Array.isArray(stats) ? stats : {};
-
-  fillStats(safeStats);
-  fillDetailTables(safeStats);
-  fillDailyTable(safeResults);
-  renderRecentResults(safeResults);
-  renderPredictions(safePredictions);
-  fillPredictionStats(safePredictions);
-  setupFullHistory(safeResults);
-  drawProfitChart(safeResults);
-}
-
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener('DOMContentLoaded', () => {
+  setupMenu();
+  setupTabs();
+  initData();
+});
