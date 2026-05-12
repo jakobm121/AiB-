@@ -35,7 +35,7 @@ MIN_PUBLIC_CONFIDENCE = 74
 # Overji so tiered.
 # 20.5 gre skozi strogo, ampak še normalno.
 # 21.5 mora imeti močnejši signal.
-# 22.5 gre skozi samo ultra redko in pri stakingu ostane capped.
+# 22.5 gre skozi samo ultra redko.
 OVER_TIER_FILTERS = [
     {
         "max_line": 20.5,
@@ -229,10 +229,6 @@ def passes_public_quality_filter(item):
     return False
 
 
-def cap_stake(stake, cap):
-    return min(float(stake), float(cap))
-
-
 def stake_label_for_units(stake):
     if stake >= 1.0:
         return "Top Rated"
@@ -247,11 +243,11 @@ def calculate_public_stake(item):
     """
     AI77 Public Stake - confidence staking version.
 
-    Vse ostalo ostane enako:
-    - izbor pickov ostane po obstoječih public filterjih;
-    - spreminja se samo javni staking;
-    - confidence < 74 se ne objavi, ker je MIN_PUBLIC_CONFIDENCE = 74;
-    - public profit/statistika se računata po tej logiki.
+    Izbor pickov ostane po public filterjih.
+    Spreminja se samo javni staking:
+    - confidence 74-81.99 = 0.50u
+    - confidence 82-89.99 = 0.75u
+    - confidence 90+ = 1.00u
     """
     confidence = to_float(item.get("confidence"), 0) or 0
 
@@ -272,7 +268,7 @@ def calculate_public_stake(item):
         label = "Top Rated"
 
     return round(stake, 2), label
-    
+
 
 def calculate_public_profit(item):
     result = normalize_result_value(item.get("result"))
@@ -523,6 +519,72 @@ def sort_results(items):
     )
 
 
+def load_settled_public_pick_ids():
+    raw_results = load_json(SOURCE_RESULTS, [])
+    public_pick_ids = load_public_pick_ids()
+    settled_ids = set()
+
+    for item in raw_results:
+        if not isinstance(item, dict):
+            continue
+
+        pick_id = item.get("pick_id")
+        if not pick_id:
+            continue
+
+        if str(pick_id) not in public_pick_ids:
+            continue
+
+        result = normalize_result_value(item.get("result"))
+
+        if result in SETTLED_RESULTS:
+            settled_ids.add(str(pick_id))
+
+    return settled_ids
+
+
+def merge_open_public_predictions(previous_items, new_items, settled_pick_ids):
+    """
+    AiB open pick memory.
+
+    Namen:
+    - če AI repo v novem runu prepiše predictions snapshot,
+      AiB ne sme izgubiti pickov, ki so bili že javno objavljeni;
+    - pick ostane v totals_predictions.json, dokler se ne pojavi kot settled
+      v AI results;
+    - novi safe picki posodobijo stare podatke, če imajo isti pick_id.
+    """
+    merged = {}
+
+    for item in previous_items:
+        if not isinstance(item, dict):
+            continue
+
+        pick_id = item.get("pick_id")
+        if not pick_id:
+            continue
+
+        if str(pick_id) in settled_pick_ids:
+            continue
+
+        merged[str(pick_id)] = item
+
+    for item in new_items:
+        if not isinstance(item, dict):
+            continue
+
+        pick_id = item.get("pick_id")
+        if not pick_id:
+            continue
+
+        if str(pick_id) in settled_pick_ids:
+            continue
+
+        merged[str(pick_id)] = item
+
+    return sort_predictions(list(merged.values()))
+
+
 def aggregate_predictions():
     now = datetime.now(TZ)
 
@@ -532,20 +594,33 @@ def aggregate_predictions():
     safe = dedupe_picks(safe)
     safe = sort_predictions(safe)
 
-    public_items = [normalize_pick(item) for item in safe]
+    new_public_items = [normalize_pick(item) for item in safe]
 
+    previous_public_items = load_json(OUTPUT_DIR / "totals_predictions.json", [])
     public_pick_ids = load_public_pick_ids()
 
-    for item in public_items:
+    for item in new_public_items:
         pick_id = item.get("pick_id")
         if pick_id:
             public_pick_ids.add(str(pick_id))
 
     save_public_pick_ids(public_pick_ids)
+
+    settled_pick_ids = load_settled_public_pick_ids()
+
+    public_items = merge_open_public_predictions(
+        previous_items=previous_public_items,
+        new_items=new_public_items,
+        settled_pick_ids=settled_pick_ids,
+    )
+
     save_json(OUTPUT_DIR / "totals_predictions.json", public_items)
 
     print(f"Loaded predictions: {len(raw)}")
-    print(f"Published predictions: {len(public_items)}")
+    print(f"New safe predictions: {len(new_public_items)}")
+    print(f"Previous open predictions: {len(previous_public_items)}")
+    print(f"Open public predictions: {len(public_items)}")
+    print(f"Settled public pick ids: {len(settled_pick_ids)}")
     print(f"Public registry size: {len(public_pick_ids)}")
 
 
