@@ -30,7 +30,7 @@ SETTLED_RESULTS = {"win", "loss", "push", "void"}
 # Underji ostanejo mehkejši, ker so po zgodovini stabilni.
 MIN_PUBLIC_EDGE = 0.025
 MIN_PUBLIC_QUALITY_SCORE = 55
-MIN_PUBLIC_CONFIDENCE = 52
+MIN_PUBLIC_CONFIDENCE = 74
 
 # Overji so tiered.
 # 20.5 gre skozi strogo, ampak še normalno.
