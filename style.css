@@ -804,3 +804,47 @@ h3{
   .terminal-foot,.footer-grid{grid-template-columns:1fr;display:grid}
   .pick-meta{grid-template-columns:1fr 1fr}
 }
+
+.played-toggle {
+  border: 1px solid rgba(241, 223, 184, 0.22);
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(241, 223, 184, 0.82);
+  border-radius: 999px;
+  padding: 0.48rem 0.78rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.played-toggle:hover {
+  border-color: rgba(200, 167, 95, 0.65);
+  background: rgba(200, 167, 95, 0.12);
+  color: #f1dfb8;
+}
+
+.played-toggle.active {
+  border-color: rgba(97, 220, 163, 0.65);
+  background: rgba(97, 220, 163, 0.13);
+  color: #bff5d9;
+}
+
+.played-pick {
+  border-color: rgba(97, 220, 163, 0.35) !important;
+  box-shadow: 0 0 0 1px rgba(97, 220, 163, 0.08), 0 18px 45px rgba(0, 0, 0, 0.24);
+}
+
+.played-badge {
+  border-color: rgba(97, 220, 163, 0.45) !important;
+  background: rgba(97, 220, 163, 0.12) !important;
+  color: #bff5d9 !important;
+}
+
+@media (max-width: 640px) {
+  .played-toggle {
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.6rem;
+  }
+}
