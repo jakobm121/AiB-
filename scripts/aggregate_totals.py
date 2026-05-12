@@ -245,105 +245,34 @@ def stake_label_for_units(stake):
 
 def calculate_public_stake(item):
     """
-    AI77 Public Stake.
+    AI77 Public Stake - confidence staking version.
 
-    Namen:
-    - public profit/statistika se računata po tej logiki;
-    - max stake je 1.00u;
-    - Top Rated je zdaj strožji, ker je zgodovina pokazala,
-      da je Strong segment boljši od starega Top Rated segmenta;
-    - izbor pickov se NE spreminja, spreminja se samo stake.
+    Vse ostalo ostane enako:
+    - izbor pickov ostane po obstoječih public filterjih;
+    - spreminja se samo javni staking;
+    - confidence < 74 se ne objavi, ker je MIN_PUBLIC_CONFIDENCE = 74;
+    - public profit/statistika se računata po tej logiki.
     """
-    side = normalize_side(item.get("side"))
-
-    edge = to_float(item.get("edge"), 0) or 0
-    quality_score = to_float(item.get("quality_score"), 0) or 0
     confidence = to_float(item.get("confidence"), 0) or 0
-    expected_margin = to_float(item.get("expected_margin"), 0) or 0
-    line = to_float(item.get("line"), 0) or 0
-    odds = to_float(item.get("odds"), 0) or 0
-    bookmakers_used = to_float(item.get("bookmakers_used"), 0) or 0
-    gap = market_gap(item)
-    over_rate = combined_over_21_5_rate(item)
 
-    stake = 0.50
+    if confidence < 74:
+        stake = 0.0
+        label = "No Pick"
 
-    if side == "under":
-        margin_abs = abs(expected_margin)
+    elif confidence < 82:
+        stake = 0.50
+        label = "Standard"
 
-        # Strožji Top Rated:
-        # - višji quality/confidence/edge
-        # - margin vsaj 3.00
-        # - line 20.5 ne dobi več 1.00u, ker je zgodovinsko slabši segment
-        if (
-            quality_score >= 86
-            and confidence >= 88
-            and edge >= 0.085
-            and margin_abs >= 3.00
-            and odds <= 2.20
-            and line != 20.5
-        ):
-            stake = 1.00
+    elif confidence < 90:
+        stake = 0.75
+        label = "Strong"
 
-        # Strong ostane skoraj enak, ker je bil najboljši segment.
-        elif (
-            quality_score >= 74
-            and confidence >= 78
-            and edge >= 0.050
-            and margin_abs >= 2.00
-        ):
-            stake = 0.75
+    else:
+        stake = 1.00
+        label = "Top Rated"
 
-        else:
-            stake = 0.50
-
-    elif side == "over":
-        # Overji ostanejo bolj previdni.
-        # Za zdaj over ne dobi 1.00u, dokler ni več zgodovine.
-        if (
-            line <= 21.5
-            and quality_score >= 84
-            and confidence >= 87
-            and edge >= 0.090
-            and expected_margin >= 1.80
-            and (gap is None or gap <= 0.45)
-            and (over_rate is None or over_rate >= 0.55)
-        ):
-            stake = 0.75
-        else:
-            stake = 0.50
-
-    # Safety caps.
-    if bookmakers_used and bookmakers_used < 5:
-        stake = cap_stake(stake, 0.50)
-
-    if odds and odds > 2.20:
-        stake = cap_stake(stake, 0.75)
-
-    # 20.5 je bil zgodovinsko profitabilen, ampak slabši od 19.5/21.5,
-    # zato ga ne napihujemo preveč.
-    if line == 20.5:
-        if side == "under":
-            stake = cap_stake(stake, 0.75)
-        elif side == "over":
-            stake = cap_stake(stake, 0.50)
-
-    # Overji ostanejo capped.
-    if side == "over":
-        stake = cap_stake(stake, 0.75)
-
-        if odds and odds > 2.05:
-            stake = cap_stake(stake, 0.50)
-
-    if gap is not None and gap > 0.55:
-        stake = cap_stake(stake, 0.50)
-
-    # 22.5 ima več variance, zato max 0.50u.
-    if line >= 22.5:
-        stake = cap_stake(stake, 0.50)
-
-    return round(stake, 2), stake_label_for_units(stake)
-
+    return round(stake, 2), label
+    
 
 def calculate_public_profit(item):
     result = normalize_result_value(item.get("result"))
