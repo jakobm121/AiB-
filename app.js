@@ -108,6 +108,65 @@ function pctFromProb(value) {
   return fmtNumber(n > 1 ? n : n * 100, '%');
 }
 
+/* ODIGRANO LOCAL STORAGE */
+const PLAYED_PICKS_KEY = 'ai77_played_public_picks';
+
+function getPlayedPicks() {
+  try {
+    const raw = localStorage.getItem(PLAYED_PICKS_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (err) {
+    return {};
+  }
+}
+
+function savePlayedPicks(data) {
+  try {
+    localStorage.setItem(PLAYED_PICKS_KEY, JSON.stringify(data || {}));
+  } catch (err) {}
+}
+
+function getPickStorageId(pick) {
+  return String(
+    pick?.pick_id ||
+    pick?.fixture_id ||
+    pick?.event_key ||
+    `${pick?.date || ''}-${pick?.time || ''}-${pick?.match || ''}-${pick?.bet || ''}`
+  );
+}
+
+function isPickPlayed(pickId) {
+  const played = getPlayedPicks();
+  return Boolean(played[String(pickId)]);
+}
+
+function togglePickPlayed(pickId) {
+  const id = String(pickId || '');
+  if (!id) return;
+
+  const played = getPlayedPicks();
+
+  if (played[id]) {
+    delete played[id];
+  } else {
+    played[id] = {
+      played_at: new Date().toISOString()
+    };
+  }
+
+  savePlayedPicks(played);
+}
+
+function setupPlayedButtons(picks) {
+  document.querySelectorAll('[data-played-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const pickId = btn.dataset.playedToggle;
+      togglePickPlayed(pickId);
+      renderPicks(picks);
+    });
+  });
+}
+
 async function fetchFirst(paths) {
   for (const path of paths) {
     try {
@@ -184,18 +243,25 @@ function renderPicks(picks) {
   const sorted = picks.slice().sort((a,b) => `${a.date || ''} ${a.time || ''}`.localeCompare(`${b.date || ''} ${b.time || ''}`));
 
   root.innerHTML = sorted.map((p) => {
+    const pickId = getPickStorageId(p);
+    const played = isPickPlayed(pickId);
     const label = p.public_stake_label || p.stake_label || 'Standard';
     const stake = p.public_stake ?? p.stake;
     const bet = p.bet || `${String(p.side || '').toUpperCase()} ${p.line}`;
     const platform = PARTNERS.sportaza;
+
     return `
-      <article class="pick-card">
+      <article class="pick-card ${played ? 'played-pick' : ''}" data-pick-card="${pickId}">
         <div class="pick-top">
           <div class="badges">
             <span class="badge">Public pick</span>
             <span class="badge ${String(p.side || '').toLowerCase() === 'over' ? 'gold' : 'silver'}">Total games</span>
+            ${played ? '<span class="badge played-badge">Odigrano ✓</span>' : ''}
           </div>
-          <strong>${p.time || ''}</strong>
+
+          <button class="played-toggle ${played ? 'active' : ''}" type="button" data-played-toggle="${pickId}" aria-pressed="${played ? 'true' : 'false'}">
+            ${played ? '✓ Odigrano' : '○ Odigrano'}
+          </button>
         </div>
 
         <h3>${p.match || 'Tennis match'}</h3>
@@ -215,6 +281,8 @@ function renderPicks(picks) {
       </article>
     `;
   }).join('');
+
+  setupPlayedButtons(picks);
 }
 
 function tableFromGroup(group) {
