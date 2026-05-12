@@ -90,6 +90,33 @@
       <div class="result-grid" data-recent-results></div>
     </div>
   </section>
+
+  <section class="section no-top">
+    <div class="container">
+      <div class="history-panel">
+        <div class="history-head">
+          <div>
+            <span class="eyebrow">Full history</span>
+            <h2>Cela public istorija</h2>
+            <p>Za potpunu transparentnost možeš otvoriti sve rezultate u kompaktnoj tabeli.</p>
+          </div>
+          <button class="btn primary" type="button" data-history-toggle>Prikaži sve rezultate</button>
+        </div>
+
+        <div class="history-tools" data-history-tools hidden>
+          <button class="filter-btn active" type="button" data-history-filter="all">Svi</button>
+          <button class="filter-btn" type="button" data-history-filter="win">Win</button>
+          <button class="filter-btn" type="button" data-history-filter="loss">Loss</button>
+          <button class="filter-btn" type="button" data-history-filter="void">Void</button>
+          <button class="filter-btn" type="button" data-history-filter="push">Push</button>
+        </div>
+
+        <div class="history-table-wrap" data-full-history hidden>
+          <div class="table-wrap" data-full-history-table></div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 <footer class="footer">
   <div class="container footer-grid">
