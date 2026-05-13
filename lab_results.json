@@ -2505,7 +2505,7 @@
     "confidence_score": 60.6,
     "quality_score": 72.1,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "ac2a08f249a75b48e87a7c232ccaee80",
@@ -2549,7 +2549,7 @@
     "confidence_score": 72.7,
     "quality_score": 74.7,
     "reasoning": "Hegelmann II vs Transinvest 2 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "404c07118c6e97abfb5c170540977761",
@@ -2615,7 +2615,7 @@
     "confidence_score": 55.8,
     "quality_score": 67.5,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "ac0ab3e9ddc2075ad3eb70b3caaba897",
@@ -2703,7 +2703,7 @@
     "confidence_score": 52.2,
     "quality_score": 53.3,
     "reasoning": "Once Caldas W vs Orsomarso W projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "734c9027e65926351686de5f49dd27d3",
@@ -2725,7 +2725,7 @@
     "confidence_score": 43.0,
     "quality_score": 47.5,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e01eb8fa7b39d59a8d744d95e93d56ea",
@@ -2769,7 +2769,7 @@
     "confidence_score": 53.9,
     "quality_score": 68.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "06ec2d0bb01ea7f1c01dc92fa93c641f",
@@ -2791,7 +2791,7 @@
     "confidence_score": 52.5,
     "quality_score": 53.8,
     "reasoning": "Epitsentr Dunayivtsi vs Polessya projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "0c00878f58a38cf309a7c603373ee598",
@@ -2813,7 +2813,7 @@
     "confidence_score": 50.8,
     "quality_score": 51.9,
     "reasoning": "Oleksandria vs Zorya Luhansk projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "82b3ff6db3a478bf803887044d09ec6d",
@@ -2835,7 +2835,7 @@
     "confidence_score": 73.9,
     "quality_score": 66.5,
     "reasoning": "Canberra White Eagles vs Queanbeyan City projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "53ba31b1b317367882cf167bccc930be",
@@ -2879,7 +2879,7 @@
     "confidence_score": 49.2,
     "quality_score": 53.6,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "87c1dc1510d07fc462c575a629042f8c",
@@ -2901,7 +2901,7 @@
     "confidence_score": 58.5,
     "quality_score": 73.1,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4d7503cbe35215d205289da1059e3f15",
@@ -2923,7 +2923,7 @@
     "confidence_score": 65.9,
     "quality_score": 67.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "db96bdd284303f438777a264eb55e21c",
@@ -2945,7 +2945,7 @@
     "confidence_score": 77.7,
     "quality_score": 76.9,
     "reasoning": "FK Liepaja vs Ogre United projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "019d4167d9c5ba1c9848e8c0c2db2bfa",
@@ -2967,7 +2967,7 @@
     "confidence_score": 80.1,
     "quality_score": 75.6,
     "reasoning": "ATK Mohun Bagan vs Inter Kashi projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "55734ee59383e27fd19691c4a7e1ee58",
@@ -2989,7 +2989,7 @@
     "confidence_score": 74.8,
     "quality_score": 75.3,
     "reasoning": "Chrudim vs Příbram projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "31829a80a9efdd87401a314b36586e22",
@@ -3055,7 +3055,7 @@
     "confidence_score": 56.5,
     "quality_score": 67.7,
     "reasoning": "Šternberk vs Tatran Všechovice projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "49254e4eb62ef42640b6f8660b9cfa29",
@@ -3077,7 +3077,7 @@
     "confidence_score": 46.6,
     "quality_score": 52.4,
     "reasoning": "Veres Rivne vs Kryvbas KR projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "43a83277ba80109aa339bd7c9851e029",
@@ -3099,7 +3099,7 @@
     "confidence_score": 46.6,
     "quality_score": 54.1,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "8f86726b092c473463fffa42ee91c74c",
@@ -3165,7 +3165,7 @@
     "confidence_score": 74.3,
     "quality_score": 75.9,
     "reasoning": "Osasuna vs Atletico Madrid projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "a0d5b0e42172efe70573ec3075de795d",
@@ -3253,7 +3253,7 @@
     "confidence_score": 49.3,
     "quality_score": 52.8,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d1a1952b0bf267238d2df949dfc1d287",
