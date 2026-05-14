@@ -27,15 +27,15 @@ ALLOWED_BUCKETS = {"total_games"}
 ALLOWED_SIDES = {"under", "over"}
 SETTLED_RESULTS = {"win", "loss", "push", "void"}
 
-# Underji ostanejo mehkejši, ker so po zgodovini stabilni.
+# Base public filter.
+# UNDER je v praksi zdaj strožji, ker calculate_public_stake()
+# pod confidence 82 vrne 0u in se tak pick ne objavi.
 MIN_PUBLIC_EDGE = 0.025
 MIN_PUBLIC_QUALITY_SCORE = 55
 MIN_PUBLIC_CONFIDENCE = 74
 
-# Overji so tiered.
-# 20.5 gre skozi strogo, ampak še normalno.
-# 21.5 mora imeti močnejši signal.
-# 22.5 gre skozi samo ultra redko.
+# Overji ostanejo tiered kot do zdaj.
+# Za zdaj over filtrov ne spreminjamo, ker so v AiB že precej strogi.
 OVER_TIER_FILTERS = [
     {
         "max_line": 20.5,
@@ -241,33 +241,101 @@ def stake_label_for_units(stake):
 
 def calculate_public_stake(item):
     """
-    AI77 Public Stake - confidence staking version.
+    AI77 Public Stake - Profile C+ calibrated version.
 
-    Izbor pickov ostane po public filterjih.
-    Spreminja se samo javni staking:
-    - confidence 74-81.99 = 0.50u
-    - confidence 82-89.99 = 0.75u
-    - confidence 90+ = 1.00u
+    UNDER:
+    - confidence < 82 = No Pick
+    - confidence 82-85.99 = 1.00u
+    - confidence 86-89.99 = 0.50u
+    - confidence 86-89.99 + edge/quality support = 0.75u
+    - confidence 90+ = 0.75u
+    - confidence 90+ + edge/quality support = 1.00u
+
+    OVER:
+    - obstoječi over filter ostane
+    - večinoma 0.50u
+    - max 0.75u
+    - za zdaj over nima 1.00u
     """
+    side = normalize_side(item.get("side"))
+
     confidence = to_float(item.get("confidence"), 0) or 0
+    quality_score = to_float(item.get("quality_score"), 0) or 0
+    expected_margin = to_float(item.get("expected_margin"), 0) or 0
+    edge = to_float(item.get("edge"), 0) or 0
+    line = to_float(item.get("line"), 0) or 0
 
-    if confidence < 74:
-        stake = 0.0
-        label = "No Pick"
+    if side == "under":
+        if confidence < 82:
+            return 0.0, "No Pick"
 
-    elif confidence < 82:
+        # Profile C sweet spot.
+        if confidence < 86:
+            stake = 1.00
+            label = "Top Rated"
+
+        # 86-90 je bil slabši segment, zato baseline ostane 0.50u.
+        elif confidence < 90:
+            stake = 0.50
+            label = "Standard"
+
+            # Edge 0.10+ je tukaj boost signal, ne osnovni pogoj.
+            if edge >= 0.10 and quality_score >= 82:
+                stake = 0.75
+                label = "Strong"
+
+        # 90+ je pozitiven, ampak ne avtomatsko najboljši.
+        else:
+            stake = 0.75
+            label = "Strong"
+
+            # Top Rated samo, če ima dodaten value/quality support.
+            if (edge >= 0.10 and quality_score >= 82) or quality_score >= 86:
+                stake = 1.00
+                label = "Top Rated"
+
+        # Safety cap: če je margin prenizek, ne dovolimo agresivnega stake-a.
+        if expected_margin > -1.50:
+            stake = min(stake, 0.50)
+            label = stake_label_for_units(stake)
+
+        # 18.5 ima premalo vzorca.
+        if line == 18.5:
+            stake = min(stake, 0.50)
+            label = stake_label_for_units(stake)
+
+        return round(stake, 2), label
+
+    if side == "over":
+        # Overji so že filtrirani v passes_public_quality_filter.
+        # Tukaj jih samo capped stakamo.
         stake = 0.50
         label = "Standard"
 
-    elif confidence < 90:
-        stake = 0.75
-        label = "Strong"
+        # Over boost samo za najbolj čiste situacije.
+        # Ne uporabljamo 1.00u za over, dokler ni več stabilne zgodovine.
+        if (
+            line <= 20.5
+            and confidence >= 90
+            and quality_score >= 82
+            and expected_margin >= 2.50
+            and edge >= 0.08
+        ):
+            stake = 0.75
+            label = "Strong"
 
-    else:
-        stake = 1.00
-        label = "Top Rated"
+        return round(stake, 2), label
 
-    return round(stake, 2), label
+    return 0.0, "No Pick"
+
+
+def is_public_pick_publishable(item):
+    if not passes_public_quality_filter(item):
+        return False
+
+    public_stake, _ = calculate_public_stake(item)
+
+    return public_stake > 0
 
 
 def calculate_public_profit(item):
@@ -430,7 +498,7 @@ def is_safe_upcoming_pick(item, now):
     if item.get("total_games") is not None:
         return False
 
-    if not passes_public_quality_filter(item):
+    if not is_public_pick_publishable(item):
         return False
 
     return True
@@ -449,6 +517,9 @@ def is_valid_result_pick(item):
     if result in {"win", "loss", "push"}:
         if item.get("total_games") is None and not item.get("final_score"):
             return False
+
+    if not is_public_pick_publishable(item):
+        return False
 
     return True
 
@@ -522,6 +593,7 @@ def sort_results(items):
 def load_settled_public_pick_ids():
     raw_results = load_json(SOURCE_RESULTS, [])
     public_pick_ids = load_public_pick_ids()
+
     settled_ids = set()
 
     for item in raw_results:
@@ -529,6 +601,7 @@ def load_settled_public_pick_ids():
             continue
 
         pick_id = item.get("pick_id")
+
         if not pick_id:
             continue
 
@@ -550,8 +623,7 @@ def merge_open_public_predictions(previous_items, new_items, settled_pick_ids):
     Namen:
     - če AI repo v novem runu prepiše predictions snapshot,
       AiB ne sme izgubiti pickov, ki so bili že javno objavljeni;
-    - pick ostane v totals_predictions.json, dokler se ne pojavi kot settled
-      v AI results;
+    - pick ostane v totals_predictions.json, dokler se ne pojavi kot settled v AI results;
     - novi safe picki posodobijo stare podatke, če imajo isti pick_id.
     """
     merged = {}
@@ -561,12 +633,15 @@ def merge_open_public_predictions(previous_items, new_items, settled_pick_ids):
             continue
 
         pick_id = item.get("pick_id")
+
         if not pick_id:
             continue
 
         if str(pick_id) in settled_pick_ids:
             continue
 
+        # Če je bil star pick objavljen, ga pustimo odprtega do settlementa.
+        # Ne filtriramo ga ponovno po novih pravilih, ker je bil že public.
         merged[str(pick_id)] = item
 
     for item in new_items:
@@ -574,6 +649,7 @@ def merge_open_public_predictions(previous_items, new_items, settled_pick_ids):
             continue
 
         pick_id = item.get("pick_id")
+
         if not pick_id:
             continue
 
@@ -597,6 +673,7 @@ def aggregate_predictions():
     new_public_items = [normalize_pick(item) for item in safe]
 
     previous_public_items = load_json(OUTPUT_DIR / "totals_predictions.json", [])
+
     public_pick_ids = load_public_pick_ids()
 
     for item in new_public_items:
@@ -673,6 +750,9 @@ def calculate_stats(items):
         if result not in SETTLED_RESULTS:
             continue
 
+        if stake <= 0 and result in {"win", "loss"}:
+            continue
+
         bucket["total_picks"] += 1
 
         if odds is not None:
@@ -742,7 +822,7 @@ def aggregate_results():
         **overall,
         "public_registry_size": len(public_pick_ids),
         "updated_at": datetime.now(TZ).isoformat(),
-        "profit_mode": "public_stake_recalculated",
+        "profit_mode": "public_stake_recalculated_profile_c_plus",
         "by_side": calculate_grouped_stats(
             public_items,
             lambda x: normalize_side(x.get("side")) or "unknown",
@@ -772,7 +852,7 @@ def build_filtered_historical_items():
     candidates = [
         item for item in raw
         if is_valid_result_pick(item)
-        and passes_public_quality_filter(item)
+        and is_public_pick_publishable(item)
     ]
 
     deduped = dedupe_picks(candidates)
@@ -795,13 +875,13 @@ def backfill_public_registry(write_registry=True):
     normalized = [normalize_result(item) for item in deduped]
     backtest_stats = {
         "generated_at": datetime.now(TZ).isoformat(),
-        "mode": "filtered_historical_public_backfill",
+        "mode": "filtered_historical_public_backfill_profile_c_plus",
         "raw_results": len(raw),
         "filtered_candidates_before_dedupe": len(candidates),
         "filtered_after_dedupe": len(deduped),
         "existing_registry_size_before": len(existing_ids),
         "registry_size_after": len(final_ids),
-        "profit_mode": "public_stake_recalculated",
+        "profit_mode": "public_stake_recalculated_profile_c_plus",
         "overall": calculate_stats(normalized),
         "by_side": calculate_grouped_stats(
             normalized,
