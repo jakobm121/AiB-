@@ -3143,7 +3143,7 @@
     "confidence_score": 71.1,
     "quality_score": 73.7,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "2200733da170da7c5ecbb05eaf2c1412",
@@ -3319,7 +3319,7 @@
     "confidence_score": 60.5,
     "quality_score": 70.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c8157d31dc1fc82df6708bb8cda6fba5",
@@ -3407,7 +3407,7 @@
     "confidence_score": 77.0,
     "quality_score": 72.3,
     "reasoning": "Cooma Tigers FC vs Monaro Panthers projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2ba1ac30cea74608d84f195d7384e38e",
@@ -3429,7 +3429,7 @@
     "confidence_score": 76.2,
     "quality_score": 67.6,
     "reasoning": "Tuggeranong United vs Canberra FC projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b2f4d29a42a8d5c9c850d9e5c8abe6cc",
@@ -3451,7 +3451,7 @@
     "confidence_score": 73.5,
     "quality_score": 67.5,
     "reasoning": "Brindabella vs Canberra Juventus projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "94470ad0175abb6925a4dc8c031ad5c6",
@@ -3737,7 +3737,7 @@
     "confidence_score": 51.9,
     "quality_score": 53.0,
     "reasoning": "Botafogo U20 vs Flamengo U20 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b979cb4c74843ee34dd3d5630e090645",
@@ -3803,7 +3803,7 @@
     "confidence_score": 55.0,
     "quality_score": 69.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "903b28716ded59e90a3ad3ebee83fdca",
@@ -3825,7 +3825,7 @@
     "confidence_score": 75.7,
     "quality_score": 74.9,
     "reasoning": "Bjarg vs Brattvåg projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "818a6ed9c40fb144ff17f0706340151a",
@@ -3869,7 +3869,7 @@
     "confidence_score": 69.9,
     "quality_score": 71.6,
     "reasoning": "Tvååker vs Olympic projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "253ef7e00ede3f73c14c244ca91fdd20",
@@ -3891,7 +3891,7 @@
     "confidence_score": 48.4,
     "quality_score": 55.6,
     "reasoning": "Berga vs Räppe projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "177a7df309f55c8c7d13458d701dc1ed",
@@ -3935,7 +3935,7 @@
     "confidence_score": 61.5,
     "quality_score": 68.8,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c958a66fce568d27f0046a356192b016",
@@ -3957,7 +3957,7 @@
     "confidence_score": 70.1,
     "quality_score": 71.8,
     "reasoning": "Trollhättan vs AFC Malmo projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "9cc3e06cd6831f3536c3b8e57cbcdea0",
@@ -3979,7 +3979,7 @@
     "confidence_score": 62.5,
     "quality_score": 63.6,
     "reasoning": "Mjallby AIF vs Hammarby FF projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1ef3dab6bcc2fefffd4c80363e7a155e",
@@ -4001,7 +4001,7 @@
     "confidence_score": 59.5,
     "quality_score": 60.6,
     "reasoning": "trelleborgs FF vs Jonkopings Sodra projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "d0c1f1ed620e3c45a88d13f60b33ddd5",
@@ -4023,7 +4023,7 @@
     "confidence_score": 81.1,
     "quality_score": 75.6,
     "reasoning": "IF Karlstad vs Stocksund projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "99513749e028864716f28a914ea63632",
@@ -4067,7 +4067,7 @@
     "confidence_score": 55.5,
     "quality_score": 60.5,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4b1b87e5f2af1f80e13c86b8aad9553e",
@@ -4111,7 +4111,7 @@
     "confidence_score": 51.9,
     "quality_score": 64.0,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "982ffb8fd67de8b4a46153d6fbe5c01f",
@@ -4133,7 +4133,7 @@
     "confidence_score": 66.2,
     "quality_score": 67.5,
     "reasoning": "Corinthians vs Barra projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "8da8c1572d99df8a4fdd7fc36ea8a875",
@@ -4155,6 +4155,6 @@
     "confidence_score": 77.8,
     "quality_score": 87.9,
     "reasoning": "Real Madrid vs Oviedo projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   }
 ]
