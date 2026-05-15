@@ -1,17 +1,17 @@
 {
-  "total_picks": 105,
-  "settled_picks": 99,
+  "total_picks": 107,
+  "settled_picks": 101,
   "wins": 58,
-  "losses": 41,
+  "losses": 43,
   "pushes": 6,
-  "win_rate": 58.59,
-  "profit": 19.826,
-  "roi": 28.73,
-  "total_staked": 69.0,
+  "win_rate": 57.43,
+  "profit": 18.826,
+  "roi": 26.89,
+  "total_staked": 70.0,
   "avg_odds": 2.048,
-  "avg_stake": 0.697,
-  "public_registry_size": 111,
-  "updated_at": "2026-05-15T08:27:31.863345+02:00",
+  "avg_stake": 0.693,
+  "public_registry_size": 113,
+  "updated_at": "2026-05-15T08:57:25.210256+02:00",
   "profit_mode": "public_stake_recalculated_profile_c_plus",
   "by_side": {
     "over": {
@@ -28,17 +28,17 @@
       "avg_stake": 0.542
     },
     "under": {
-      "total_picks": 93,
-      "settled_picks": 87,
+      "total_picks": 95,
+      "settled_picks": 89,
       "wins": 51,
-      "losses": 36,
+      "losses": 38,
       "pushes": 6,
-      "win_rate": 58.62,
-      "profit": 19.144,
-      "roi": 30.63,
-      "total_staked": 62.5,
-      "avg_odds": 2.061,
-      "avg_stake": 0.718
+      "win_rate": 57.3,
+      "profit": 18.144,
+      "roi": 28.57,
+      "total_staked": 63.5,
+      "avg_odds": 2.06,
+      "avg_stake": 0.713
     }
   },
   "by_line": {
@@ -56,17 +56,17 @@
       "avg_stake": 0.5
     },
     "19.5": {
-      "total_picks": 17,
-      "settled_picks": 16,
+      "total_picks": 18,
+      "settled_picks": 17,
       "wins": 11,
-      "losses": 5,
+      "losses": 6,
       "pushes": 1,
-      "win_rate": 68.75,
-      "profit": 6.616,
-      "roi": 51.89,
-      "total_staked": 12.75,
-      "avg_odds": 2.09,
-      "avg_stake": 0.797
+      "win_rate": 64.71,
+      "profit": 6.116,
+      "roi": 46.16,
+      "total_staked": 13.25,
+      "avg_odds": 2.091,
+      "avg_stake": 0.779
     },
     "20.5": {
       "total_picks": 34,
@@ -82,17 +82,17 @@
       "avg_stake": 0.637
     },
     "21.5": {
-      "total_picks": 37,
-      "settled_picks": 35,
+      "total_picks": 38,
+      "settled_picks": 36,
       "wins": 18,
-      "losses": 17,
+      "losses": 18,
       "pushes": 2,
-      "win_rate": 51.43,
-      "profit": 4.201,
-      "roi": 16.8,
-      "total_staked": 25.0,
-      "avg_odds": 2.062,
-      "avg_stake": 0.714
+      "win_rate": 50.0,
+      "profit": 3.701,
+      "roi": 14.51,
+      "total_staked": 25.5,
+      "avg_odds": 2.059,
+      "avg_stake": 0.708
     },
     "22.5": {
       "total_picks": 15,
@@ -123,44 +123,44 @@
       "avg_stake": 0.723
     },
     "challenger": {
-      "total_picks": 50,
-      "settled_picks": 46,
+      "total_picks": 51,
+      "settled_picks": 47,
       "wins": 24,
-      "losses": 22,
+      "losses": 23,
       "pushes": 4,
-      "win_rate": 52.17,
-      "profit": 4.934,
-      "roi": 15.54,
-      "total_staked": 31.75,
-      "avg_odds": 2.048,
-      "avg_stake": 0.69
+      "win_rate": 51.06,
+      "profit": 4.434,
+      "roi": 13.75,
+      "total_staked": 32.25,
+      "avg_odds": 2.046,
+      "avg_stake": 0.686
     },
     "wta": {
-      "total_picks": 27,
-      "settled_picks": 25,
+      "total_picks": 28,
+      "settled_picks": 26,
       "wins": 16,
-      "losses": 9,
+      "losses": 10,
       "pushes": 2,
-      "win_rate": 64.0,
-      "profit": 6.406,
-      "roi": 37.68,
-      "total_staked": 17.0,
-      "avg_odds": 2.042,
-      "avg_stake": 0.68
+      "win_rate": 61.54,
+      "profit": 5.906,
+      "roi": 33.75,
+      "total_staked": 17.5,
+      "avg_odds": 2.044,
+      "avg_stake": 0.673
     }
   },
   "by_stake_label": {
     "Standard": {
-      "total_picks": 41,
-      "settled_picks": 39,
+      "total_picks": 43,
+      "settled_picks": 41,
       "wins": 16,
-      "losses": 23,
+      "losses": 25,
       "pushes": 2,
-      "win_rate": 41.03,
-      "profit": -3.53,
-      "roi": -18.1,
-      "total_staked": 19.5,
-      "avg_odds": 2.033,
+      "win_rate": 39.02,
+      "profit": -4.53,
+      "roi": -22.1,
+      "total_staked": 20.5,
+      "avg_odds": 2.034,
       "avg_stake": 0.5
     },
     "Strong": {
