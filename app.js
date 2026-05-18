@@ -265,9 +265,10 @@ function renderPicks(picks) {
         </div>
 
         <h3>${p.match || 'Tennis match'}</h3>
-        <div class="pick-sub">${p.tournament || 'Tennis'}${p.round ? ' · ' + p.round : ''}</div>
+<div class="pick-sub">${p.tournament || 'Tennis'}${p.round ? ' · ' + p.round : ''}</div>
+<div class="pick-sub">${p.date || ''}${p.date && p.time ? ' · ' : ''}${p.time || ''}</div>
 
-        <div class="pick-bet">${bet}</div>
+<div class="pick-bet">${bet}</div>
 
         <div class="pick-meta">
           <span>Koef <strong>${fmtNumber(p.odds)}</strong></span>
