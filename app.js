@@ -32,59 +32,59 @@ const PARTNERS = {
 const PLATFORM_DATA = [
   {
     name: 'Sportaza',
-    tag: 'Premium balans za početak',
-    rating: 'AI77 izbor',
+    tag: 'Editor’s Choice',
+    rating: '★★★★★',
     url: PARTNERS.sportaza,
-    text: 'Dobra opcija za korisnike koji žele jednostavan pristup, tenis ponudu i stabilan mobilni flow.',
-    details: 'Sportaza je postavljena kao partner spotlight jer se dobro uklapa u platform rotation pristup: provjera koef, dostupnost linija i praktičan ulaz.'
-  },
-  {
-    name: '22Bet',
-    tag: 'Široka sportska ponuda',
-    rating: 'Partner panel',
-    url: PARTNERS.bet22,
-    text: 'Opcija za korisnike koji žele veliki izbor sportskih marketa i dodatnu alternativu u rotaciji.',
-    details: '22Bet može biti koristan kao druga ili treća platforma kada želiš provjeriti da li postoji bolji koef ili dostupna ista linija.'
+    text: 'Najbolje izbalansirana opcija za početak: jednostavan mobilni flow, solidna tenis ponuda i brzo provjeravanje koef.',
+    details: 'AI77 review: testirani su registracija, depozit, bonus aktivacija, tenis marketi, mobilno iskustvo i osnovni payout flow. Sportaza se najbolje uklapa kao glavna platforma za korisnike koji žele čist i brz pristup. Bonusi uključuju welcome ponudu, reload opcije, cashback, boosted odds i crypto bonus. Prije ulaza uvijek provjeri da se linija i koef poklapaju s AI77 pickom.'
   },
   {
     name: '20Bet',
-    tag: 'Mobilni pristup',
-    rating: 'Rotation opcija',
+    tag: 'Mobile Flow',
+    rating: '★★★★☆',
     url: PARTNERS.bet20,
-    text: 'Jednostavna platforma za korisnike koji preferiraju brz mobilni pregled i osnovnu sportsku ponudu.',
-    details: 'Koristi se kao dio rotacije, posebno kada želiš ne držati sve aktivnosti na jednom mjestu.'
+    text: 'Dobra opcija za korisnike koji žele brz mobilni pregled, live betting i dodatnu provjeru tenis linija.',
+    details: 'AI77 review: fokus je bio na brzini depozita, mobilnom iskustvu, live betting sekciji, dostupnosti tenis marketa i promocijama. 20Bet je koristan kao druga platforma u rotaciji kada želiš provjeriti bolji koef ili alternativnu liniju. Dostupne su reload promocije, boosted odds i multi-bet insurance. Kod live marketa koef se može brzo promijeniti.'
+  },
+  {
+    name: '22Bet',
+    tag: 'Market Coverage',
+    rating: '★★★★☆',
+    url: PARTNERS.bet22,
+    text: 'Široka sportska ponuda i puno marketa, korisno za usporedbu koef i dodatne opcije prije ulaza.',
+    details: 'AI77 review: pregledani su registracija, sportska ponuda, live marketi, mobilni prikaz, support i promo sekcija. 22Bet je dobar izbor kada želiš veću pokrivenost marketa i dodatnu platformu za rotaciju. Bonusi uključuju reload ponude, accumulator promocije, weekly rebate i birthday bonus. Uvijek usporedi liniju s AI77 pickom.'
   },
   {
     name: '1xBet',
-    tag: 'Veliki izbor marketa',
-    rating: 'Market coverage',
+    tag: 'Huge Markets',
+    rating: '★★★★☆',
     url: PARTNERS.onexbet,
-    text: 'Poznata opcija sa širokim izborom sportova i marketa, korisna za provjeru alternativnih linija.',
-    details: 'Kod ovakvih platformi najvažnije je provjeriti koeficijent, liniju i uslove prije svake odluke.'
+    text: 'Velik izbor sportova i marketa, posebno koristan za traženje alternativnih linija i specifičnih ponuda.',
+    details: 'AI77 review: platforma je pregledana kroz market coverage, dostupnost tenis linija, posebne markete, mobilni flow i bonus sekciju. 1xBet može biti koristan za iskusnije korisnike koji žele više opcija, ali dostupnost ovisi o državi. Bonusi uključuju no-risk bet, app promocije, cashback i accumulator boost. Prije korištenja provjeri pravila i ograničenja za svoju lokaciju.'
   },
   {
     name: '7Signs',
-    tag: 'Bonus oriented',
-    rating: 'Dodatna opcija',
+    tag: 'Bonus Focused',
+    rating: '★★★★☆',
     url: PARTNERS.sevensigns,
-    text: 'Alternativna platforma za korisnike koji žele više opcija u rotaciji.',
-    details: 'Nije cilj koristiti sve platforme odjednom, nego imati rezervne opcije kada je ponuda ili koef bolji.'
+    text: 'Dodatna platforma za korisnike koji žele promo value, cashback opcije i crypto bonus mogućnosti.',
+    details: 'AI77 review: testiran je osnovni betting flow, depozitno iskustvo, bonus aktivacija, support i pregled sportskih marketa. 7Signs je zanimljiv kao dodatna opcija u rotaciji, posebno za korisnike koji prate reload i cashback promocije. Bonusi uključuju weekly reload, cashback, accumulator boost, boosted odds i horse racing bonus. Kod bonusa uvijek pročitaj wagering uslove.'
   },
   {
     name: '5Gringos',
-    tag: 'Promo focused',
-    rating: 'Dodatna opcija',
+    tag: 'Promo Rotation',
+    rating: '★★★★☆',
     url: PARTNERS.fivegringos,
-    text: 'Može poslužiti kao dodatna opcija za one koji žele širu platform rotation listu.',
-    details: 'Prije korištenja uvijek provjeri uslove, limite, dostupnost tržišta i način isplate.'
+    text: 'Alternativna opcija za rotaciju platformi, promo ponude, crypto rewards i povremenu provjeru boljih koef.',
+    details: 'AI77 review: pregledani su depozit, bonus sekcija, korisničko iskustvo, dostupnost marketa i osnovna isplata. 5Gringos se dobro uklapa kao dodatna platforma, ne nužno kao jedina glavna opcija. Bonusi uključuju crypto rewards, risk-free bet, weekly cashback, early payout i enhanced odds. Najkorisnija je kada tražiš dodatnu vrijednost ili bolju ponudu.'
   },
   {
     name: 'Woosports',
-    tag: 'Sports entertainment',
-    rating: 'Dodatna opcija',
+    tag: 'Live Streaming',
+    rating: '★★★★☆',
     url: PARTNERS.woosports,
-    text: 'Još jedna opcija za diversifikaciju i provjeru ponude.',
-    details: 'Kao i kod svih platformi, koristi je odgovorno i samo ako razumiješ pravila.'
+    text: 'Opcija za korisnike koji žele live streaming, sports entertainment flow i dodatne reload promocije.',
+    details: 'AI77 review: testirani su registracija, mobilni prikaz, live streaming iskustvo, sportska pokrivenost, support i bonus ponuda. Woosports je dobar dodatak za korisnike koji vole pratiti evente uživo i žele širu ponudu. Bonusi uključuju 200% welcome bonus, second deposit bonus, comboboost i Friday reload freebet. Veći bonusi često imaju strože uslove.'
   }
 ];
 
@@ -569,17 +569,25 @@ function renderFullHistoryTable() {
 function renderPlatforms() {
   const root = document.querySelector('[data-platforms]');
   if (!root) return;
+
   root.innerHTML = PLATFORM_DATA.map((p) => `
     <article class="platform-card">
-      <span class="badge gold">${p.tag}</span>
+      <div class="platform-top">
+        <span class="badge gold">${p.tag}</span>
+        <span class="rating">${p.rating}</span>
+      </div>
+
       <h3>${p.name}</h3>
-      <div class="rating">${p.rating}</div>
       <p>${p.text}</p>
+
       <details class="details">
         <summary>Detalji</summary>
         <p>${p.details}</p>
       </details>
-      <a class="btn primary btn-full" href="${p.url}" target="_blank" rel="nofollow sponsored noopener">Otvori platformu</a>
+
+      <a class="btn primary btn-full" href="${p.url}" target="_blank" rel="nofollow sponsored noopener">
+        Otvori platformu
+      </a>
     </article>
   `).join('');
 }
