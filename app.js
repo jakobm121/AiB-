@@ -20,13 +20,13 @@ const DATA_PATHS = {
 };
 
 const PARTNERS = {
-  sportaza: 'https://stzns.naralvin.com',
-  bet22: 'https://moy.auraodin.com',
-  bet20: 'https://promo.20bet.partners',
-  onexbet: 'https://refpa.top',
-  sevensigns: 'https://media.toxtren.com',
-  fivegringos: 'https://media.toxtren.com',
-  woosports: 'https://media.toxtren.com'
+  sportaza: 'https://stzns.naralvin.com/?mid=309891_1835232',
+  bet20: 'https://promo.20bet.partners/redirect.aspx?pid=389482&bid=2044',
+  bet22: 'https://moy.auraodin.com/redirect.aspx?pid=148721&bid=1571',
+  onexbet: 'https://refpa649012.pro/L?tag=d_4666247m_1599c_&site=4666247&ad=1599',
+  sevensigns: 'https://sgn.naralvin.com/?mid=310196_1838281',
+  fivegringos: 'https://fgrns.naralvin.com/?mid=309891_1838292',
+  woosports: 'https://mu.fastmui.com/redirect.aspx?pid=389482&bid=2112&lpid=1976'
 };
 
 const PLATFORM_DATA = [
