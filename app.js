@@ -222,6 +222,11 @@ function stakeBadgeClass(label) {
   return 'silver';
 }
 
+function getRotatingPartner(index) {
+  const values = Object.values(PARTNERS).filter(Boolean);
+  return values[index % values.length] || PARTNERS.sportaza;
+}
+
 function renderPicks(picks) {
   const root = document.querySelector('[data-picks]');
   if (!root) return;
@@ -242,13 +247,13 @@ function renderPicks(picks) {
 
   const sorted = picks.slice().sort((a,b) => `${a.date || ''} ${a.time || ''}`.localeCompare(`${b.date || ''} ${b.time || ''}`));
 
-  root.innerHTML = sorted.map((p) => {
+  root.innerHTML = sorted.map((p, index) => {
     const pickId = getPickStorageId(p);
     const played = isPickPlayed(pickId);
     const label = p.public_stake_label || p.stake_label || 'Standard';
     const stake = p.public_stake ?? p.stake;
     const bet = p.bet || `${String(p.side || '').toUpperCase()} ${p.line}`;
-    const platform = PARTNERS.sportaza;
+    const platform = getRotatingPartner(index);
 
     return `
       <article class="pick-card ${played ? 'played-pick' : ''}" data-pick-card="${pickId}">
