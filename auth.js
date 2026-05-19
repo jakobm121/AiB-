@@ -13,7 +13,7 @@ async function signIn(email) {
     return;
   }
 
-  alert('Check your email for login link.');
+  alert('Provjeri email za login link.');
 }
 
 async function getCurrentUser() {
@@ -51,7 +51,7 @@ async function startTrial() {
     document.getElementById('trialEmail').value;
 
   if (!email) {
-    alert('Enter email');
+    alert('Unesi email');
     return;
   }
 
