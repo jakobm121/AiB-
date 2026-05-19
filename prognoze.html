@@ -50,6 +50,17 @@
         </div>
         <p>Na kartici prikazujemo samo ključne podatke: meč, tip, koef, ulog, snagu signala i gumb za provjeru ponude.</p>
       </div>
+            <section class="trial-box">
+        <h2>Otključaj AI77 Premium</h2>
+        <p>Dobij pristup svim AI pickovima 3 dana besplatno. Bez kartice.</p>
+
+        <input type="email" id="trialEmail" placeholder="Unesi email">
+
+        <button class="btn primary" onclick="startTrial()">
+          Pokreni 3 dana besplatno
+        </button>
+      </section>
+
       <div class="pick-grid" data-picks>
         <article class="empty-card">Učitavam pickove...</article>
       </div>
@@ -82,6 +93,8 @@
     <p class="fineprint">Nema garantovanih rezultata. Koef se može promijeniti. Uvijek provjeri liniju, pravila i uslove platforme prije odluke. Sadržaj je informativan i ne predstavlja finansijski savjet.</p>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
