@@ -848,3 +848,50 @@ h3{
     margin-top: 0.6rem;
   }
 }
+
+.trial-box {
+  margin: 26px 0 28px;
+  padding: 24px;
+  border: 1px solid rgba(200,167,95,.28);
+  border-radius: 28px;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  box-shadow: 0 18px 50px rgba(0,0,0,.24);
+}
+
+.trial-box h2 {
+  margin: 0 0 10px;
+  font-size: clamp(28px, 6vw, 44px);
+}
+
+.trial-box p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  max-width: 680px;
+}
+
+.trial-form {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.trial-form input {
+  min-width: 240px;
+  flex: 1;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.08);
+  color: var(--text);
+  padding: 0 18px;
+  font: inherit;
+}
+
+.trial-form input::placeholder {
+  color: rgba(239,227,202,.55);
+}
+
+.trial-form .btn {
+  min-height: 52px;
+}
