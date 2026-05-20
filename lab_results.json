@@ -6620,5 +6620,27 @@
     "quality_score": 73.5,
     "reasoning": "Baník Souš vs Ústí nad Orlicí projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
     "result": "pending"
+  },
+  {
+    "pick_id": "e8aab06d3370ebd15ad9b9652d165317",
+    "fixture_id": 1545123,
+    "bucket": "draw",
+    "date": "2026-05-20",
+    "time": "23:30",
+    "league": "Segunda División",
+    "match": "Fundación Lara Deportiva - Atletico el Vigia FC",
+    "bet": "Draw",
+    "odds": 4.4,
+    "market_odds_median": 4.4,
+    "model_prob": 0.3136,
+    "implied_prob": 0.2273,
+    "edge": 0.0863,
+    "bookmakers_used": 11,
+    "line": null,
+    "stake": 1,
+    "confidence_score": 63.6,
+    "quality_score": 68.3,
+    "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
+    "result": "pending"
   }
 ]
