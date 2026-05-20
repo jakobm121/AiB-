@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="bs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Premium | AI77 Sports Lab®</title>
+  <meta name="description" content="AI77 Premium pristup za tenis totals pickove, 3 dana besplatno i mjesečna pretplata.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="premium.css">
+</head>
+<body data-page="premium">
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">AI77</span>
+      <span><strong>Sports Lab®</strong><small>Platinum Tennis Desk</small></span>
+    </a>
+    <button class="menu-toggle" type="button" data-menu-toggle aria-label="Otvori meni">☰</button>
+    <nav class="nav" data-nav>
+      <a href="index.html">Home</a>
+      <a href="prognoze.html">Prognoze</a>
+      <a href="rezultati.html">Rezultati</a>
+      <a href="platforme.html">Platforme</a>
+      <a href="strategija.html">Strategija</a>
+      <a class="active" href="premium.html">Premium</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero compact-hero">
+    <div class="container">
+      <div class="eyebrow">AI77 Premium</div>
+      <h1>Premium tenis totals pristup.</h1>
+      <p class="lead">Otključaj sve aktivne AI77 pickove, staking profil, edge, koef i premium signal snagu. Prva 3 dana možeš testirati bez kartice.</p>
+      <div class="hero-actions" style="margin-top:22px">
+        <a class="btn primary" href="#trial">Pokreni 3 dana besplatno</a>
+        <a class="btn" href="#pricing">Pogledaj cijenu</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-top" id="trial">
+    <div class="container">
+      <div class="premium-hero-card" data-premium-access-box>
+        <div class="premium-status-top">
+          <span class="partner-badge">AI77 Premium</span>
+          <span class="premium-price">3 dana besplatno</span>
+        </div>
+        <h2>Otključaj AI77 Premium</h2>
+        <p>Dobij pristup svim AI pickovima 3 dana besplatno. Bez kartice.</p>
+        <div class="trial-form">
+          <input type="email" id="trialEmail" placeholder="Unesi email">
+          <button class="btn primary" onclick="startTrial()">Pokreni 3 dana besplatno</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Šta dobijaš</span>
+          <h2>Premium je fokusiran na kvalitet, ne na volumen.</h2>
+        </div>
+        <p>AI77 ne forsira pickove kada filter ne daje dovoljno jak signal. Premium pristup otključava punu karticu kada signal prođe model.</p>
+      </div>
+
+      <div class="premium-grid">
+        <article class="premium-info-card">
+          <h3>Svi aktivni pickovi</h3>
+          <p>Free korisnik vidi samo osnovni preview. Premium korisnik vidi kompletne aktivne pickove.</p>
+        </article>
+        <article class="premium-info-card">
+          <h3>Stake confidence</h3>
+          <p>Standard, Strong i Top Rated oznake pomažu razlikovati jačinu signala i predloženi public stake.</p>
+        </article>
+        <article class="premium-info-card">
+          <h3>Transparentna istorija</h3>
+          <p>Rezultati ostaju javni i ne brišu se naknadno. To gradi realan pregled model performansa.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-top" id="pricing">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Plan</span>
+          <h2>Jednostavan premium model.</h2>
+        </div>
+        <p>Možeš prvo testirati 3 dana bez kartice. Ako želiš odmah nastaviti, premium pretplata će biti povezana kroz Stripe checkout.</p>
+      </div>
+
+      <div class="pricing-grid">
+        <article class="premium-plan-card">
+          <span class="badge gold">Free trial</span>
+          <h2>3 dana besplatno</h2>
+          <p>Bez kartice. Samo email magic link i premium pristup dok trial traje.</p>
+          <ul class="premium-list">
+            <li><strong>✓</strong> Svi aktivni pickovi</li>
+            <li><strong>✓</strong> Koef, ulog, edge i snaga signala</li>
+            <li><strong>✓</strong> Bez lozinke, login preko email linka</li>
+          </ul>
+          <div class="hero-actions" style="margin-top:20px">
+            <a class="btn primary" href="#trial">Pokreni trial</a>
+          </div>
+        </article>
+
+        <article class="premium-plan-card">
+          <span class="badge platinum">Premium</span>
+          <h2>AI77 Premium</h2>
+          <div class="price-big">99€<small>/mj</small></div>
+          <p>Za korisnike koji žele kompletan AI77 tenis totals pristup i manji, ozbiljniji premium krug.</p>
+          <ul class="premium-list">
+            <li><strong>✓</strong> Full premium cards</li>
+            <li><strong>✓</strong> Public history + model stats</li>
+            <li><strong>✓</strong> Kasnije: Telegram alerts za premium članove</li>
+          </ul>
+          <div class="hero-actions" style="margin-top:20px">
+            <a class="btn primary" href="#">Stripe checkout uskoro</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section no-top">
+    <div class="container partner-panel">
+      <div>
+        <span class="partner-badge">Odgovorno</span>
+        <h2>AI77 ne garantuje dobitak.</h2>
+        <p class="muted">Premium pristup je analitički proizvod. Koef, linije i tržište se mijenjaju. Uvijek provjeri liniju prije ulaza i koristi odgovoran stake.</p>
+      </div>
+      <a class="btn" href="rezultati.html">Pogledaj rezultate</a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <strong>AI77 Sports Lab®</strong>
+      <p>Javni pickovi, realna statistika i odgovoran pristup. 18+</p>
+    </div>
+    <div class="footer-links">
+      <a href="prognoze.html">Prognoze</a>
+      <a href="rezultati.html">Rezultati</a>
+      <a href="platforme.html">Platforme</a>
+      <a href="strategija.html">Strategija</a>
+      <a href="premium.html">Premium</a>
+    </div>
+    <p class="fineprint">Nema garantovanih rezultata. Koef se može promijeniti. Uvijek provjeri liniju, pravila i uslove platforme prije odluke. Sadržaj je informativan i ne predstavlja finansijski savjet.</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

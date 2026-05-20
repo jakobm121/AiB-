@@ -6,6 +6,7 @@
   <title>Prognoze | AI77 Sports Lab®</title>
   <meta name="description" content="AI77 public tenis prognoze.">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="premium.css">
 </head>
 <body data-page="prognoze">
 <header class="site-header">
@@ -15,19 +16,22 @@
       <span><strong>Sports Lab®</strong><small>Platinum Tennis Desk</small></span>
     </a>
     <button class="menu-toggle" type="button" data-menu-toggle aria-label="Otvori meni">☰</button>
-    <nav class="nav" data-nav><a class="" href="index.html">Home</a>
-<a class="active" href="prognoze.html">Prognoze</a>
-<a class="" href="rezultati.html">Rezultati</a>
-<a class="" href="platforme.html">Platforme</a>
-<a class="" href="strategija.html">Strategija</a></nav>
+    <nav class="nav" data-nav>
+      <a href="index.html">Home</a>
+      <a class="active" href="prognoze.html">Prognoze</a>
+      <a href="rezultati.html">Rezultati</a>
+      <a href="platforme.html">Platforme</a>
+      <a href="strategija.html">Strategija</a>
+      <a href="premium.html">Premium</a>
+    </nav>
   </div>
 </header>
 <main>
   <section class="hero compact-hero">
     <div class="container">
       <div class="eyebrow">AI77 Public Picks</div>
-      <h1>Prognoze.</h1>
-      <p class="lead">Aktivni public pickovi bez previše šuma. Detaljna istorija i analiza su odvojeni na stranici rezultata.</p>
+      <h1>Public tenis totals pickovi.</h1>
+      <p class="lead">Aktivni AI77 pickovi bez previše šuma. Free korisnik vidi jedan public pick, dok trial i premium otključavaju kompletnu karticu.</p>
       <div class="stat-grid">
         <article class="stat-card"><span>Profit</span><strong data-stat="profit">—</strong><small>public</small></article>
         <article class="stat-card"><span>ROI</span><strong data-stat="roi">—</strong><small>public stake</small></article>
@@ -36,7 +40,7 @@
       </div>
       <div class="hero-actions" style="margin-top:22px">
         <a class="btn primary" href="#aktivni">Aktivni pickovi</a>
-        <a class="btn" href="rezultati.html">Detaljni rezultati</a>
+        <a class="btn" href="premium.html">AI77 Premium</a>
       </div>
     </div>
   </section>
@@ -48,19 +52,21 @@
           <span class="eyebrow">Aktivno</span>
           <h2>Trenutni public pickovi</h2>
         </div>
-        <p>Na kartici prikazujemo samo ključne podatke: meč, tip, koef, ulog, snagu signala i gumb za provjeru ponude.</p>
+        <p>Na kartici prikazujemo ključne podatke: meč, tip, koef, ulog, snagu signala i gumb za provjeru ponude.</p>
       </div>
-           <section class="trial-box">
-  <h2>Otključaj AI77 Premium</h2>
-  <p>Dobij pristup svim AI pickovima 3 dana besplatno. Bez kartice.</p>
 
-  <div class="trial-form">
-    <input type="email" id="trialEmail" placeholder="Unesi email">
-    <button class="btn primary" onclick="startTrial()">
-      Pokreni 3 dana besplatno
-    </button>
-  </div>
-</section>
+      <section class="trial-box" data-premium-access-box>
+        <div class="premium-status-top">
+          <span class="partner-badge">AI77 Premium</span>
+          <span class="premium-price">3 dana besplatno</span>
+        </div>
+        <h2>Otključaj AI77 Premium</h2>
+        <p>Dobij pristup svim AI pickovima 3 dana besplatno. Bez kartice.</p>
+        <div class="trial-form">
+          <input type="email" id="trialEmail" placeholder="Unesi email">
+          <button class="btn primary" onclick="startTrial()">Pokreni 3 dana besplatno</button>
+        </div>
+      </section>
 
       <div class="pick-grid" data-picks>
         <article class="empty-card">Učitavam pickove...</article>
@@ -90,6 +96,7 @@
       <a href="rezultati.html">Rezultati</a>
       <a href="platforme.html">Platforme</a>
       <a href="strategija.html">Strategija</a>
+      <a href="premium.html">Premium</a>
     </div>
     <p class="fineprint">Nema garantovanih rezultata. Koef se može promijeniti. Uvijek provjeri liniju, pravila i uslove platforme prije odluke. Sadržaj je informativan i ne predstavlja finansijski savjet.</p>
   </div>
