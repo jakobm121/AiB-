@@ -227,7 +227,7 @@ function getRotatingPartner(index) {
   return values[index % values.length] || PARTNERS.sportaza;
 }
 
-function renderPicks(picks) {
+async function renderPicks(picks) {
   const root = document.querySelector('[data-picks]');
   if (!root) return;
 
@@ -245,9 +245,41 @@ function renderPicks(picks) {
     return;
   }
 
+  let unlocked = false;
+  try {
+    if (typeof window.userHasAccess === 'function') {
+      unlocked = await window.userHasAccess();
+    }
+  } catch (err) {
+    unlocked = false;
+  }
+
   const sorted = picks.slice().sort((a,b) => `${a.date || ''} ${a.time || ''}`.localeCompare(`${b.date || ''} ${b.time || ''}`));
 
   root.innerHTML = sorted.map((p, index) => {
+    if (!unlocked && index > 0) {
+      return `
+        <article class="pick-card premium-locked-card">
+          <div class="pick-top">
+            <div class="badges">
+              <span class="badge">Premium pick</span>
+              <span class="badge gold">AI77 Premium</span>
+            </div>
+          </div>
+
+          <h3>${p.match || 'Tennis match'}</h3>
+          <div class="pick-sub">${p.tournament || 'Tennis'}${p.round ? ' · ' + p.round : ''}</div>
+          <div class="pick-sub">${p.date || ''}${p.date && p.time ? ' · ' : ''}${p.time || ''}</div>
+
+          <div class="locked-premium-box">
+            <strong>🔒 Premium pick</strong>
+            <p>Tip, koef, ulog i edge su dostupni članovima.</p>
+            <a class="btn primary btn-full" href="#aktivni" onclick="document.getElementById('trialEmail')?.focus()">Pokreni 3 dana besplatno</a>
+          </div>
+        </article>
+      `;
+    }
+
     const pickId = getPickStorageId(p);
     const played = isPickPlayed(pickId);
     const label = p.public_stake_label || p.stake_label || 'Standard';
@@ -259,7 +291,7 @@ function renderPicks(picks) {
       <article class="pick-card ${played ? 'played-pick' : ''}" data-pick-card="${pickId}">
         <div class="pick-top">
           <div class="badges">
-            <span class="badge">Public pick</span>
+            <span class="badge">${unlocked ? 'Premium pick' : 'Free pick'}</span>
             <span class="badge ${String(p.side || '').toLowerCase() === 'over' ? 'gold' : 'silver'}">Total games</span>
             ${played ? '<span class="badge played-badge">Odigrano ✓</span>' : ''}
           </div>
@@ -270,10 +302,10 @@ function renderPicks(picks) {
         </div>
 
         <h3>${p.match || 'Tennis match'}</h3>
-<div class="pick-sub">${p.tournament || 'Tennis'}${p.round ? ' · ' + p.round : ''}</div>
-<div class="pick-sub">${p.date || ''}${p.date && p.time ? ' · ' : ''}${p.time || ''}</div>
+        <div class="pick-sub">${p.tournament || 'Tennis'}${p.round ? ' · ' + p.round : ''}</div>
+        <div class="pick-sub">${p.date || ''}${p.date && p.time ? ' · ' : ''}${p.time || ''}</div>
 
-<div class="pick-bet">${bet}</div>
+        <div class="pick-bet">${bet}</div>
 
         <div class="pick-meta">
           <span>Koef <strong>${fmtNumber(p.odds)}</strong></span>
@@ -604,7 +636,7 @@ async function initData() {
 
   if (page === 'prognoze') {
     const picks = await fetchFirst(DATA_PATHS.picks) || [];
-    renderPicks(picks);
+    await renderPicks(picks);
   }
 
   if (page === 'rezultati') {
@@ -624,7 +656,7 @@ async function initData() {
       if (Array.isArray(picks) && picks.length) {
         previewRoot.innerHTML = '';
         previewRoot.setAttribute('data-picks', '');
-        renderPicks(picks.slice(0,3));
+        await renderPicks(picks.slice(0,3));
       } else {
         previewRoot.innerHTML = '<p class="muted">Trenutno nema aktivnih public pickova. AI77 čeka bolji signal.</p>';
       }
