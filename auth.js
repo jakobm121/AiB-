@@ -206,3 +206,73 @@ window.startTrial = startTrial;
 window.userHasAccess = userHasAccess;
 window.getAccessState = getAccessState;
 window.signOutAI77 = signOutAI77;
+
+async function updatePremiumStatusCard() {
+  const card = document.querySelector('[data-premium-status]');
+  if (!card || typeof window.userHasAccess !== 'function') return;
+
+  const user = await getCurrentUser();
+
+  if (!user) {
+    card.innerHTML = `
+      <div>
+        <span class="badge gold">AI77 Premium</span>
+        <h2>Otključaj sve premium pickove</h2>
+        <p>
+          Premium članovi dobijaju puni pristup svim aktivnim tenis totals signalima,
+          stake confidence oznakama, edge podacima i budućim Telegram alertima.
+        </p>
+      </div>
+
+      <a class="btn primary" href="premium.html">
+        Pogledaj Premium
+      </a>
+    `;
+    return;
+  }
+
+  const { data } = await supabaseClient
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
+
+  if (!data) return;
+
+  const now = new Date();
+  const trialEnd = new Date(data.trial_ends_at);
+  const active = data.subscription_status === 'active' || now < trialEnd;
+
+  if (active) {
+    card.innerHTML = `
+      <div>
+        <span class="badge platinum">AI77 Premium aktivan ✅</span>
+        <h2>Svi premium pickovi su otključani.</h2>
+        <p>
+          Tvoj pristup je aktivan do:
+          <strong>${trialEnd.toLocaleString('bs-BA')}</strong>
+        </p>
+      </div>
+
+      <a class="btn" href="premium.html">
+        Moj Premium status
+      </a>
+    `;
+  } else {
+    card.innerHTML = `
+      <div>
+        <span class="badge silver">Trial istekao</span>
+        <h2>AI77 Premium pristup nije aktivan.</h2>
+        <p>
+          Nastavi premium pristup i otključaj sve aktivne pickove.
+        </p>
+      </div>
+
+      <a class="btn primary" href="premium.html">
+        Nastavi Premium
+      </a>
+    `;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', updatePremiumStatusCard);
