@@ -895,3 +895,27 @@ h3{
 .trial-form .btn {
   min-height: 52px;
 }
+
+.premium-locked-card {
+  position: relative;
+}
+
+.locked-premium-box {
+  margin-top: 18px;
+  padding: 22px;
+  border: 1px solid rgba(200,167,95,.28);
+  border-radius: 22px;
+  background: rgba(255,255,255,.045);
+  text-align: center;
+}
+
+.locked-premium-box strong {
+  display: block;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.locked-premium-box p {
+  color: var(--muted);
+  margin-bottom: 16px;
+}
