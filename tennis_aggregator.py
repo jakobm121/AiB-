@@ -12,18 +12,22 @@ REJECTED_FILE = OUT_DIR / "tennis_rejected.json"
 
 MAX_CORE_PICKS = 8
 
+
 def fnum(x, default=0.0):
     try:
         return float(x)
     except Exception:
         return default
 
+
 def load_remote_json(url):
     with urllib.request.urlopen(url, timeout=30) as response:
         return json.loads(response.read().decode("utf-8"))
 
+
 def pick_key(p):
     return f"{p.get('date')}|{p.get('match')}|{p.get('bet')}"
+
 
 def reject_reasons(p):
     reasons = []
@@ -53,6 +57,7 @@ def reject_reasons(p):
         reasons.append("inflated_high_edge_zone")
 
     return reasons
+
 
 def score_pick(p):
     odds = fnum(p.get("odds"))
@@ -103,6 +108,7 @@ def score_pick(p):
 
     return round(score, 2)
 
+
 def normalize_stake(p):
     odds = fnum(p.get("odds"))
     stake_label = str(p.get("stake_label", ""))
@@ -114,6 +120,7 @@ def normalize_stake(p):
         return 0.75
 
     return 0.5
+
 
 def dedupe(picks):
     best = {}
@@ -131,24 +138,31 @@ def dedupe(picks):
 
     return list(best.values())
 
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    raw = load_remote_json(SOURCE_URL)
+    raw_payload = load_remote_json(SOURCE_URL)
 
-if isinstance(raw, dict):
-    source_meta = {
-        "generated_at": raw.get("generated_at"),
-        "source": raw.get("source"),
-        "model": raw.get("model"),
-        "summary": raw.get("summary")
-    }
-    raw = raw.get("picks", [])
-elif isinstance(raw, list):
-    source_meta = {}
-else:
-    source_meta = []
-    raw = []
+    if isinstance(raw_payload, dict):
+        source_meta = {
+            "generated_at": raw_payload.get("generated_at"),
+            "source": raw_payload.get("source"),
+            "model": raw_payload.get("model"),
+            "summary": raw_payload.get("summary")
+        }
+        raw = raw_payload.get("picks", [])
+    elif isinstance(raw_payload, list):
+        source_meta = {}
+        raw = raw_payload
+    else:
+        source_meta = {}
+        raw = []
+
+    if not isinstance(raw, list):
+        raw = []
+
+    print(f"Loaded raw picks: {len(raw)}")
 
     raw = dedupe(raw)
 
@@ -170,6 +184,7 @@ else:
                 watchlist.append(p)
             else:
                 rejected.append(p)
+
             continue
 
         p["stake"] = normalize_stake(p)
@@ -189,6 +204,7 @@ else:
     print(f"Core picks: {len(core)}")
     print(f"Watchlist: {len(watchlist)}")
     print(f"Rejected: {len(rejected)}")
+
 
 if __name__ == "__main__":
     main()
