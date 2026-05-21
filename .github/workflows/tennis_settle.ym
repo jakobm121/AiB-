@@ -1,0 +1,33 @@
+name: Tennis Core Settle
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "10 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  settle-tennis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout AiB repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run tennis settle
+        run: python tennis_settle.py
+
+      - name: Commit settled tennis core results
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add public/data/tennis_core_results.json public/data/tennis_core_stats.json
+          git commit -m "Update tennis core results" || echo "No changes"
+          git push
