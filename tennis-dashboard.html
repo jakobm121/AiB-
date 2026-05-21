@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI77 Tennis Dashboard</title>
+
+  <style>
+    :root {
+      --bg: #090806;
+      --card: #14110c;
+      --card2: #1d1811;
+      --gold: #c8a75f;
+      --text: #f1dfb8;
+      --muted: #aaa39a;
+      --red: #ff6b6b;
+      --green: #64d98a;
+      --border: rgba(241, 223, 184, .14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1c160d, var(--bg));
+      color: var(--text);
+    }
+
+    header {
+      padding: 28px 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,0,0,.25);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    h1, h2, h3 { margin: 0; }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .muted { color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+
+    .stat, .card {
+      background: linear-gradient(180deg, var(--card), var(--card2));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      color: var(--gold);
+      margin-top: 6px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 18px 0;
+    }
+
+    button, select {
+      background: #211b12;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    button.active {
+      background: var(--gold);
+      color: #17120a;
+      font-weight: 800;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .pick h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .bet {
+      font-size: 22px;
+      color: var(--gold);
+      font-weight: 900;
+      margin: 12px 0;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      font-size: 13px;
+    }
+
+    .meta span {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+      color: var(--gold);
+      margin: 2px 4px 2px 0;
+    }
+
+    .green { color: var(--green); }
+    .red { color: var(--red); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      font-size: 14px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    th {
+      color: var(--gold);
+      background: rgba(255,255,255,.04);
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 900px) {
+      .grid, .cards { grid-template-columns: 1fr; }
+      header { position: static; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap top">
+      <div>
+        <h1>AI77 Tennis Dashboard</h1>
+        <div class="muted">Interni testni pregled pickov, watchliste, rejectov in performance reporta.</div>
+      </div>
+      <div class="muted" id="updated">Loading...</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <div class="stat">Core picki<strong id="coreCount">—</strong></div>
+      <div class="stat">Watchlist<strong id="watchCount">—</strong></div>
+      <div class="stat">Rejected<strong id="rejectCount">—</strong></div>
+      <div class="stat">Overall ROI<strong id="roi">—</strong></div>
+    </section>
+
+    <section class="tabs">
+      <button class="tab active" data-tab="core">Core Picks</button>
+      <button class="tab" data-tab="watchlist">Watchlist</button>
+      <button class="tab" data-tab="rejected">Rejected</button>
+      <button class="tab" data-tab="report">Report</button>
+    </section>
+
+    <section class="filters">
+      <select id="tourFilter">
+        <option value="">All tours</option>
+        <option value="challenger">Challenger</option>
+        <option value="atp">ATP</option>
+        <option value="wta">WTA</option>
+        <option value="itf">ITF</option>
+      </select>
+
+      <select id="favFilter">
+        <option value="">Favorite/Underdog</option>
+        <option value="favorite">Favorite</option>
+        <option value="underdog">Underdog</option>
+      </select>
+
+      <select id="sortFilter">
+        <option value="score">Sort: AI77 score</option>
+        <option value="odds">Sort: odds</option>
+        <option value="time">Sort: time</option>
+      </select>
+    </section>
+
+    <section id="core" class="panel">
+      <div class="cards" id="coreCards"></div>
+    </section>
+
+    <section id="watchlist" class="panel hidden">
+      <div class="cards" id="watchCards"></div>
+    </section>
+
+    <section id="rejected" class="panel hidden">
+      <div class="cards" id="rejectCards"></div>
+    </section>
+
+    <section id="report" class="panel hidden">
+      <div class="card">
+        <h2>What-if strategije</h2>
+        <div id="whatIfTable"></div>
+      </div>
+
+      <br />
+
+      <div class="card">
+        <h2>Calibration</h2>
+        <div id="calibrationTable"></div>
+      </div>
+
+      <br />
+
+      <div class="card">
+        <h2>Duplicate warning</h2>
+        <div id="duplicateTable"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const PATHS = {
+      core: "public/data/tennis_predictions.json",
+      watchlist: "public/data/tennis_watchlist.json",
+      rejected: "public/data/tennis_rejected.json",
+      report: "public/data/tennis_deep_performance_report.json"
+    };
+
+    let DATA = {
+      core: [],
+      watchlist: [],
+      rejected: [],
+      report: null,
+      active: "core"
+    };
+
+    async function loadJson(path, fallback) {
+      try {
+        const res = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) return fallback;
+        return await res.json();
+      } catch {
+        return fallback;
+      }
+    }
+
+    function n(x) {
+      const num = Number(x);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function fmt(x, suffix = "") {
+      const num = Number(x);
+      if (!Number.isFinite(num)) return "—";
+      return `${num.toLocaleString("sl-SI", { maximumFractionDigits: 2 })}${suffix}`;
+    }
+
+    function filterAndSort(items) {
+      const tour = document.getElementById("tourFilter").value;
+      const fav = document.getElementById("favFilter").value;
+      const sort = document.getElementById("sortFilter").value;
+
+      let out = [...items];
+
+      if (tour) out = out.filter(p => String(p.tour_level || "").toLowerCase() === tour);
+      if (fav) out = out.filter(p => String(p.favorite_type || "").toLowerCase() === fav);
+
+      out.sort((a, b) => {
+        if (sort === "odds") return n(b.odds) - n(a.odds);
+        if (sort === "time") return `${a.date || ""} ${a.time || ""}`.localeCompare(`${b.date || ""} ${b.time || ""}`);
+        return n(b.ai77_score) - n(a.ai77_score);
+      });
+
+      return out;
+    }
+
+    function card(p, type) {
+      const reasons = Array.isArray(p.reject_reasons) ? p.reject_reasons : [];
+
+      return `
+        <article class="card pick">
+          <div>
+            <span class="badge">${p.tour_level || "tour?"}</span>
+            <span class="badge">${p.favorite_type || "type?"}</span>
+            <span class="badge">score ${fmt(p.ai77_score)}</span>
+          </div>
+
+          <h3>${p.match || "Match"}</h3>
+          <div class="sub">${p.tournament || "Tennis"} ${p.round ? " · " + p.round : ""}</div>
+          <div class="sub">${p.date || ""} ${p.time ? " · " + p.time : ""}</div>
+
+          <div class="bet">${p.bet || "—"}</div>
+
+          <div class="meta">
+            <span>Odds <strong>${fmt(p.odds)}</strong></span>
+            <span>Stake <strong>${fmt(p.stake)}u</strong></span>
+            <span>Edge <strong>${fmt(n(p.edge) * 100, "%")}</strong></span>
+            <span>Confidence <strong>${fmt(p.confidence)}</strong></span>
+            <span>Label <strong>${p.stake_label || "—"}</strong></span>
+            <span>Quality <strong>${fmt(p.quality_score)}</strong></span>
+          </div>
+
+          ${reasons.length ? `
+            <p class="red">
+              Reject: ${reasons.map(r => `<span class="badge">${r}</span>`).join("")}
+            </p>
+          ` : ""}
+
+          ${p.aggregated_at ? `<p class="muted">Aggregated: ${new Date(p.aggregated_at).toLocaleString("sl-SI")}</p>` : ""}
+        </article>
+      `;
+    }
+
+    function renderCards() {
+      document.getElementById("coreCards").innerHTML =
+        filterAndSort(DATA.core).map(p => card(p, "core")).join("") || `<div class="card">Ni core pickov.</div>`;
+
+      document.getElementById("watchCards").innerHTML =
+        filterAndSort(DATA.watchlist).map(p => card(p, "watch")).join("") || `<div class="card">Ni watchlist pickov.</div>`;
+
+      document.getElementById("rejectCards").innerHTML =
+        filterAndSort(DATA.rejected).map(p => card(p, "reject")).join("") || `<div class="card">Ni rejected pickov.</div>`;
+    }
+
+    function table(rows, columns) {
+      if (!rows || !rows.length) return `<p class="muted">Ni podatkov.</p>`;
+
+      return `
+        <table>
+          <thead>
+            <tr>${columns.map(c => `<th>${c.label}</th>`).join("")}</tr>
+          </thead>
+          <tbody>
+            ${rows.map(row => `
+              <tr>
+                ${columns.map(c => `<td>${c.render ? c.render(row) : row[c.key]}</td>`).join("")}
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderReport() {
+      const report = DATA.report;
+      if (!report) return;
+
+      const overall = report.overall || {};
+      document.getElementById("roi").textContent = fmt(overall.roi, "%");
+
+      document.getElementById("whatIfTable").innerHTML = table(report.what_if || [], [
+        { label: "Strategija", key: "name" },
+        { label: "Picks", key: "picks" },
+        { label: "W-L", render: r => `${r.wins}-${r.losses}` },
+        { label: "WR", render: r => fmt(r.win_rate, "%") },
+        { label: "Profit", render: r => `<span class="${n(r.profit) >= 0 ? "green" : "red"}">${fmt(r.profit)}u</span>` },
+        { label: "ROI", render: r => `<strong class="${n(r.roi) >= 0 ? "green" : "red"}">${fmt(r.roi, "%")}</strong>` },
+        { label: "Max DD", render: r => `${fmt(r.max_drawdown_units)}u` },
+        { label: "Loss streak", key: "longest_loss_streak" }
+      ]);
+
+      const calibrationRows = Object.entries(report.calibration || {}).map(([bucket, x]) => ({ bucket, ...x }));
+
+      document.getElementById("calibrationTable").innerHTML = table(calibrationRows, [
+        { label: "Bucket", key: "bucket" },
+        { label: "Picks", key: "picks" },
+        { label: "Model prob", render: r => fmt(r.avg_model_prob, "%") },
+        { label: "Actual WR", render: r => fmt(r.actual_win_rate, "%") },
+        { label: "Gap", render: r => `<span class="${n(r.gap) >= 0 ? "green" : "red"}">${fmt(r.gap, "%")}</span>` }
+      ]);
+
+      const dups = report.duplicates?.same_match_multiple_picks || [];
+
+      document.getElementById("duplicateTable").innerHTML = table(dups, [
+        { label: "Key", key: "key" },
+        { label: "Count", key: "count" },
+        { label: "Profit", render: r => `<span class="${n(r.profit) >= 0 ? "green" : "red"}">${fmt(r.profit)}u</span>` }
+      ]);
+    }
+
+    function setupTabs() {
+      document.querySelectorAll(".tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".tab").forEach(b => b.classList.remove("active"));
+          document.querySelectorAll(".panel").forEach(p => p.classList.add("hidden"));
+
+          btn.classList.add("active");
+          DATA.active = btn.dataset.tab;
+          document.getElementById(DATA.active).classList.remove("hidden");
+        });
+      });
+    }
+
+    async function init() {
+      setupTabs();
+
+      DATA.core = await loadJson(PATHS.core, []);
+      DATA.watchlist = await loadJson(PATHS.watchlist, []);
+      DATA.rejected = await loadJson(PATHS.rejected, []);
+      DATA.report = await loadJson(PATHS.report, null);
+
+      document.getElementById("coreCount").textContent = DATA.core.length;
+      document.getElementById("watchCount").textContent = DATA.watchlist.length;
+      document.getElementById("rejectCount").textContent = DATA.rejected.length;
+      document.getElementById("updated").textContent = `Updated: ${new Date().toLocaleString("sl-SI")}`;
+
+      document.querySelectorAll("select").forEach(s => {
+        s.addEventListener("change", renderCards);
+      });
+
+      renderCards();
+      renderReport();
+    }
+
+    init();
+  </script>
+</body>
+</html>
