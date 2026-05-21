@@ -1,0 +1,33 @@
+name: Tennis Aggregator
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  aggregate-tennis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout AiB repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run tennis aggregator
+        run: python tennis_aggregator.py
+
+      - name: Commit aggregated tennis data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add public/data/tennis_predictions.json public/data/tennis_watchlist.json public/data/tennis_rejected.json
+          git commit -m "Update aggregated tennis picks" || echo "No changes"
+          git push
