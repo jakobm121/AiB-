@@ -135,8 +135,20 @@ def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
     raw = load_remote_json(SOURCE_URL)
-    if not isinstance(raw, list):
-        raw = []
+
+if isinstance(raw, dict):
+    source_meta = {
+        "generated_at": raw.get("generated_at"),
+        "source": raw.get("source"),
+        "model": raw.get("model"),
+        "summary": raw.get("summary")
+    }
+    raw = raw.get("picks", [])
+elif isinstance(raw, list):
+    source_meta = {}
+else:
+    source_meta = []
+    raw = []
 
     raw = dedupe(raw)
 
