@@ -6091,7 +6091,7 @@
     "confidence_score": 56.4,
     "quality_score": 68.2,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "692b0f216e4af475d4eb1fea7902452e",
@@ -6355,7 +6355,7 @@
     "confidence_score": 71.4,
     "quality_score": 75.7,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4f9d3c13555ab2a93dfe7cb15fc82a87",
@@ -6399,7 +6399,7 @@
     "confidence_score": 70.9,
     "quality_score": 72.3,
     "reasoning": "Shenyang Urban vs Qingdao Jonoon projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "fc2c60a0ae880d04dd80212bbf93f8b2",
@@ -6663,7 +6663,7 @@
     "confidence_score": 50.2,
     "quality_score": 64.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2289fa82d0d0a5df9bb19c62645d951e",
@@ -6685,7 +6685,7 @@
     "confidence_score": 76.8,
     "quality_score": 77.2,
     "reasoning": "Jamshedpur vs Odisha projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "e37705a3f36bc43f8ba3eda39b46182f",
@@ -6707,7 +6707,7 @@
     "confidence_score": 65.5,
     "quality_score": 66.6,
     "reasoning": "Shakhtar Donetsk vs Kolos Kovalivka projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "8ec459c9a5c663d1973cb7891e4bb705",
@@ -6729,7 +6729,7 @@
     "confidence_score": 72.3,
     "quality_score": 77.0,
     "reasoning": "Legia Warszawa II vs Widzew II projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "749d12096123f5c0cfb6f0cc98fc53b2",
@@ -6751,7 +6751,7 @@
     "confidence_score": 76.8,
     "quality_score": 82.2,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "faabb05ecd73158110c9895ec117cbf8",
@@ -6773,7 +6773,7 @@
     "confidence_score": 60.4,
     "quality_score": 70.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b4ed4dd80a9c68ec35261b9097256b0f",
@@ -6795,7 +6795,7 @@
     "confidence_score": 79.7,
     "quality_score": 78.8,
     "reasoning": "Al Arabi vs Al Tadhamon projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "5802337e3f07c906add94d17969e8410",
@@ -6817,7 +6817,7 @@
     "confidence_score": 72.2,
     "quality_score": 73.7,
     "reasoning": "Atromitos vs Panserraikos projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b45ce0b759487ed34de6465c6801b20a",
@@ -6839,7 +6839,7 @@
     "confidence_score": 67.5,
     "quality_score": 69.2,
     "reasoning": "Arsenal Česká Lípa vs Sokol Zápy projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "a7e03957fedab5d335d6c2b56b33c142",
@@ -6883,7 +6883,7 @@
     "confidence_score": 59.2,
     "quality_score": 66.2,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7e8b18a68d0be68b34f2fc2d79764150",
@@ -6905,7 +6905,7 @@
     "confidence_score": 55.9,
     "quality_score": 61.1,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f3befca10280162d5c0263caa2c3d4b6",
@@ -6927,7 +6927,7 @@
     "confidence_score": 52.8,
     "quality_score": 59.3,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1982ea4300b66d10c1413ef51d7fcb8a",
@@ -6971,7 +6971,7 @@
     "confidence_score": 79.8,
     "quality_score": 78.8,
     "reasoning": "Atletico-MG vs Cienciano projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "1fb28a77a82847658c20f3c05632ab7e",
@@ -7037,6 +7037,6 @@
     "confidence_score": 60.1,
     "quality_score": 62.8,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
