@@ -2,20 +2,23 @@
 <html lang="sl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tennis Totals Premium</title>
+
   <style>
     :root {
-      --bg: #0b1020;
-      --card: #121a33;
-      --card2: #17203d;
-      --text: #eaf0ff;
-      --muted: #9aa8c7;
-      --good: #35d07f;
+      --bg: #07111f;
+      --panel: #0d1b2e;
+      --panel2: #10243c;
+      --text: #eaf2ff;
+      --muted: #8fa6c3;
+      --line: rgba(255,255,255,.11);
+      --good: #23d18b;
       --bad: #ff5c7a;
       --warn: #ffd166;
-      --line: rgba(255,255,255,.12);
-      --accent: #7aa2ff;
+      --blue: #5ea1ff;
+      --shadow: 0 18px 50px rgba(0,0,0,.35);
+      --radius: 18px;
     }
 
     * {
@@ -24,483 +27,773 @@
 
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #07101f 0%, var(--bg) 100%);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(94,161,255,.20), transparent 35%),
+        radial-gradient(circle at top right, rgba(35,209,139,.12), transparent 30%),
+        var(--bg);
       color: var(--text);
     }
 
-    header {
-      padding: 28px 20px 14px;
-      max-width: 1200px;
+    .wrap {
+      width: min(1500px, calc(100% - 28px));
       margin: 0 auto;
+      padding: 28px 0 50px;
+    }
+
+    .top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
     }
 
     h1 {
-      margin: 0 0 6px;
-      font-size: 30px;
-      letter-spacing: .2px;
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      letter-spacing: -0.04em;
+      line-height: 1;
     }
 
     .subtitle {
+      margin-top: 10px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 15px;
     }
 
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 16px 20px 40px;
-    }
-
-    .status {
-      padding: 14px 16px;
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      background: var(--card);
-      margin-bottom: 18px;
+      border-radius: 999px;
       color: var(--muted);
+      background: rgba(255,255,255,.04);
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--good);
+      box-shadow: 0 0 20px var(--good);
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
-      margin-bottom: 18px;
+    }
+
+    .cards {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      margin-bottom: 14px;
     }
 
     .card {
-      background: rgba(18, 26, 51, .94);
+      background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
       border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+      border-radius: var(--radius);
+      padding: 17px;
+      box-shadow: var(--shadow);
+      min-width: 0;
     }
 
-    .metric-label {
+    .card .label {
       color: var(--muted);
       font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .09em;
       margin-bottom: 8px;
     }
 
-    .metric-value {
-      font-size: 26px;
+    .card .value {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .card .small {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .good { color: var(--good); }
+    .bad { color: var(--bad); }
+    .warn { color: var(--warn); }
+    .blue { color: var(--blue); }
+
+    .section {
+      background: rgba(13,27,46,.76);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-top: 14px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.035);
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input, select, button {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font: inherit;
+      outline: none;
+    }
+
+    input {
+      min-width: 250px;
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    button {
+      cursor: pointer;
       font-weight: 700;
     }
 
-    .good {
-      color: var(--good);
+    button:hover, input:focus, select:focus {
+      border-color: rgba(94,161,255,.55);
     }
 
-    .bad {
-      color: var(--bad);
-    }
-
-    .warn {
-      color: var(--warn);
-    }
-
-    section {
-      margin-top: 18px;
-    }
-
-    h2 {
-      font-size: 19px;
-      margin: 0 0 12px;
+    .table-wrap {
+      overflow: auto;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 14px;
-      background: var(--card);
-      border: 1px solid var(--line);
+      min-width: 1100px;
     }
 
     th, td {
-      padding: 12px 11px;
-      text-align: left;
+      padding: 12px 14px;
       border-bottom: 1px solid var(--line);
-      font-size: 14px;
-      vertical-align: top;
+      text-align: left;
+      font-size: 13px;
+      vertical-align: middle;
+      white-space: nowrap;
     }
 
     th {
       color: var(--muted);
-      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: .06em;
-      background: var(--card2);
+      letter-spacing: .08em;
+      font-size: 11px;
+      background: rgba(255,255,255,.025);
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
-    tr:last-child td {
-      border-bottom: 0;
+    tr:hover td {
+      background: rgba(94,161,255,.045);
     }
 
-    .pill {
-      display: inline-block;
-      padding: 4px 8px;
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 9px;
       border-radius: 999px;
-      background: rgba(122,162,255,.14);
-      color: var(--accent);
+      border: 1px solid var(--line);
+      font-weight: 800;
       font-size: 12px;
-      font-weight: 700;
     }
 
-    .small {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
+    .badge.win {
+      color: var(--good);
+      background: rgba(35,209,139,.10);
+      border-color: rgba(35,209,139,.25);
     }
 
-    .rules {
+    .badge.loss {
+      color: var(--bad);
+      background: rgba(255,92,122,.10);
+      border-color: rgba(255,92,122,.25);
+    }
+
+    .badge.open {
+      color: var(--warn);
+      background: rgba(255,209,102,.10);
+      border-color: rgba(255,209,102,.25);
+    }
+
+    .badge.premium {
+      color: var(--blue);
+      background: rgba(94,161,255,.10);
+      border-color: rgba(94,161,255,.25);
+    }
+
+    .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
     }
 
-    pre {
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin: 0;
-      color: var(--text);
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .tier-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+    }
+
+    .tier-name {
+      font-weight: 900;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .tier-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(255,255,255,.10);
       font-size: 13px;
-      line-height: 1.45;
+    }
+
+    .tier-row:last-child {
+      border-bottom: 0;
+    }
+
+    .tier-row b {
+      color: var(--text);
+    }
+
+    .error {
+      padding: 22px;
+      background: rgba(255,92,122,.10);
+      border: 1px solid rgba(255,92,122,.30);
+      border-radius: var(--radius);
+      color: #ffd7df;
+      line-height: 1.55;
+    }
+
+    .empty {
+      padding: 24px;
+      color: var(--muted);
     }
 
     .footer {
       margin-top: 22px;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 13px;
+      text-align: center;
     }
 
-    @media (max-width: 900px) {
-      .grid {
+    @media (max-width: 1100px) {
+      .cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .tier-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .top {
+        flex-direction: column;
+      }
+
+      .cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .rules {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .grid {
+      .tier-grid {
         grid-template-columns: 1fr;
       }
 
-      th, td {
-        font-size: 12px;
-        padding: 10px 8px;
+      input {
+        min-width: 100%;
       }
 
-      h1 {
-        font-size: 24px;
+      .section-head {
+        align-items: stretch;
+        flex-direction: column;
       }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>Tennis Totals Premium</h1>
-    <div class="subtitle">AiB agregator report · Premium / Volume B pregled</div>
-  </header>
-
-  <main>
-    <div id="status" class="status">Loading report...</div>
-
-    <div id="content" style="display:none;">
-      <div class="grid">
-        <div class="card">
-          <div class="metric-label">Picks</div>
-          <div id="picks" class="metric-value">-</div>
-        </div>
-
-        <div class="card">
-          <div class="metric-label">Win rate</div>
-          <div id="winRate" class="metric-value">-</div>
-        </div>
-
-        <div class="card">
-          <div class="metric-label">Profit</div>
-          <div id="profit" class="metric-value">-</div>
-        </div>
-
-        <div class="card">
-          <div class="metric-label">ROI</div>
-          <div id="roi" class="metric-value">-</div>
+  <main class="wrap">
+    <div class="top">
+      <div>
+        <h1>Tennis Totals Premium</h1>
+        <div class="subtitle">
+          Ločena premium stran za agregator, settle, statistiko, odprte picke in rezultate.
         </div>
       </div>
 
-      <section>
-        <h2>Overall summary</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Picks</th>
-              <th>Wins</th>
-              <th>Losses</th>
-              <th>Win rate</th>
-              <th>Staked</th>
-              <th>Profit</th>
-              <th>ROI</th>
-              <th>Avg odds</th>
-              <th>Max DD</th>
-              <th>Loss streak</th>
-            </tr>
-          </thead>
-          <tbody id="summaryBody"></tbody>
-        </table>
-      </section>
+      <div class="pill">
+        <span class="dot"></span>
+        <span id="lastUpdated">Loading...</span>
+      </div>
+    </div>
 
-      <section>
-        <h2>By tier</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Tier</th>
-              <th>Picks</th>
-              <th>Wins</th>
-              <th>Losses</th>
-              <th>Win rate</th>
-              <th>Staked</th>
-              <th>Profit</th>
-              <th>ROI</th>
-              <th>Avg odds</th>
-            </tr>
-          </thead>
-          <tbody id="tierBody"></tbody>
-        </table>
-      </section>
+    <div id="app">
+      <div class="empty">Nalagam podatke...</div>
+    </div>
 
-      <section>
-        <h2>Latest picks</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Match</th>
-              <th>Side</th>
-              <th>Line</th>
-              <th>Odds</th>
-              <th>Tier</th>
-              <th>Result</th>
-              <th>Profit</th>
-            </tr>
-          </thead>
-          <tbody id="picksBody"></tbody>
-        </table>
-      </section>
-
-      <section class="rules">
-        <div class="card">
-          <h2>Premium filter</h2>
-          <pre>side = under
-confidence >= 82
-bookmakers_used NOT between 6 and 7
-stake_label = Strong</pre>
-        </div>
-
-        <div class="card">
-          <h2>Volume B filter</h2>
-          <pre>line = 20.5
-confidence >= 82
-stake_label != Top Rated
-recommended stake: 0.25u</pre>
-        </div>
-      </section>
-
-      <div id="footer" class="footer"></div>
+    <div class="footer">
+      Data source: <b>/data/tennis_totals_premium_report.json</b>
     </div>
   </main>
 
   <script>
-    const REPORT_PATH = "../../data/tennis_totals_premium_report.json";
+    const DATA_URL = "/data/tennis_totals_premium_report.json";
 
-    function num(value, digits = 2) {
-      if (value === null || value === undefined || value === "") return "-";
-      const n = Number(value);
-      if (!Number.isFinite(n)) return String(value);
-      return n.toFixed(digits).replace(/\.?0+$/, "");
+    let REPORT = null;
+    let ALL_ROWS = [];
+
+    function n(value, fallback = 0) {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : fallback;
     }
 
-    function pct(value) {
-      if (value === null || value === undefined || value === "") return "-";
-      return `${num(value, 2)}%`;
+    function fmt(value, digits = 2) {
+      return n(value).toFixed(digits);
     }
 
-    function profitClass(value) {
-      const n = Number(value);
-      if (!Number.isFinite(n)) return "";
-      if (n > 0) return "good";
-      if (n < 0) return "bad";
-      return "warn";
+    function fmtPct(value) {
+      return `${fmt(value, 2)}%`;
     }
 
-    function td(value, className = "") {
-      return `<td class="${className}">${value}</td>`;
+    function fmtUnits(value) {
+      const number = n(value);
+      return `${number >= 0 ? "+" : ""}${number.toFixed(2)}u`;
     }
 
-    function getSummary(report) {
-      return (
-        report.combined_optimized ||
-        report.overall ||
-        report.summary ||
-        report.premium_plus_volume_b ||
-        report.premium_only ||
-        report.recommended?.combined_optimized ||
-        {}
-      );
+    function safe(value, fallback = "-") {
+      if (value === null || value === undefined || value === "") return fallback;
+      return String(value);
     }
 
-    function getTiers(summary) {
-      return summary.by_tier || {};
+    function pickResult(pick) {
+      return safe(pick?.result, "").trim().toLowerCase();
     }
 
-    function getLatestPicks(report) {
-      return (
-        report.latest_picks ||
-        report.picks ||
-        report.selected_picks ||
-        report.rows ||
-        []
-      );
+    function resultBadge(result) {
+      const r = safe(result, "").toLowerCase();
+
+      if (r === "win") return `<span class="badge win">WIN</span>`;
+      if (r === "loss") return `<span class="badge loss">LOSS</span>`;
+
+      return `<span class="badge open">${r ? r.toUpperCase() : "OPEN"}</span>`;
     }
 
-    function renderSummary(summary) {
-      document.getElementById("summaryBody").innerHTML = `
-        <tr>
-          ${td(num(summary.picks, 0))}
-          ${td(num(summary.wins, 0))}
-          ${td(num(summary.losses, 0))}
-          ${td(pct(summary.win_rate))}
-          ${td(num(summary.staked, 2))}
-          ${td(num(summary.profit, 2), profitClass(summary.profit))}
-          ${td(pct(summary.roi), profitClass(summary.roi))}
-          ${td(num(summary.avg_odds, 3))}
-          ${td(num(summary.max_drawdown_units, 2))}
-          ${td(num(summary.longest_loss_streak, 0))}
-        </tr>
+    function profitForRow(row) {
+      const pick = row.pick || {};
+      const result = pickResult(pick);
+      const odds = n(pick.odds);
+      const stake = n(row.stake);
+
+      if (result === "win") return stake * (odds - 1);
+      if (result === "loss") return -stake;
+
+      return 0;
+    }
+
+    function rowDate(row) {
+      const p = row.pick || {};
+      return `${safe(p.date, "")} ${safe(p.time, "")}`.trim();
+    }
+
+    function rowSortValue(row) {
+      const p = row.pick || {};
+      return `${safe(p.date, "")} ${safe(p.time, "")} ${safe(p.match, "")}`;
+    }
+
+    function classProfit(value) {
+      if (n(value) > 0) return "good";
+      if (n(value) < 0) return "bad";
+      return "";
+    }
+
+    function getSummary() {
+      return REPORT?.summary || {};
+    }
+
+    function buildCards() {
+      const s = getSummary();
+
+      return `
+        <section class="grid cards">
+          <div class="card">
+            <div class="label">Settled picks</div>
+            <div class="value">${safe(s.picks, 0)}</div>
+            <div class="small">Known total: ${safe(REPORT.known_total, 0)}</div>
+          </div>
+
+          <div class="card">
+            <div class="label">Win rate</div>
+            <div class="value ${n(s.win_rate) >= 60 ? "good" : ""}">${fmtPct(s.win_rate)}</div>
+            <div class="small">${safe(s.wins, 0)}W / ${safe(s.losses, 0)}L</div>
+          </div>
+
+          <div class="card">
+            <div class="label">Profit</div>
+            <div class="value ${classProfit(s.profit)}">${fmtUnits(s.profit)}</div>
+            <div class="small">Staked: ${fmt(s.staked)}u</div>
+          </div>
+
+          <div class="card">
+            <div class="label">ROI</div>
+            <div class="value ${n(s.roi) > 0 ? "good" : "bad"}">${fmtPct(s.roi)}</div>
+            <div class="small">Avg odds: ${fmt(s.avg_odds, 3)}</div>
+          </div>
+
+          <div class="card">
+            <div class="label">Max drawdown</div>
+            <div class="value warn">${fmt(s.max_drawdown_units)}u</div>
+            <div class="small">Risk control</div>
+          </div>
+
+          <div class="card">
+            <div class="label">Open picks</div>
+            <div class="value blue">${safe(REPORT.open_total, 0)}</div>
+            <div class="small">New settled: ${safe(REPORT.newly_settled_count, 0)}</div>
+          </div>
+        </section>
+      `;
+    }
+
+    function buildTierStats() {
+      const byTier = getSummary().by_tier || {};
+      const tiers = Object.keys(byTier);
+
+      if (!tiers.length) {
+        return `
+          <section class="section">
+            <div class="section-head">
+              <div class="section-title">Stats by tier</div>
+            </div>
+            <div class="empty">Ni tier statistike.</div>
+          </section>
+        `;
+      }
+
+      return `
+        <section class="section">
+          <div class="section-head">
+            <div class="section-title">Stats by tier</div>
+          </div>
+
+          <div class="tier-grid">
+            ${tiers.map(tier => {
+              const x = byTier[tier];
+
+              return `
+                <div class="tier-card">
+                  <div class="tier-name">${safe(tier)}</div>
+
+                  <div class="tier-row"><span>Picks</span><b>${safe(x.picks, 0)}</b></div>
+                  <div class="tier-row"><span>Record</span><b>${safe(x.wins, 0)}W / ${safe(x.losses, 0)}L</b></div>
+                  <div class="tier-row"><span>Win rate</span><b class="${n(x.win_rate) >= 60 ? "good" : ""}">${fmtPct(x.win_rate)}</b></div>
+                  <div class="tier-row"><span>Profit</span><b class="${classProfit(x.profit)}">${fmtUnits(x.profit)}</b></div>
+                  <div class="tier-row"><span>ROI</span><b class="${n(x.roi) > 0 ? "good" : "bad"}">${fmtPct(x.roi)}</b></div>
+                  <div class="tier-row"><span>Avg odds</span><b>${fmt(x.avg_odds, 3)}</b></div>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </section>
+      `;
+    }
+
+    function normalizeRows() {
+      const open = (REPORT.open_picks || []).map(x => ({ ...x, _bucket: "open" }));
+      const settled = (REPORT.settled_picks || []).map(x => ({ ...x, _bucket: "settled" }));
+      const newly = (REPORT.newly_settled || []).map(x => ({ ...x, _bucket: "newly" }));
+
+      const byId = new Map();
+
+      [...settled, ...open, ...newly].forEach(row => {
+        const id = row.id || JSON.stringify([
+          row.pick?.fixture_id,
+          row.pick?.event_key,
+          row.pick?.match,
+          row.pick?.side,
+          row.pick?.line,
+          row.pick?.date,
+          row.pick?.time
+        ]);
+
+        if (!byId.has(id)) {
+          byId.set(id, row);
+        } else if (row._bucket === "newly") {
+          byId.set(id, row);
+        }
+      });
+
+      ALL_ROWS = Array.from(byId.values()).sort((a, b) => {
+        return rowSortValue(b).localeCompare(rowSortValue(a));
+      });
+    }
+
+    function buildTableSection(title, tableId, rows, defaultLimit = 100) {
+      return `
+        <section class="section">
+          <div class="section-head">
+            <div class="section-title">${title}</div>
+
+            <div class="controls">
+              <input id="${tableId}_search" placeholder="Search match, player, side..." />
+              <select id="${tableId}_result">
+                <option value="all">All results</option>
+                <option value="open">Open</option>
+                <option value="win">Win</option>
+                <option value="loss">Loss</option>
+              </select>
+              <select id="${tableId}_tier">
+                <option value="all">All tiers</option>
+              </select>
+              <select id="${tableId}_limit">
+                <option value="25">25 rows</option>
+                <option value="50">50 rows</option>
+                <option value="100" selected>100 rows</option>
+                <option value="250">250 rows</option>
+                <option value="99999">All rows</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Match</th>
+                  <th>Pick</th>
+                  <th>Line</th>
+                  <th>Odds</th>
+                  <th>Stake</th>
+                  <th>Tier</th>
+                  <th>Result</th>
+                  <th>Profit</th>
+                  <th>Confidence</th>
+                  <th>Edge</th>
+                  <th>Books</th>
+                </tr>
+              </thead>
+              <tbody id="${tableId}_body"></tbody>
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
+    function populateTierSelect(tableId, rows) {
+      const select = document.getElementById(`${tableId}_tier`);
+      if (!select) return;
+
+      const tiers = Array.from(new Set(rows.map(r => safe(r.tier, "Unknown")))).sort();
+
+      tiers.forEach(tier => {
+        const opt = document.createElement("option");
+        opt.value = tier;
+        opt.textContent = tier;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderRows(tableId, baseRows) {
+      const body = document.getElementById(`${tableId}_body`);
+      if (!body) return;
+
+      const search = document.getElementById(`${tableId}_search`)?.value?.trim().toLowerCase() || "";
+      const resultFilter = document.getElementById(`${tableId}_result`)?.value || "all";
+      const tierFilter = document.getElementById(`${tableId}_tier`)?.value || "all";
+      const limit = Number(document.getElementById(`${tableId}_limit`)?.value || 100);
+
+      let rows = [...baseRows];
+
+      if (search) {
+        rows = rows.filter(row => {
+          const p = row.pick || {};
+          const haystack = [
+            p.match,
+            p.player_a,
+            p.player_b,
+            p.side,
+            p.tour_level,
+            p.tournament,
+            row.tier,
+            row.id
+          ].map(safe).join(" ").toLowerCase();
+
+          return haystack.includes(search);
+        });
+      }
+
+      if (resultFilter !== "all") {
+        rows = rows.filter(row => {
+          const r = pickResult(row.pick || {});
+          if (resultFilter === "open") return r !== "win" && r !== "loss";
+          return r === resultFilter;
+        });
+      }
+
+      if (tierFilter !== "all") {
+        rows = rows.filter(row => safe(row.tier, "Unknown") === tierFilter);
+      }
+
+      rows = rows.slice(0, limit);
+
+      if (!rows.length) {
+        body.innerHTML = `
+          <tr>
+            <td colspan="12" class="empty">Ni podatkov za izbrane filtre.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      body.innerHTML = rows.map(row => {
+        const p = row.pick || {};
+        const result = pickResult(p);
+        const profit = profitForRow(row);
+
+        return `
+          <tr>
+            <td>${safe(p.date)} ${safe(p.time, "")}</td>
+            <td>${safe(p.match)}</td>
+            <td><b>${safe(p.side).toUpperCase()}</b></td>
+            <td>${safe(p.line)}</td>
+            <td>${fmt(p.odds, 3)}</td>
+            <td>${fmt(row.stake, 2)}u</td>
+            <td><span class="badge premium">${safe(row.tier, "Premium")}</span></td>
+            <td>${resultBadge(result)}</td>
+            <td class="${classProfit(profit)}"><b>${fmtUnits(profit)}</b></td>
+            <td>${fmt(p.confidence, 2)}</td>
+            <td>${fmt(p.edge, 4)}</td>
+            <td>${safe(p.bookmakers_used)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function attachTableEvents(tableId, rows) {
+      ["search", "result", "tier", "limit"].forEach(part => {
+        const el = document.getElementById(`${tableId}_${part}`);
+        if (!el) return;
+
+        el.addEventListener("input", () => renderRows(tableId, rows));
+        el.addEventListener("change", () => renderRows(tableId, rows));
+      });
+
+      populateTierSelect(tableId, rows);
+      renderRows(tableId, rows);
+    }
+
+    function buildPage() {
+      normalizeRows();
+
+      const openRows = ALL_ROWS.filter(row => {
+        const r = pickResult(row.pick || {});
+        return r !== "win" && r !== "loss";
+      });
+
+      const settledRows = ALL_ROWS.filter(row => {
+        const r = pickResult(row.pick || {});
+        return r === "win" || r === "loss";
+      });
+
+      const newlyRows = REPORT.newly_settled || [];
+
+      document.getElementById("lastUpdated").textContent =
+        REPORT.settled_at_utc
+          ? `Updated: ${new Date(REPORT.settled_at_utc).toLocaleString()}`
+          : "Updated: unknown";
+
+      document.getElementById("app").innerHTML = `
+        ${buildCards()}
+        ${buildTierStats()}
+
+        <div class="two-col">
+          ${buildTableSection("Open picks", "openTable", openRows, 100)}
+          ${buildTableSection("Newly settled", "newTable", newlyRows, 100)}
+        </div>
+
+        ${buildTableSection("All picks / Results history", "allTable", ALL_ROWS, 100)}
       `;
 
-      document.getElementById("picks").textContent = num(summary.picks, 0);
-      document.getElementById("winRate").textContent = pct(summary.win_rate);
-      document.getElementById("profit").textContent = num(summary.profit, 2);
-      document.getElementById("profit").className = `metric-value ${profitClass(summary.profit)}`;
-      document.getElementById("roi").textContent = pct(summary.roi);
-      document.getElementById("roi").className = `metric-value ${profitClass(summary.roi)}`;
+      attachTableEvents("openTable", openRows);
+      attachTableEvents("newTable", newlyRows);
+      attachTableEvents("allTable", ALL_ROWS);
     }
 
-    function renderTiers(tiers) {
-      const names = Object.keys(tiers);
-
-      if (!names.length) {
-        document.getElementById("tierBody").innerHTML = `
-          <tr><td colspan="9" class="small">No tier data found in report.</td></tr>
-        `;
-        return;
-      }
-
-      document.getElementById("tierBody").innerHTML = names.map(name => {
-        const t = tiers[name] || {};
-        return `
-          <tr>
-            ${td(`<span class="pill">${name}</span>`)}
-            ${td(num(t.picks, 0))}
-            ${td(num(t.wins, 0))}
-            ${td(num(t.losses, 0))}
-            ${td(pct(t.win_rate))}
-            ${td(num(t.staked, 2))}
-            ${td(num(t.profit, 2), profitClass(t.profit))}
-            ${td(pct(t.roi), profitClass(t.roi))}
-            ${td(num(t.avg_odds, 3))}
-          </tr>
-        `;
-      }).join("");
-    }
-
-    function renderPicks(picks) {
-      const latest = Array.isArray(picks) ? picks.slice(-50).reverse() : [];
-
-      if (!latest.length) {
-        document.getElementById("picksBody").innerHTML = `
-          <tr><td colspan="8" class="small">No pick list found in report. Summary still works.</td></tr>
-        `;
-        return;
-      }
-
-      document.getElementById("picksBody").innerHTML = latest.map(p => {
-        const result = String(p.result || "").toLowerCase();
-        const profit = p.profit ?? p.units ?? "";
-        const resultClass = result === "win" ? "good" : result === "loss" ? "bad" : "warn";
-
-        return `
-          <tr>
-            ${td(p.date || "-")}
-            ${td(p.match || p.event || p.fixture || "-")}
-            ${td(p.side || "-")}
-            ${td(num(p.line, 1))}
-            ${td(num(p.odds, 3))}
-            ${td(`<span class="pill">${p.tier || p.bucket || p.stake_tier || "-"}</span>`)}
-            ${td(result || "-", resultClass)}
-            ${td(profit === "" ? "-" : num(profit, 2), profitClass(profit))}
-          </tr>
-        `;
-      }).join("");
-    }
-
-    async function loadReport() {
-      const status = document.getElementById("status");
-      const content = document.getElementById("content");
-
+    async function load() {
       try {
-        const response = await fetch(REPORT_PATH, { cache: "no-store" });
+        const res = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
 
-        if (!response.ok) {
-          throw new Error(`Could not load ${REPORT_PATH}. HTTP ${response.status}`);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status} while loading ${DATA_URL}`);
         }
 
-        const report = await response.json();
-        const summary = getSummary(report);
-        const tiers = getTiers(summary);
-        const picks = getLatestPicks(report);
+        REPORT = await res.json();
+        buildPage();
+      } catch (err) {
+        document.getElementById("lastUpdated").textContent = "Data error";
 
-        renderSummary(summary);
-        renderTiers(tiers);
-        renderPicks(picks);
-
-        const generated = report.generated_at || report.updated_at || report.created_at || "";
-        const raw = report.raw_results ?? report.raw ?? "";
-        const settled = report.settled_results ?? report.settled ?? "";
-        const deduped = report.deduped_results ?? report.deduped_settled_results ?? "";
-
-        status.innerHTML = `
-          Report loaded: <strong>${REPORT_PATH}</strong>
-          ${generated ? `<br><span class="small">Generated: ${generated}</span>` : ""}
-        `;
-
-        document.getElementById("footer").innerHTML = `
-          Raw: ${raw || "-"} · Settled: ${settled || "-"} · Deduped: ${deduped || "-"}
-        `;
-
-        content.style.display = "block";
-      } catch (error) {
-        status.innerHTML = `
-          <strong class="bad">Report could not be loaded.</strong><br>
-          <span class="small">${error.message}</span><br><br>
-          <span class="small">
-            Preveri, da obstaja file:
-            <strong>data/tennis_totals_premium_report.json</strong>
-            in da je commitan v repo.
-          </span>
+        document.getElementById("app").innerHTML = `
+          <div class="error">
+            <b>Ne morem naložiti premium reporta.</b><br><br>
+            Preveri, da obstaja datoteka:<br>
+            <code>${DATA_URL}</code><br><br>
+            In da sta GitHub Actions za agregator/settle že ustvarila:<br>
+            <code>data/tennis_totals_premium_report.json</code><br><br>
+            Error: ${safe(err.message)}
+          </div>
         `;
       }
     }
 
-    loadReport();
+    load();
   </script>
 </body>
 </html>
