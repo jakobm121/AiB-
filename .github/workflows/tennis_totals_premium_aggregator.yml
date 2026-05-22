@@ -2,9 +2,6 @@ name: Tennis Totals Premium Aggregator
 
 on:
   workflow_dispatch:
-  schedule:
-    # Vsak dan ob 09:00 UTC
-    - cron: "0 9 * * *"
 
 permissions:
   contents: write
