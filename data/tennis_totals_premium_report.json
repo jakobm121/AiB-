@@ -1,11 +1,11 @@
 {
-  "generated_at_utc": "2026-05-22T12:25:04.874529+00:00",
+  "settled_at_utc": "2026-05-22T12:25:33.451273+00:00",
   "strategy": "tennis_totals_premium",
   "source_results_url": "https://raw.githubusercontent.com/jakobm121/Ai/main/data/tennis_totals_results.json",
-  "raw_source_count_after_dedupe": 333,
-  "selected_total": 65,
-  "selected_open": 10,
-  "selected_settled": 55,
+  "known_total": 65,
+  "open_total": 10,
+  "settled_total": 55,
+  "newly_settled_count": 0,
   "summary": {
     "picks": 55,
     "wins": 38,
@@ -30,6 +30,7 @@
       }
     }
   },
+  "newly_settled": [],
   "open_picks": [
     {
       "id": "12125572|under|20.5",
