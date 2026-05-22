@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tennis Totals Premium</title>
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0d1b2e;
+      --panel2: #10233b;
+      --text: #e8f0ff;
+      --muted: #93a4bd;
+      --line: rgba(255,255,255,.10);
+      --good: #28d17c;
+      --bad: #ff5b6e;
+      --warn: #ffd166;
+      --blue: #68a7ff;
+      --chip: rgba(104,167,255,.14);
+      --shadow: 0 18px 50px rgba(0,0,0,.28);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(104,167,255,.20), transparent 34rem),
+        radial-gradient(circle at top right, rgba(40,209,124,.13), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .wrap {
+      width: min(1280px, calc(100% - 28px));
+      margin: 0 auto;
+      padding: 22px 0 48px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(26px, 5vw, 44px);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .brand p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    button, .btn {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    button:hover, .btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255,255,255,.10);
+    }
+
+    .status {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.055);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--warn);
+      box-shadow: 0 0 16px currentColor;
+    }
+
+    .dot.ok {
+      background: var(--good);
+      color: var(--good);
+    }
+
+    .dot.err {
+      background: var(--bad);
+      color: var(--bad);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      grid-column: span 12;
+      background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-inner {
+      padding: 16px;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .kpi {
+      grid-column: span 3;
+      min-height: 116px;
+    }
+
+    .kpi .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .kpi .value {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .kpi .sub {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .good {
+      color: var(--good);
+    }
+
+    .bad {
+      color: var(--bad);
+    }
+
+    .warn {
+      color: var(--warn);
+    }
+
+    .blue {
+      color: var(--blue);
+    }
+
+    .wide {
+      grid-column: span 8;
+    }
+
+    .side {
+      grid-column: span 4;
+    }
+
+    .full {
+      grid-column: span 12;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .tab {
+      border-radius: 999px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      color: var(--muted);
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .tab.active {
+      background: var(--chip);
+      color: var(--text);
+      border-color: rgba(104,167,255,.35);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 1.4fr .8fr .8fr .8fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    input, select {
+      width: 100%;
+      background: rgba(0,0,0,.20);
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 11px 12px;
+      outline: none;
+      font-weight: 650;
+    }
+
+    input::placeholder {
+      color: rgba(232,240,255,.45);
+    }
+
+    select option {
+      background: #0d1b2e;
+      color: var(--text);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+      background: rgba(0,0,0,.12);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      background: #10233b;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      z-index: 1;
+    }
+
+    tr:hover td {
+      background: rgba(255,255,255,.035);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      white-space: nowrap;
+    }
+
+    .tag.win {
+      background: rgba(40,209,124,.13);
+      color: var(--good);
+      border-color: rgba(40,209,124,.26);
+    }
+
+    .tag.loss {
+      background: rgba(255,91,110,.13);
+      color: var(--bad);
+      border-color: rgba(255,91,110,.26);
+    }
+
+    .tag.open {
+      background: rgba(255,209,102,.12);
+      color: var(--warn);
+      border-color: rgba(255,209,102,.24);
+    }
+
+    .tag.premium {
+      background: rgba(104,167,255,.15);
+      color: #b8d4ff;
+      border-color: rgba(104,167,255,.30);
+    }
+
+    .mini {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .match {
+      font-weight: 850;
+      max-width: 280px;
+    }
+
+    .mono {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .box {
+      background: rgba(0,0,0,.16);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .box-title {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+    }
+
+    .box-value {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 22px;
+      text-align: center;
+    }
+
+    .error {
+      border: 1px solid rgba(255,91,110,.28);
+      background: rgba(255,91,110,.10);
+      color: #ffd6dc;
+      padding: 14px;
+      border-radius: 14px;
+      line-height: 1.45;
+      margin: 14px 0;
+      display: none;
+    }
+
+    .small-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .small-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .small-row:last-child {
+      border-bottom: 0;
+    }
+
+    .small-row span:first-child {
+      color: var(--muted);
+    }
+
+    .small-row span:last-child {
+      font-weight: 850;
+      text-align: right;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .topbar {
+        display: block;
+      }
+
+      .actions {
+        justify-content: flex-start;
+        margin-top: 14px;
+      }
+
+      .kpi {
+        grid-column: span 6;
+      }
+
+      .wide, .side {
+        grid-column: span 12;
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .wrap {
+        width: min(100% - 18px, 1280px);
+        padding-top: 14px;
+      }
+
+      .kpi {
+        grid-column: span 12;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+      }
+
+      .card-inner {
+        padding: 13px;
+      }
+
+      .kpi .value {
+        font-size: 29px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <h1>Tennis Totals Premium</h1>
+        <p>Ločena premium stran za agregator, settled picke, rezultate in statistiko.</p>
+      </div>
+
+      <div class="actions">
+        <button onclick="loadAll()">Refresh</button>
+        <a class="btn" href="/" title="Nazaj na glavno stran">Main page</a>
+      </div>
+    </div>
+
+    <div class="status">
+      <div class="pill"><span id="statusDot" class="dot"></span><span id="loadStatus">Loading data...</span></div>
+      <div class="pill">Report: <span id="reportPath">data/tennis_totals_premium_report.json</span></div>
+      <div class="pill">Updated: <span id="updatedAt">-</span></div>
+    </div>
+
+    <div id="errorBox" class="error"></div>
+
+    <section class="grid" id="kpiGrid">
+      <div class="card kpi"><div class="card-inner"><div class="label">Known picks</div><div id="kKnown" class="value">-</div><div class="sub">Vsi premium picki v evidenci</div></div></div>
+      <div class="card kpi"><div class="card-inner"><div class="label">Open picks</div><div id="kOpen" class="value warn">-</div><div class="sub">Še brez rezultata</div></div></div>
+      <div class="card kpi"><div class="card-inner"><div class="label">Settled picks</div><div id="kSettled" class="value blue">-</div><div class="sub">Win/loss rezultati</div></div></div>
+      <div class="card kpi"><div class="card-inner"><div class="label">Newly settled</div><div id="kNew" class="value">-</div><div class="sub">Zadnji settle run</div></div></div>
+
+      <div class="card kpi"><div class="card-inner"><div class="label">Profit</div><div id="kProfit" class="value">-</div><div class="sub">Units glede na stake</div></div></div>
+      <div class="card kpi"><div class="card-inner"><div class="label">ROI</div><div id="kRoi" class="value">-</div><div class="sub">Profit / staked</div></div></div>
+      <div class="card kpi"><div class="card-inner"><div class="label">Win rate</div><div id="kWinRate" class="value">-</div><div class="sub">Wins / settled</div></div></div>
+      <div class="card kpi"><div class="card-inner"><div class="label">Max drawdown</div><div id="kDD" class="value">-</div><div class="sub">Največji padec banke</div></div></div>
+    </section>
+
+    <section class="grid" style="margin-top:14px;">
+      <div class="card wide">
+        <div class="card-inner">
+          <h2>Tier statistika</h2>
+          <div id="tierStats" class="split"></div>
+        </div>
+      </div>
+
+      <div class="card side">
+        <div class="card-inner">
+          <h2>Quick info</h2>
+          <div class="small-list">
+            <div class="small-row"><span>Strategy</span><span id="qStrategy">-</span></div>
+            <div class="small-row"><span>Avg odds</span><span id="qAvgOdds">-</span></div>
+            <div class="small-row"><span>Staked</span><span id="qStaked">-</span></div>
+            <div class="small-row"><span>Wins / Losses</span><span id="qWL">-</span></div>
+            <div class="small-row"><span>Longest loss streak</span><span id="qStreak">-</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card full">
+        <div class="card-inner">
+          <h2>Premium picki</h2>
+
+          <div class="tabs">
+            <button class="tab active" data-view="all" onclick="setView('all')">All</button>
+            <button class="tab" data-view="open" onclick="setView('open')">Open</button>
+            <button class="tab" data-view="settled" onclick="setView('settled')">Settled</button>
+            <button class="tab" data-view="win" onclick="setView('win')">Wins</button>
+            <button class="tab" data-view="loss" onclick="setView('loss')">Losses</button>
+            <button class="tab" data-view="new" onclick="setView('new')">Newly settled</button>
+          </div>
+
+          <div class="filters">
+            <input id="searchInput" placeholder="Search match, player, tour..." oninput="renderTable()" />
+            <select id="tierFilter" onchange="renderTable()">
+              <option value="">All tiers</option>
+            </select>
+            <select id="sideFilter" onchange="renderTable()">
+              <option value="">All sides</option>
+              <option value="under">Under</option>
+              <option value="over">Over</option>
+            </select>
+            <select id="sortFilter" onchange="renderTable()">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="profit">Profit</option>
+              <option value="odds">Odds</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Match</th>
+                  <th>Pick</th>
+                  <th>Odds</th>
+                  <th>Stake</th>
+                  <th>Tier</th>
+                  <th>Result</th>
+                  <th>Profit</th>
+                  <th>Meta</th>
+                </tr>
+              </thead>
+              <tbody id="picksBody">
+                <tr><td colspan="9" class="empty">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      Tennis Totals Premium dashboard · reads JSON from /data
+    </footer>
+  </main>
+
+  <script>
+    const REPORT_URL = "data/tennis_totals_premium_report.json";
+    const PICKS_URL = "data/tennis_totals_premium_picks.json";
+    const SETTLED_URL = "data/tennis_totals_premium_settled.json";
+
+    let report = null;
+    let allRows = [];
+    let currentView = "all";
+
+    const $ = (id) => document.getElementById(id);
+
+    function n(x, fallback = 0) {
+      const v = Number(x);
+      return Number.isFinite(v) ? v : fallback;
+    }
+
+    function s(x) {
+      return String(x ?? "").trim();
+    }
+
+    function low(x) {
+      return s(x).toLowerCase();
+    }
+
+    function fmtNum(x, digits = 2) {
+      const v = n(x, 0);
+      return v.toLocaleString("en-US", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      });
+    }
+
+    function fmtPct(x) {
+      return `${fmtNum(x, 2)}%`;
+    }
+
+    function resultOf(row) {
+      const p = row.pick || row;
+      return low(row.result || p.result);
+    }
+
+    function stakeOf(row) {
+      return n(row.stake, 1);
+    }
+
+    function oddsOf(row) {
+      const p = row.pick || row;
+      return n(p.odds, 0);
+    }
+
+    function profitOf(row) {
+      const r = resultOf(row);
+      const odds = oddsOf(row);
+      const stake = stakeOf(row);
+
+      if (r === "win") return stake * (odds - 1);
+      if (r === "loss") return -stake;
+      return 0;
+    }
+
+    function dateKey(row) {
+      const p = row.pick || row;
+      return `${s(p.date)} ${s(p.time)} ${s(p.match)}`;
+    }
+
+    function isSettled(row) {
+      const r = resultOf(row);
+      return r === "win" || r === "loss";
+    }
+
+    function normalizeRows(raw) {
+      if (!Array.isArray(raw)) return [];
+
+      return raw.map((x, idx) => {
+        if (x && x.pick) {
+          return {
+            id: x.id || `row_${idx}`,
+            tier: x.tier || "Premium",
+            stake: n(x.stake, 1),
+            result: x.result || (x.pick ? x.pick.result : ""),
+            pick: x.pick || {}
+          };
+        }
+
+        return {
+          id: x.id || `row_${idx}`,
+          tier: x.tier || x.stake_tier || x.stake_label || "Premium",
+          stake: n(x.stake, 1),
+          result: x.result || "",
+          pick: x || {}
+        };
+      });
+    }
+
+    async function fetchJson(url, required = false) {
+      const bust = `?v=${Date.now()}`;
+
+      try {
+        const res = await fetch(url + bust, { cache: "no-store" });
+
+        if (!res.ok) {
+          if (required) throw new Error(`${url} returned ${res.status}`);
+          return null;
+        }
+
+        return await res.json();
+      } catch (err) {
+        if (required) throw err;
+        return null;
+      }
+    }
+
+    async function loadAll() {
+      $("statusDot").className = "dot";
+      $("loadStatus").textContent = "Loading data...";
+      $("errorBox").style.display = "none";
+      $("errorBox").textContent = "";
+
+      try {
+        report = await fetchJson(REPORT_URL, true);
+
+        const settledRaw = await fetchJson(SETTLED_URL, false);
+        const picksRaw = await fetchJson(PICKS_URL, false);
+
+        let rows = [];
+
+        if (report && Array.isArray(report.settled_picks)) rows = rows.concat(report.settled_picks);
+        if (report && Array.isArray(report.open_picks)) rows = rows.concat(report.open_picks);
+
+        if (!rows.length && Array.isArray(settledRaw)) rows = rows.concat(settledRaw);
+        if (!rows.length && Array.isArray(picksRaw)) rows = rows.concat(picksRaw);
+
+        allRows = normalizeRows(rows);
+
+        $("statusDot").className = "dot ok";
+        $("loadStatus").textContent = "Data loaded";
+        $("updatedAt").textContent = report.settled_at_utc
+          ? new Date(report.settled_at_utc).toLocaleString()
+          : "-";
+
+        hydrateFilters();
+        renderSummary();
+        renderTable();
+
+      } catch (err) {
+        $("statusDot").className = "dot err";
+        $("loadStatus").textContent = "Data error";
+        $("errorBox").style.display = "block";
+        $("errorBox").innerHTML = `
+          <strong>Ne morem naložiti premium JSON podatkov.</strong><br>
+          Preveri, da obstaja <code>${REPORT_URL}</code> v repoju in da je deploy končan.<br>
+          Error: ${escapeHtml(err.message || err)}
+        `;
+        renderEmpty();
+      }
+    }
+
+    function renderEmpty() {
+      ["kKnown","kOpen","kSettled","kNew","kProfit","kRoi","kWinRate","kDD"].forEach(id => $(id).textContent = "-");
+      $("picksBody").innerHTML = `<tr><td colspan="9" class="empty">No data</td></tr>`;
+    }
+
+    function renderSummary() {
+      const summary = report.summary || {};
+      const settled = allRows.filter(isSettled);
+      const open = allRows.filter(x => !isSettled(x));
+
+      const knownTotal = n(report.known_total, allRows.length);
+      const openTotal = n(report.open_total, open.length);
+      const settledTotal = n(report.settled_total, settled.length);
+      const newlySettled = n(report.newly_settled_count, Array.isArray(report.newly_settled) ? report.newly_settled.length : 0);
+
+      $("kKnown").textContent = knownTotal;
+      $("kOpen").textContent = openTotal;
+      $("kSettled").textContent = settledTotal;
+      $("kNew").textContent = newlySettled;
+
+      const profit = n(summary.profit);
+      const roi = n(summary.roi);
+      const winRate = n(summary.win_rate);
+
+      $("kProfit").textContent = fmtNum(profit, 2);
+      $("kProfit").className = `value ${profit >= 0 ? "good" : "bad"}`;
+
+      $("kRoi").textContent = fmtPct(roi);
+      $("kRoi").className = `value ${roi >= 0 ? "good" : "bad"}`;
+
+      $("kWinRate").textContent = fmtPct(winRate);
+      $("kDD").textContent = fmtNum(summary.max_drawdown_units, 2);
+
+      $("qStrategy").textContent = report.strategy || "-";
+      $("qAvgOdds").textContent = fmtNum(summary.avg_odds, 3);
+      $("qStaked").textContent = fmtNum(summary.staked, 2);
+      $("qWL").textContent = `${n(summary.wins)} / ${n(summary.losses)}`;
+      $("qStreak").textContent = n(summary.longest_loss_streak);
+
+      renderTierStats(summary.by_tier || {});
+    }
+
+    function renderTierStats(byTier) {
+      const entries = Object.entries(byTier);
+
+      if (!entries.length) {
+        $("tierStats").innerHTML = `<div class="empty">No tier stats yet</div>`;
+        return;
+      }
+
+      $("tierStats").innerHTML = entries.map(([tier, v]) => {
+        const profit = n(v.profit);
+        const roi = n(v.roi);
+
+        return `
+          <div class="box">
+            <div class="box-title">${escapeHtml(tier)}</div>
+            <div class="box-value ${profit >= 0 ? "good" : "bad"}">${fmtNum(profit, 2)}u</div>
+            <div class="small-list" style="margin-top:10px;">
+              <div class="small-row"><span>Picks</span><span>${n(v.picks)}</span></div>
+              <div class="small-row"><span>W/L</span><span>${n(v.wins)} / ${n(v.losses)}</span></div>
+              <div class="small-row"><span>Win rate</span><span>${fmtPct(v.win_rate)}</span></div>
+              <div class="small-row"><span>ROI</span><span class="${roi >= 0 ? "good" : "bad"}">${fmtPct(roi)}</span></div>
+              <div class="small-row"><span>Avg odds</span><span>${fmtNum(v.avg_odds, 3)}</span></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function hydrateFilters() {
+      const tiers = [...new Set(allRows.map(x => s(x.tier || "Premium")).filter(Boolean))].sort();
+      const current = $("tierFilter").value;
+
+      $("tierFilter").innerHTML = `<option value="">All tiers</option>` + tiers.map(t => {
+        return `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`;
+      }).join("");
+
+      $("tierFilter").value = current;
+    }
+
+    function setView(view) {
+      currentView = view;
+
+      document.querySelectorAll(".tab").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.view === view);
+      });
+
+      renderTable();
+    }
+
+    function rowMatchesView(row) {
+      const r = resultOf(row);
+
+      if (currentView === "all") return true;
+      if (currentView === "open") return !isSettled(row);
+      if (currentView === "settled") return isSettled(row);
+      if (currentView === "win") return r === "win";
+      if (currentView === "loss") return r === "loss";
+
+      if (currentView === "new") {
+        const ids = new Set((report.newly_settled || []).map(x => x.id).filter(Boolean));
+        return row.id && ids.has(row.id);
+      }
+
+      return true;
+    }
+
+    function renderTable() {
+      const q = low($("searchInput").value);
+      const tier = $("tierFilter").value;
+      const side = low($("sideFilter").value);
+      const sort = $("sortFilter").value;
+
+      let rows = allRows.filter(row => {
+        const p = row.pick || {};
+        const hay = low([
+          p.match,
+          p.player,
+          p.home,
+          p.away,
+          p.tournament,
+          p.tour_level,
+          p.league,
+          p.side,
+          row.tier,
+          p.stake_label
+        ].join(" "));
+
+        if (!rowMatchesView(row)) return false;
+        if (q && !hay.includes(q)) return false;
+        if (tier && s(row.tier) !== tier) return false;
+        if (side && low(p.side) !== side) return false;
+
+        return true;
+      });
+
+      rows.sort((a, b) => {
+        if (sort === "oldest") return dateKey(a).localeCompare(dateKey(b));
+        if (sort === "profit") return profitOf(b) - profitOf(a);
+        if (sort === "odds") return oddsOf(b) - oddsOf(a);
+        return dateKey(b).localeCompare(dateKey(a));
+      });
+
+      if (!rows.length) {
+        $("picksBody").innerHTML = `<tr><td colspan="9" class="empty">Ni pickov za izbrane filtre.</td></tr>`;
+        return;
+      }
+
+      $("picksBody").innerHTML = rows.map(row => {
+        const p = row.pick || {};
+        const r = resultOf(row);
+        const prof = profitOf(row);
+        const resultClass = r === "win" ? "win" : r === "loss" ? "loss" : "open";
+        const resultText = r || "open";
+        const sideText = s(p.side) || "-";
+        const lineText = p.line !== undefined && p.line !== null ? p.line : "-";
+
+        return `
+          <tr>
+            <td class="mono">
+              <strong>${escapeHtml(s(p.date) || "-")}</strong>
+              <div class="mini">${escapeHtml(s(p.time) || "")}</div>
+            </td>
+            <td>
+              <div class="match">${escapeHtml(s(p.match) || "-")}</div>
+              <div class="mini">${escapeHtml(s(p.tournament || p.league || p.tour_level || ""))}</div>
+            </td>
+            <td>
+              <strong>${escapeHtml(sideText.toUpperCase())} ${escapeHtml(String(lineText))}</strong>
+              <div class="mini">Confidence: ${fmtNum(p.confidence, 1)} · Edge: ${fmtNum(n(p.edge) * 100, 2)}%</div>
+            </td>
+            <td class="mono">${fmtNum(p.odds, 3)}</td>
+            <td class="mono">${fmtNum(row.stake, 2)}</td>
+            <td><span class="tag premium">${escapeHtml(s(row.tier || "Premium"))}</span></td>
+            <td><span class="tag ${resultClass}">${escapeHtml(resultText.toUpperCase())}</span></td>
+            <td class="mono ${prof >= 0 ? "good" : "bad"}">${fmtNum(prof, 2)}</td>
+            <td>
+              <div class="mini">Q: ${fmtNum(p.quality_score, 1)} · Books: ${fmtNum(p.bookmakers_used, 0)}</div>
+              <div class="mini">Label: ${escapeHtml(s(p.stake_label || "-"))}</div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    loadAll();
+  </script>
+</body>
+</html>
