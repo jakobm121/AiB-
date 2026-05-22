@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-05-22T11:47:45.201500+00:00",
+  "generated_at_utc": "2026-05-22T12:25:04.874529+00:00",
   "strategy": "tennis_totals_premium",
   "source_results_url": "https://raw.githubusercontent.com/jakobm121/Ai/main/data/tennis_totals_results.json",
   "raw_source_count_after_dedupe": 333,
