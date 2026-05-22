@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="sl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tennis Totals Premium</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #121a33;
+      --card2: #17203d;
+      --text: #eaf0ff;
+      --muted: #9aa8c7;
+      --good: #35d07f;
+      --bad: #ff5c7a;
+      --warn: #ffd166;
+      --line: rgba(255,255,255,.12);
+      --accent: #7aa2ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #07101f 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    header {
+      padding: 28px 20px 14px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 30px;
+      letter-spacing: .2px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 20px 40px;
+    }
+
+    .status {
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--card);
+      margin-bottom: 18px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: rgba(18, 26, 51, .94);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .good {
+      color: var(--good);
+    }
+
+    .bad {
+      color: var(--bad);
+    }
+
+    .warn {
+      color: var(--warn);
+    }
+
+    section {
+      margin-top: 18px;
+    }
+
+    h2 {
+      font-size: 19px;
+      margin: 0 0 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+    }
+
+    th, td {
+      padding: 12px 11px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      background: var(--card2);
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(122,162,255,.14);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .rules {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0;
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .footer {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rules {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      th, td {
+        font-size: 12px;
+        padding: 10px 8px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Tennis Totals Premium</h1>
+    <div class="subtitle">AiB agregator report · Premium / Volume B pregled</div>
+  </header>
+
+  <main>
+    <div id="status" class="status">Loading report...</div>
+
+    <div id="content" style="display:none;">
+      <div class="grid">
+        <div class="card">
+          <div class="metric-label">Picks</div>
+          <div id="picks" class="metric-value">-</div>
+        </div>
+
+        <div class="card">
+          <div class="metric-label">Win rate</div>
+          <div id="winRate" class="metric-value">-</div>
+        </div>
+
+        <div class="card">
+          <div class="metric-label">Profit</div>
+          <div id="profit" class="metric-value">-</div>
+        </div>
+
+        <div class="card">
+          <div class="metric-label">ROI</div>
+          <div id="roi" class="metric-value">-</div>
+        </div>
+      </div>
+
+      <section>
+        <h2>Overall summary</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Picks</th>
+              <th>Wins</th>
+              <th>Losses</th>
+              <th>Win rate</th>
+              <th>Staked</th>
+              <th>Profit</th>
+              <th>ROI</th>
+              <th>Avg odds</th>
+              <th>Max DD</th>
+              <th>Loss streak</th>
+            </tr>
+          </thead>
+          <tbody id="summaryBody"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>By tier</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Tier</th>
+              <th>Picks</th>
+              <th>Wins</th>
+              <th>Losses</th>
+              <th>Win rate</th>
+              <th>Staked</th>
+              <th>Profit</th>
+              <th>ROI</th>
+              <th>Avg odds</th>
+            </tr>
+          </thead>
+          <tbody id="tierBody"></tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>Latest picks</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Match</th>
+              <th>Side</th>
+              <th>Line</th>
+              <th>Odds</th>
+              <th>Tier</th>
+              <th>Result</th>
+              <th>Profit</th>
+            </tr>
+          </thead>
+          <tbody id="picksBody"></tbody>
+        </table>
+      </section>
+
+      <section class="rules">
+        <div class="card">
+          <h2>Premium filter</h2>
+          <pre>side = under
+confidence >= 82
+bookmakers_used NOT between 6 and 7
+stake_label = Strong</pre>
+        </div>
+
+        <div class="card">
+          <h2>Volume B filter</h2>
+          <pre>line = 20.5
+confidence >= 82
+stake_label != Top Rated
+recommended stake: 0.25u</pre>
+        </div>
+      </section>
+
+      <div id="footer" class="footer"></div>
+    </div>
+  </main>
+
+  <script>
+    const REPORT_PATH = "../../data/tennis_totals_premium_report.json";
+
+    function num(value, digits = 2) {
+      if (value === null || value === undefined || value === "") return "-";
+      const n = Number(value);
+      if (!Number.isFinite(n)) return String(value);
+      return n.toFixed(digits).replace(/\.?0+$/, "");
+    }
+
+    function pct(value) {
+      if (value === null || value === undefined || value === "") return "-";
+      return `${num(value, 2)}%`;
+    }
+
+    function profitClass(value) {
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "";
+      if (n > 0) return "good";
+      if (n < 0) return "bad";
+      return "warn";
+    }
+
+    function td(value, className = "") {
+      return `<td class="${className}">${value}</td>`;
+    }
+
+    function getSummary(report) {
+      return (
+        report.combined_optimized ||
+        report.overall ||
+        report.summary ||
+        report.premium_plus_volume_b ||
+        report.premium_only ||
+        report.recommended?.combined_optimized ||
+        {}
+      );
+    }
+
+    function getTiers(summary) {
+      return summary.by_tier || {};
+    }
+
+    function getLatestPicks(report) {
+      return (
+        report.latest_picks ||
+        report.picks ||
+        report.selected_picks ||
+        report.rows ||
+        []
+      );
+    }
+
+    function renderSummary(summary) {
+      document.getElementById("summaryBody").innerHTML = `
+        <tr>
+          ${td(num(summary.picks, 0))}
+          ${td(num(summary.wins, 0))}
+          ${td(num(summary.losses, 0))}
+          ${td(pct(summary.win_rate))}
+          ${td(num(summary.staked, 2))}
+          ${td(num(summary.profit, 2), profitClass(summary.profit))}
+          ${td(pct(summary.roi), profitClass(summary.roi))}
+          ${td(num(summary.avg_odds, 3))}
+          ${td(num(summary.max_drawdown_units, 2))}
+          ${td(num(summary.longest_loss_streak, 0))}
+        </tr>
+      `;
+
+      document.getElementById("picks").textContent = num(summary.picks, 0);
+      document.getElementById("winRate").textContent = pct(summary.win_rate);
+      document.getElementById("profit").textContent = num(summary.profit, 2);
+      document.getElementById("profit").className = `metric-value ${profitClass(summary.profit)}`;
+      document.getElementById("roi").textContent = pct(summary.roi);
+      document.getElementById("roi").className = `metric-value ${profitClass(summary.roi)}`;
+    }
+
+    function renderTiers(tiers) {
+      const names = Object.keys(tiers);
+
+      if (!names.length) {
+        document.getElementById("tierBody").innerHTML = `
+          <tr><td colspan="9" class="small">No tier data found in report.</td></tr>
+        `;
+        return;
+      }
+
+      document.getElementById("tierBody").innerHTML = names.map(name => {
+        const t = tiers[name] || {};
+        return `
+          <tr>
+            ${td(`<span class="pill">${name}</span>`)}
+            ${td(num(t.picks, 0))}
+            ${td(num(t.wins, 0))}
+            ${td(num(t.losses, 0))}
+            ${td(pct(t.win_rate))}
+            ${td(num(t.staked, 2))}
+            ${td(num(t.profit, 2), profitClass(t.profit))}
+            ${td(pct(t.roi), profitClass(t.roi))}
+            ${td(num(t.avg_odds, 3))}
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderPicks(picks) {
+      const latest = Array.isArray(picks) ? picks.slice(-50).reverse() : [];
+
+      if (!latest.length) {
+        document.getElementById("picksBody").innerHTML = `
+          <tr><td colspan="8" class="small">No pick list found in report. Summary still works.</td></tr>
+        `;
+        return;
+      }
+
+      document.getElementById("picksBody").innerHTML = latest.map(p => {
+        const result = String(p.result || "").toLowerCase();
+        const profit = p.profit ?? p.units ?? "";
+        const resultClass = result === "win" ? "good" : result === "loss" ? "bad" : "warn";
+
+        return `
+          <tr>
+            ${td(p.date || "-")}
+            ${td(p.match || p.event || p.fixture || "-")}
+            ${td(p.side || "-")}
+            ${td(num(p.line, 1))}
+            ${td(num(p.odds, 3))}
+            ${td(`<span class="pill">${p.tier || p.bucket || p.stake_tier || "-"}</span>`)}
+            ${td(result || "-", resultClass)}
+            ${td(profit === "" ? "-" : num(profit, 2), profitClass(profit))}
+          </tr>
+        `;
+      }).join("");
+    }
+
+    async function loadReport() {
+      const status = document.getElementById("status");
+      const content = document.getElementById("content");
+
+      try {
+        const response = await fetch(REPORT_PATH, { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error(`Could not load ${REPORT_PATH}. HTTP ${response.status}`);
+        }
+
+        const report = await response.json();
+        const summary = getSummary(report);
+        const tiers = getTiers(summary);
+        const picks = getLatestPicks(report);
+
+        renderSummary(summary);
+        renderTiers(tiers);
+        renderPicks(picks);
+
+        const generated = report.generated_at || report.updated_at || report.created_at || "";
+        const raw = report.raw_results ?? report.raw ?? "";
+        const settled = report.settled_results ?? report.settled ?? "";
+        const deduped = report.deduped_results ?? report.deduped_settled_results ?? "";
+
+        status.innerHTML = `
+          Report loaded: <strong>${REPORT_PATH}</strong>
+          ${generated ? `<br><span class="small">Generated: ${generated}</span>` : ""}
+        `;
+
+        document.getElementById("footer").innerHTML = `
+          Raw: ${raw || "-"} · Settled: ${settled || "-"} · Deduped: ${deduped || "-"}
+        `;
+
+        content.style.display = "block";
+      } catch (error) {
+        status.innerHTML = `
+          <strong class="bad">Report could not be loaded.</strong><br>
+          <span class="small">${error.message}</span><br><br>
+          <span class="small">
+            Preveri, da obstaja file:
+            <strong>data/tennis_totals_premium_report.json</strong>
+            in da je commitan v repo.
+          </span>
+        `;
+      }
+    }
+
+    loadReport();
+  </script>
+</body>
+</html>
