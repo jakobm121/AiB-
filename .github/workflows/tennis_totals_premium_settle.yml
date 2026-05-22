@@ -1,0 +1,44 @@
+name: Tennis Totals Premium Settle
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Vsak dan ob 22:00 UTC
+    - cron: "0 22 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  run-premium-settle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout AiB repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Run premium settle
+        run: python tennis_totals_premium/tennis_totals_premium_settle.py
+
+      - name: Commit premium settle outputs
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/tennis_totals_premium_settled.json
+          git add data/tennis_totals_premium_report.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Settle tennis totals premium picks"
+            git push
+          fi
