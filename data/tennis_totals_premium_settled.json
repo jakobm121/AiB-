@@ -10293,7 +10293,7 @@
     "id": "12129966|under|21.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "loss",
     "pick": {
       "pick_id": "e4d3278b7f53d0f50163c70b5504cd68",
       "event_key": 12129966,
@@ -10425,16 +10425,22 @@
       "first_strength_score": 63.94,
       "second_strength_score": 65.0,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "loss",
       "created_at": "2026-05-24T14:13:06.922296+02:00",
-      "reasoning": "UNDER 21.5 games selected in H. Baptiste - B. Krejcikova at line 21.5. Model expected total games: 18.33; market line: 21.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 9. Confidence: 92.5."
+      "reasoning": "UNDER 21.5 games selected in H. Baptiste - B. Krejcikova at line 21.5. Model expected total games: 18.33; market line: 21.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 9. Confidence: 92.5.",
+      "profit": -0.75,
+      "settled_at": "2026-05-24T23:54:40.896195+02:00",
+      "settled_status": "Finished",
+      "event_winner": "First Player",
+      "final_score": "6-7, 7-6, 6-2",
+      "total_games": 34
     }
   },
   {
     "id": "12130192|under|20.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "2812a638a3ada28dcceb342d1d099c17",
       "event_key": 12130192,
@@ -10566,16 +10572,22 @@
       "first_strength_score": 48.75,
       "second_strength_score": 48.8,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "win",
       "created_at": "2026-05-24T17:36:49.481922+02:00",
-      "reasoning": "UNDER 20.5 games selected in S. Bejlek - S. Stephens at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 47.6% from best odds 2.10. Edge: +9.4%. Bookmakers used: 8. Confidence: 89.7."
+      "reasoning": "UNDER 20.5 games selected in S. Bejlek - S. Stephens at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 47.6% from best odds 2.10. Edge: +9.4%. Bookmakers used: 8. Confidence: 89.7.",
+      "profit": 0.825,
+      "settled_at": "2026-05-24T23:54:47.224943+02:00",
+      "settled_status": "Finished",
+      "event_winner": "First Player",
+      "final_score": "6-3, 6-2",
+      "total_games": 17
     }
   },
   {
     "id": "12129929|under|20.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "loss",
     "pick": {
       "pick_id": "aeecf1fd0561e1e537a62f2bf3ad857e",
       "event_key": 12129929,
@@ -10707,9 +10719,15 @@
       "first_strength_score": 44.75,
       "second_strength_score": 78.72,
       "h2h_matches": 1,
-      "result": "pending",
+      "result": "loss",
       "created_at": "2026-05-24T17:36:42.044050+02:00",
-      "reasoning": "UNDER 20.5 games selected in C. Tauson - D. Snigur at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 47.6% from best odds 2.10. Edge: +9.4%. Bookmakers used: 7. Confidence: 88.9."
+      "reasoning": "UNDER 20.5 games selected in C. Tauson - D. Snigur at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 47.6% from best odds 2.10. Edge: +9.4%. Bookmakers used: 7. Confidence: 88.9.",
+      "profit": -0.75,
+      "settled_at": "2026-05-24T23:54:47.883103+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "6-3, 5-7, 2-6",
+      "total_games": 29
     }
   }
 ]
