@@ -133,7 +133,7 @@
     "result": "pending",
     "created_at": "2026-05-24T10:22:06.992511+02:00",
     "reasoning": "S. Vincent Ruggeri is selected against I. Xilas in Vicenza. The model prices S. Vincent Ruggeri at 60.0% versus an implied probability of 46.3% from best odds 2.16. Market median is 2.07 across 11 bookmakers, leaving an estimated edge of +13.7%. Recent-form profile: S. Vincent Ruggeri last-10 win rate 50.0%, avg set diff +0.20, avg game diff +1.40; I. Xilas last-10 win rate 40.0%, avg set diff -0.30, avg game diff -1.30. Pick type: underdog. Confidence score: 88.0.",
-    "aggregated_at": "2026-05-24T09:06:53.471640Z",
+    "aggregated_at": "2026-05-24T12:46:38.352402Z",
     "strategy_tag": "core_challenger_dog_2.10_2.39_edge12",
     "watchlist_tag": "watch_challenger_dog_2.10_2.70",
     "ai77_score": 103
@@ -272,7 +272,7 @@
     "result": "pending",
     "created_at": "2026-05-24T10:20:36.558636+02:00",
     "reasoning": "K. Jacquet is selected against M. Trungelliti in French Open. The model prices K. Jacquet at 66.0% versus an implied probability of 52.6% from best odds 1.90. Market median is 1.80 across 11 bookmakers, leaving an estimated edge of +13.4%. Recent-form profile: K. Jacquet last-10 win rate 70.0%, avg set diff +0.80, avg game diff +2.70; M. Trungelliti last-10 win rate 30.0%, avg set diff -0.50, avg game diff -0.90. Pick type: favorite. Confidence score: 88.0.",
-    "aggregated_at": "2026-05-24T09:06:53.471631Z",
+    "aggregated_at": "2026-05-24T12:46:38.352393Z",
     "strategy_tag": "core_atp_favorite_1.70_2.09",
     "watchlist_tag": "watch_old_core_1.70_2.09_no_top_rated",
     "ai77_score": 87
