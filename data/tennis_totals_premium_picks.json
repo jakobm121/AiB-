@@ -9558,7 +9558,7 @@
     "id": "12130328|under|19.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "54cf7eaa62d9326a19d8327ba4bae483",
       "event_key": 12130328,
@@ -9690,16 +9690,22 @@
       "first_strength_score": 63.25,
       "second_strength_score": 81.12,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "win",
       "created_at": "2026-05-24T10:04:29.527129+02:00",
-      "reasoning": "UNDER 19.5 games selected in A. Azkara - P. Schoen at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 47.2% from best odds 2.12. Edge: +9.8%. Bookmakers used: 4. Confidence: 86.5."
+      "reasoning": "UNDER 19.5 games selected in A. Azkara - P. Schoen at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 47.2% from best odds 2.12. Edge: +9.8%. Bookmakers used: 4. Confidence: 86.5.",
+      "profit": 0.84,
+      "settled_at": "2026-05-24T11:04:46.755060+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "2-6, 4-6",
+      "total_games": 18
     }
   },
   {
     "id": "12130277|under|19.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "542efd142f1ffffe2fe646827cfe4a16",
       "event_key": 12130277,
@@ -9831,16 +9837,22 @@
       "first_strength_score": 77.75,
       "second_strength_score": 72.95,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "win",
       "created_at": "2026-05-24T10:04:12.730914+02:00",
-      "reasoning": "UNDER 19.5 games selected in N. Vukadin - M. Kasnikowski at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 47.2% from best odds 2.12. Edge: +9.8%. Bookmakers used: 4. Confidence: 86.5."
+      "reasoning": "UNDER 19.5 games selected in N. Vukadin - M. Kasnikowski at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 47.2% from best odds 2.12. Edge: +9.8%. Bookmakers used: 4. Confidence: 86.5.",
+      "profit": 0.84,
+      "settled_at": "2026-05-24T14:02:05.232588+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "1-6, 3-6",
+      "total_games": 16
     }
   },
   {
     "id": "12130191|under|19.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "c0b88957f5a18c6dd05a8ac6d51e9393",
       "event_key": 12130191,
@@ -9972,9 +9984,15 @@
       "first_strength_score": 78.0,
       "second_strength_score": 46.93,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "win",
       "created_at": "2026-05-24T10:04:08.861774+02:00",
-      "reasoning": "UNDER 19.5 games selected in L. Bronzetti - M. Bouzkova at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 8. Confidence: 91.7."
+      "reasoning": "UNDER 19.5 games selected in L. Bronzetti - M. Bouzkova at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 8. Confidence: 91.7.",
+      "profit": 0.787,
+      "settled_at": "2026-05-24T14:02:10.678231+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "3-6, 1-6",
+      "total_games": 16
     }
   },
   {
@@ -10114,7 +10132,7 @@
       "second_strength_score": 97.17,
       "h2h_matches": 0,
       "result": "pending",
-      "created_at": "2026-05-24T10:04:16.608791+02:00",
+      "created_at": "2026-05-24T11:26:54.302702+02:00",
       "reasoning": "UNDER 19.5 games selected in N. Berecoechea - A. Dudeney at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 46.1% from best odds 2.17. Edge: +10.9%. Bookmakers used: 3. Confidence: 83.7."
     }
   },
@@ -10122,7 +10140,7 @@
     "id": "12130183|under|19.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "ace9e71fb5d15527a5a2fe3dc4d455c3",
       "event_key": 12130183,
@@ -10130,7 +10148,7 @@
       "sport": "tennis",
       "model_version": "ai77_tennis_totals_v1",
       "date": "2026-05-24",
-      "time": "12:00",
+      "time": "12:10",
       "match": "S. Kraus - B. Bencic",
       "bet": "UNDER 19.5 games",
       "bucket": "total_games",
@@ -10254,9 +10272,15 @@
       "first_strength_score": 72.5,
       "second_strength_score": 60.39,
       "h2h_matches": 0,
-      "result": "pending",
-      "created_at": "2026-05-24T10:04:06.269599+02:00",
-      "reasoning": "UNDER 19.5 games selected in S. Kraus - B. Bencic at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 9. Confidence: 92.5."
+      "result": "win",
+      "created_at": "2026-05-24T11:26:48.931746+02:00",
+      "reasoning": "UNDER 19.5 games selected in S. Kraus - B. Bencic at line 19.5. Model expected total games: 16.50; market line: 19.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 9. Confidence: 92.5.",
+      "profit": 0.787,
+      "settled_at": "2026-05-24T14:02:13.928060+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "2-6, 3-6",
+      "total_games": 17
     }
   },
   {
@@ -10271,7 +10295,7 @@
       "sport": "tennis",
       "model_version": "ai77_tennis_totals_v1",
       "date": "2026-05-24",
-      "time": "13:00",
+      "time": "14:10",
       "match": "H. Baptiste - B. Krejcikova",
       "bet": "UNDER 21.5 games",
       "bucket": "total_games",
@@ -10396,7 +10420,7 @@
       "second_strength_score": 65.0,
       "h2h_matches": 0,
       "result": "pending",
-      "created_at": "2026-05-24T10:03:58.425131+02:00",
+      "created_at": "2026-05-24T14:13:06.922296+02:00",
       "reasoning": "UNDER 21.5 games selected in H. Baptiste - B. Krejcikova at line 21.5. Model expected total games: 18.33; market line: 21.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 9. Confidence: 92.5."
     }
   },
@@ -10412,7 +10436,7 @@
       "sport": "tennis",
       "model_version": "ai77_tennis_totals_v1",
       "date": "2026-05-24",
-      "time": "16:30",
+      "time": "16:45",
       "match": "S. Bejlek - S. Stephens",
       "bet": "UNDER 20.5 games",
       "bucket": "total_games",
@@ -10445,10 +10469,10 @@
       "stake_label": "Strong",
       "market_info": {
         "home_median_odds": 1.57,
-        "away_median_odds": 2.4,
+        "away_median_odds": 2.38,
         "home_implied": 0.6369,
-        "away_implied": 0.4167,
-        "market_gap": 0.2203,
+        "away_implied": 0.4202,
+        "market_gap": 0.2168,
         "market_favorite_side": "home"
       },
       "first_form": {
@@ -10537,8 +10561,149 @@
       "second_strength_score": 48.8,
       "h2h_matches": 0,
       "result": "pending",
-      "created_at": "2026-05-24T10:04:10.151815+02:00",
+      "created_at": "2026-05-24T14:45:35.397238+02:00",
       "reasoning": "UNDER 20.5 games selected in S. Bejlek - S. Stephens at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 47.6% from best odds 2.10. Edge: +9.4%. Bookmakers used: 8. Confidence: 89.7."
+    }
+  },
+  {
+    "id": "12129929|under|20.5",
+    "tier": "Premium",
+    "stake": 1.0,
+    "result": "pending",
+    "pick": {
+      "pick_id": "aeecf1fd0561e1e537a62f2bf3ad857e",
+      "event_key": 12129929,
+      "fixture_id": 12129929,
+      "sport": "tennis",
+      "model_version": "ai77_tennis_totals_v1",
+      "date": "2026-05-24",
+      "time": "16:50",
+      "match": "C. Tauson - D. Snigur",
+      "bet": "UNDER 20.5 games",
+      "bucket": "total_games",
+      "side": "under",
+      "market": "Over/Under by Games in Match",
+      "line": 20.5,
+      "first_player_key": 3007,
+      "second_player_key": 1131,
+      "first_player_name": "C. Tauson",
+      "second_player_name": "D. Snigur",
+      "tournament": "French Open",
+      "tournament_key": 2156,
+      "round": "WTA French Open - 1/64-finals",
+      "event_type": "Wta Singles",
+      "qualification": false,
+      "tour_level": "wta",
+      "gender": "women",
+      "odds": 2.1,
+      "best_bookmaker": "Superbet",
+      "market_median_odds": 2.02,
+      "bookmakers_used": 8,
+      "model_prob": 0.57,
+      "implied_prob": 0.4762,
+      "edge": 0.0938,
+      "expected_total_games": 16.5,
+      "expected_margin": -4.0,
+      "confidence": 89.7,
+      "quality_score": 85.5,
+      "stake": 0.75,
+      "stake_label": "Strong",
+      "market_info": {
+        "home_median_odds": 1.54,
+        "away_median_odds": 2.49,
+        "home_implied": 0.6494,
+        "away_implied": 0.4016,
+        "market_gap": 0.2477,
+        "market_favorite_side": "home"
+      },
+      "first_form": {
+        "last_5": {
+          "matches": 5,
+          "avg_total_games": 20.4,
+          "median_total_games": 19,
+          "over_21_5_rate": 0.2,
+          "over_22_5_rate": 0.2,
+          "three_set_rate": 0.2,
+          "straight_set_rate": 0.8,
+          "close_set_rate": 0.5667,
+          "avg_set_diff": 0.2,
+          "avg_game_diff": 0.8,
+          "win_rate": 0.4
+        },
+        "last_10": {
+          "matches": 8,
+          "avg_total_games": 21.38,
+          "median_total_games": 19.0,
+          "over_21_5_rate": 0.25,
+          "over_22_5_rate": 0.25,
+          "three_set_rate": 0.25,
+          "straight_set_rate": 0.75,
+          "close_set_rate": 0.5625,
+          "avg_set_diff": 0.0,
+          "avg_game_diff": 0.125,
+          "win_rate": 0.375
+        },
+        "last_20": {
+          "matches": 8,
+          "avg_total_games": 21.38,
+          "median_total_games": 19.0,
+          "over_21_5_rate": 0.25,
+          "over_22_5_rate": 0.25,
+          "three_set_rate": 0.25,
+          "straight_set_rate": 0.75,
+          "close_set_rate": 0.5625,
+          "avg_set_diff": 0.0,
+          "avg_game_diff": 0.125,
+          "win_rate": 0.375
+        }
+      },
+      "second_form": {
+        "last_5": {
+          "matches": 5,
+          "avg_total_games": 17.6,
+          "median_total_games": 18,
+          "over_21_5_rate": 0.0,
+          "over_22_5_rate": 0.0,
+          "three_set_rate": 0.0,
+          "straight_set_rate": 1.0,
+          "close_set_rate": 0.2,
+          "avg_set_diff": 0.0,
+          "avg_game_diff": 0.0,
+          "win_rate": 0.6
+        },
+        "last_10": {
+          "matches": 9,
+          "avg_total_games": 17.33,
+          "median_total_games": 18,
+          "over_21_5_rate": 0.0,
+          "over_22_5_rate": 0.0,
+          "three_set_rate": 0.0,
+          "straight_set_rate": 1.0,
+          "close_set_rate": 0.2222,
+          "avg_set_diff": 0.889,
+          "avg_game_diff": 3.333,
+          "win_rate": 0.7778
+        },
+        "last_20": {
+          "matches": 9,
+          "avg_total_games": 17.33,
+          "median_total_games": 18,
+          "over_21_5_rate": 0.0,
+          "over_22_5_rate": 0.0,
+          "three_set_rate": 0.0,
+          "straight_set_rate": 1.0,
+          "close_set_rate": 0.2222,
+          "avg_set_diff": 0.889,
+          "avg_game_diff": 3.333,
+          "win_rate": 0.7778
+        }
+      },
+      "first_strength_score": 44.75,
+      "second_strength_score": 78.72,
+      "h2h_matches": 1,
+      "result": "pending",
+      "created_at": "2026-05-24T14:45:20.784525+02:00",
+      "reasoning": "UNDER 20.5 games selected in C. Tauson - D. Snigur at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 47.6% from best odds 2.10. Edge: +9.4%. Bookmakers used: 8. Confidence: 89.7."
     }
   }
 ]
