@@ -6861,7 +6861,7 @@
     "confidence_score": 61.9,
     "quality_score": 75.1,
     "reasoning": "Killas W vs FBC Melgar W projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "573b8065b6bf57daab3cc815e59b85ab",
@@ -6993,7 +6993,7 @@
     "confidence_score": 63.9,
     "quality_score": 65.1,
     "reasoning": "Union Magdalena vs Bogota FC projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "72c5d86bd43bb5db631c7fafbb0fe2f1",
@@ -7169,7 +7169,7 @@
     "confidence_score": 61.6,
     "quality_score": 73.9,
     "reasoning": "Kingston City vs Werribee City projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "371f7a67807ca02e591d9b5357123247",
@@ -7543,7 +7543,7 @@
     "confidence_score": 69.5,
     "quality_score": 71.4,
     "reasoning": "Blansko vs Vítkovice projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "021c0eca4667bbf9a2345be47b3f372f",
@@ -7565,7 +7565,7 @@
     "confidence_score": 55.1,
     "quality_score": 56.1,
     "reasoning": "Auckland vs Sydney projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "c6236b8db79631948fc53519f7857dae",
@@ -7763,7 +7763,7 @@
     "confidence_score": 63.9,
     "quality_score": 76.3,
     "reasoning": "Christos vs Annapolis Blues projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "968bcd7762a32138e18f5ce73c2bab35",
@@ -7807,7 +7807,7 @@
     "confidence_score": 49.8,
     "quality_score": 55.1,
     "reasoning": "Sportivo Luqueno vs Olimpia projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "b61bf38aa72458c91d64a5bad8064635",
@@ -7895,7 +7895,7 @@
     "confidence_score": 70.9,
     "quality_score": 72.3,
     "reasoning": "Växjö W vs Vittsjö W projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "9360618b683e989c50398b6fba836e2c",
@@ -7917,7 +7917,7 @@
     "confidence_score": 65.9,
     "quality_score": 67.1,
     "reasoning": "Parma vs Sassuolo projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "2b0ec08f3e68bde157807a62039cd98b",
@@ -7939,7 +7939,7 @@
     "confidence_score": 76.7,
     "quality_score": 86.4,
     "reasoning": "Häcken W vs Norrköping W projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "26bd58a1418f505a08bf4156cd983258",
@@ -7961,7 +7961,7 @@
     "confidence_score": 73.3,
     "quality_score": 82.8,
     "reasoning": "Slovan Velvary vs Arsenal Česká Lípa projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "989b2e825605f1a5ba6716f6c566725b",
@@ -7983,7 +7983,7 @@
     "confidence_score": 61.9,
     "quality_score": 72.2,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d313a78126ca94394dbd144152dac16c",
@@ -8005,7 +8005,7 @@
     "confidence_score": 60.4,
     "quality_score": 70.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1a6692b9ec8c2f6c7278ca492db2fd13",
@@ -8027,7 +8027,7 @@
     "confidence_score": 79.3,
     "quality_score": 79.0,
     "reasoning": "Cruzeiro vs Chapecoense-sc projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "99a4e45085abd45e5b4b245054d74752",
@@ -8049,7 +8049,7 @@
     "confidence_score": 74.3,
     "quality_score": 75.9,
     "reasoning": "D. La Serena vs Deportes Limache projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "049e17b14d8b273d4aa813fd8184a592",
@@ -8093,7 +8093,7 @@
     "confidence_score": 81.0,
     "quality_score": 88.0,
     "reasoning": "Villarreal vs Atletico Madrid projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "85c711f0b12a56125b1df34713f9c1c6",
@@ -8115,7 +8115,7 @@
     "confidence_score": 68.4,
     "quality_score": 80.7,
     "reasoning": "Minnesota United II vs Colorado Rapids II projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4da0ca7c425e00246b8a4ab78a5d6497",
@@ -8137,7 +8137,7 @@
     "confidence_score": 54.3,
     "quality_score": 61.7,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "a38627b83d36e5d61d3b643f61de4ac9",
@@ -8181,6 +8181,6 @@
     "confidence_score": 53.1,
     "quality_score": 56.0,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   }
 ]
