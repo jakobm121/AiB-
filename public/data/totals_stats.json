@@ -1,17 +1,17 @@
 {
-  "total_picks": 222,
-  "settled_picks": 207,
-  "wins": 111,
-  "losses": 96,
+  "total_picks": 225,
+  "settled_picks": 210,
+  "wins": 113,
+  "losses": 97,
   "pushes": 15,
-  "win_rate": 53.62,
-  "profit": 21.894,
-  "roi": 14.97,
-  "total_staked": 146.25,
-  "avg_odds": 2.067,
-  "avg_stake": 0.707,
-  "public_registry_size": 238,
-  "updated_at": "2026-05-25T09:49:29.915031+02:00",
+  "win_rate": 53.81,
+  "profit": 23.274,
+  "roi": 15.62,
+  "total_staked": 149.0,
+  "avg_odds": 2.068,
+  "avg_stake": 0.71,
+  "public_registry_size": 240,
+  "updated_at": "2026-05-25T13:57:35.320734+02:00",
   "profit_mode": "public_stake_recalculated_profile_c_plus",
   "by_side": {
     "over": {
@@ -28,17 +28,17 @@
       "avg_stake": 0.533
     },
     "under": {
-      "total_picks": 206,
-      "settled_picks": 192,
-      "wins": 102,
-      "losses": 90,
+      "total_picks": 209,
+      "settled_picks": 195,
+      "wins": 104,
+      "losses": 91,
       "pushes": 14,
-      "win_rate": 53.12,
-      "profit": 20.762,
-      "roi": 15.02,
-      "total_staked": 138.25,
+      "win_rate": 53.33,
+      "profit": 22.142,
+      "roi": 15.7,
+      "total_staked": 141.0,
       "avg_odds": 2.076,
-      "avg_stake": 0.72
+      "avg_stake": 0.723
     }
   },
   "by_line": {
@@ -56,17 +56,17 @@
       "avg_stake": 0.5
     },
     "19.5": {
-      "total_picks": 38,
-      "settled_picks": 34,
+      "total_picks": 39,
+      "settled_picks": 35,
       "wins": 19,
-      "losses": 15,
+      "losses": 16,
       "pushes": 4,
-      "win_rate": 55.88,
-      "profit": 6.579,
-      "roi": 25.06,
-      "total_staked": 26.25,
-      "avg_odds": 2.103,
-      "avg_stake": 0.772
+      "win_rate": 54.29,
+      "profit": 5.829,
+      "roi": 21.59,
+      "total_staked": 27.0,
+      "avg_odds": 2.105,
+      "avg_stake": 0.771
     },
     "20.0": {
       "total_picks": 2,
@@ -82,17 +82,17 @@
       "avg_stake": 1.0
     },
     "20.5": {
-      "total_picks": 65,
-      "settled_picks": 61,
-      "wins": 35,
+      "total_picks": 67,
+      "settled_picks": 63,
+      "wins": 37,
       "losses": 26,
       "pushes": 4,
-      "win_rate": 57.38,
-      "profit": 8.123,
-      "roi": 19.69,
-      "total_staked": 41.25,
+      "win_rate": 58.73,
+      "profit": 10.253,
+      "roi": 23.71,
+      "total_staked": 43.25,
       "avg_odds": 2.062,
-      "avg_stake": 0.676
+      "avg_stake": 0.687
     },
     "21.5": {
       "total_picks": 82,
@@ -175,17 +175,17 @@
       "avg_stake": 1.0
     },
     "wta": {
-      "total_picks": 61,
-      "settled_picks": 56,
-      "wins": 29,
-      "losses": 27,
+      "total_picks": 64,
+      "settled_picks": 59,
+      "wins": 31,
+      "losses": 28,
       "pushes": 5,
-      "win_rate": 51.79,
-      "profit": 3.883,
-      "roi": 10.02,
-      "total_staked": 38.75,
-      "avg_odds": 2.067,
-      "avg_stake": 0.692
+      "win_rate": 52.54,
+      "profit": 5.263,
+      "roi": 12.68,
+      "total_staked": 41.5,
+      "avg_odds": 2.068,
+      "avg_stake": 0.703
     }
   },
   "by_stake_label": {
@@ -203,29 +203,29 @@
       "avg_stake": 0.5
     },
     "Strong": {
-      "total_picks": 101,
-      "settled_picks": 93,
+      "total_picks": 102,
+      "settled_picks": 94,
       "wins": 52,
-      "losses": 41,
+      "losses": 42,
       "pushes": 8,
-      "win_rate": 55.91,
-      "profit": 9.949,
-      "roi": 14.26,
-      "total_staked": 69.75,
-      "avg_odds": 2.058,
+      "win_rate": 55.32,
+      "profit": 9.199,
+      "roi": 13.05,
+      "total_staked": 70.5,
+      "avg_odds": 2.059,
       "avg_stake": 0.75
     },
     "Top Rated": {
-      "total_picks": 41,
-      "settled_picks": 39,
-      "wins": 26,
+      "total_picks": 43,
+      "settled_picks": 41,
+      "wins": 28,
       "losses": 13,
       "pushes": 2,
-      "win_rate": 66.67,
-      "profit": 16.08,
-      "roi": 41.23,
-      "total_staked": 39.0,
-      "avg_odds": 2.129,
+      "win_rate": 68.29,
+      "profit": 18.21,
+      "roi": 44.41,
+      "total_staked": 41.0,
+      "avg_odds": 2.126,
       "avg_stake": 1.0
     }
   }
