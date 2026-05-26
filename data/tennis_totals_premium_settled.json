@@ -11322,7 +11322,7 @@
     "id": "12129924|under|18.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "a28d965582b51d7797859def81378151",
       "event_key": 12129924,
@@ -11454,16 +11454,22 @@
       "first_strength_score": 31.75,
       "second_strength_score": 81.6,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "win",
       "created_at": "2026-05-26T10:28:00.164449+02:00",
-      "reasoning": "UNDER 18.5 games selected in H. Vandewinkel - M. Keys at line 18.5. Model expected total games: 16.50; market line: 18.5. Model probability 57.0% versus implied 46.7% from best odds 2.14. Edge: +10.3%. Bookmakers used: 10. Confidence: 84.0."
+      "reasoning": "UNDER 18.5 games selected in H. Vandewinkel - M. Keys at line 18.5. Model expected total games: 16.50; market line: 18.5. Model probability 57.0% versus implied 46.7% from best odds 2.14. Edge: +10.3%. Bookmakers used: 10. Confidence: 84.0.",
+      "profit": 0.855,
+      "settled_at": "2026-05-26T22:07:23.822089+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "3-6, 0-6",
+      "total_games": 15
     }
   },
   {
     "id": "12130181|under|20.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "win",
     "pick": {
       "pick_id": "524d9be6c89941ace1b004628a8c7ee1",
       "event_key": 12130181,
@@ -11595,16 +11601,22 @@
       "first_strength_score": 84.61,
       "second_strength_score": 60.4,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "win",
       "created_at": "2026-05-26T10:28:24.337873+02:00",
-      "reasoning": "UNDER 20.5 games selected in E. Pridankina - O. Oliynykova at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 49.5% from best odds 2.02. Edge: +7.5%. Bookmakers used: 8. Confidence: 91.7."
+      "reasoning": "UNDER 20.5 games selected in E. Pridankina - O. Oliynykova at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 49.5% from best odds 2.02. Edge: +7.5%. Bookmakers used: 8. Confidence: 91.7.",
+      "profit": 0.765,
+      "settled_at": "2026-05-26T22:07:25.569051+02:00",
+      "settled_status": "Finished",
+      "event_winner": "Second Player",
+      "final_score": "1-6, 2-6",
+      "total_games": 15
     }
   },
   {
     "id": "12130530|under|21.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "void",
     "pick": {
       "pick_id": "7d0724f9212f961ff5d5d8f850936b89",
       "event_key": 12130530,
@@ -11736,16 +11748,22 @@
       "first_strength_score": 78.5,
       "second_strength_score": 78.39,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "void",
       "created_at": "2026-05-26T10:29:06.553663+02:00",
-      "reasoning": "UNDER 21.5 games selected in D. Milavsky - Wu Tung-Lin at line 21.5. Model expected total games: 18.11; market line: 21.5. Model probability 57.0% versus implied 46.5% from best odds 2.15. Edge: +10.5%. Bookmakers used: 5. Confidence: 87.3."
+      "reasoning": "UNDER 21.5 games selected in D. Milavsky - Wu Tung-Lin at line 21.5. Model expected total games: 18.11; market line: 21.5. Model probability 57.0% versus implied 46.5% from best odds 2.15. Edge: +10.5%. Bookmakers used: 5. Confidence: 87.3.",
+      "profit": 0.0,
+      "settled_at": "2026-05-26T22:07:26.427201+02:00",
+      "settled_status": "Retired",
+      "event_winner": "First Player",
+      "final_score": null,
+      "total_games": null
     }
   },
   {
     "id": "12130533|under|21.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "void",
     "pick": {
       "pick_id": "b22242f2ae9c0c43025ab6dc113dd645",
       "event_key": 12130533,
@@ -11877,9 +11895,15 @@
       "first_strength_score": 66.35,
       "second_strength_score": 44.25,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "void",
       "created_at": "2026-05-26T10:29:08.155616+02:00",
-      "reasoning": "UNDER 21.5 games selected in P. Sekulic - M. Krueger at line 21.5. Model expected total games: 16.50; market line: 21.5. Model probability 57.0% versus implied 45.9% from best odds 2.18. Edge: +11.1%. Bookmakers used: 5. Confidence: 85.3."
+      "reasoning": "UNDER 21.5 games selected in P. Sekulic - M. Krueger at line 21.5. Model expected total games: 16.50; market line: 21.5. Model probability 57.0% versus implied 45.9% from best odds 2.18. Edge: +11.1%. Bookmakers used: 5. Confidence: 85.3.",
+      "profit": 0.0,
+      "settled_at": "2026-05-26T22:07:27.267642+02:00",
+      "settled_status": "Cancelled",
+      "event_winner": null,
+      "final_score": null,
+      "total_games": null
     }
   }
 ]
