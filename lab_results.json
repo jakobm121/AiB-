@@ -6641,7 +6641,7 @@
     "confidence_score": 63.6,
     "quality_score": 68.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "0504eb966153e5dc16074e3ffc228958",
@@ -7015,7 +7015,7 @@
     "confidence_score": 59.0,
     "quality_score": 60.1,
     "reasoning": "Benjamín Aceval vs Sportivo Carapeguá projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "a005d6105fc023fda1491d75ce88f4de",
@@ -7235,7 +7235,7 @@
     "confidence_score": 62.1,
     "quality_score": 75.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "45f83799b46ea52d10939ac69abb65a9",
@@ -7279,7 +7279,7 @@
     "confidence_score": 77.1,
     "quality_score": 79.0,
     "reasoning": "Aris vs AEK Larnaca projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b10fbc5d18ce4c4dfc0e93fb0a9f97aa",
@@ -7301,7 +7301,7 @@
     "confidence_score": 74.7,
     "quality_score": 76.4,
     "reasoning": "Pafos vs Apoel Nicosia projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "feb072ccfad44301ab9cd16b22390ac0",
@@ -7433,7 +7433,7 @@
     "confidence_score": 64.5,
     "quality_score": 66.0,
     "reasoning": "Porto Vitória vs Audax São Mateus projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "ffbea5dfee0966d892ce4559a0668f88",
@@ -7455,7 +7455,7 @@
     "confidence_score": 59.0,
     "quality_score": 60.2,
     "reasoning": "Deportivo Binacional vs Sport Huancayo 2 projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "52980a3820be06345d8808ae07954fd4",
@@ -7521,7 +7521,7 @@
     "confidence_score": 70.8,
     "quality_score": 71.4,
     "reasoning": "Altona City vs Moreland City projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4d3c5c65587108dc80151c5856e7912e",
@@ -8247,7 +8247,7 @@
     "confidence_score": 79.4,
     "quality_score": 79.0,
     "reasoning": "Start vs Valerenga projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "b5293ae6224d3bc371a17b13c01c859b",
@@ -8401,7 +8401,7 @@
     "confidence_score": 62.6,
     "quality_score": 76.6,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "b37fc4a6996f24f81aa1def5e0f5602e",
@@ -8423,7 +8423,7 @@
     "confidence_score": 79.5,
     "quality_score": 79.0,
     "reasoning": "Tromso vs Aalesund projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "523d23b8aed042ca3b960e91a06b938d",
@@ -8445,7 +8445,7 @@
     "confidence_score": 80.0,
     "quality_score": 78.7,
     "reasoning": "Lyn vs Strommen projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "77a9d2b6e10d0a6268be3be26f7c7f68",
@@ -8467,7 +8467,7 @@
     "confidence_score": 81.0,
     "quality_score": 78.2,
     "reasoning": "Sarpsborg 08 FF vs Molde projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e9112df047bdadfaab99dd05ce8d409e",
@@ -8489,7 +8489,7 @@
     "confidence_score": 71.9,
     "quality_score": 84.8,
     "reasoning": "Haugesund vs Moss projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "72cc355d1d2880b3b18117acd6c9d6b7",
@@ -8555,7 +8555,7 @@
     "confidence_score": 58.4,
     "quality_score": 66.1,
     "reasoning": "hodd vs Egersund projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4c81295594b2004edee4fad9daad9c1e",
@@ -8577,7 +8577,7 @@
     "confidence_score": 74.9,
     "quality_score": 76.7,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "14ae25cd70be15fc44eea6717a95ff57",
@@ -8599,7 +8599,7 @@
     "confidence_score": 74.9,
     "quality_score": 76.7,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "be95ae60bfd290bdf55756ad2bdf5d1f",
@@ -8621,7 +8621,7 @@
     "confidence_score": 59.6,
     "quality_score": 69.5,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "2373a6d1f97ee95ad2e79b2e8bdb5be3",
@@ -8643,7 +8643,7 @@
     "confidence_score": 53.7,
     "quality_score": 65.6,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "1e70cd42256d1a4214cec5febf5fdf1a",
@@ -8687,7 +8687,7 @@
     "confidence_score": 60.5,
     "quality_score": 61.5,
     "reasoning": "Coritiba vs Bahia projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7da244349f94f88f714f30a3966f424c",
@@ -8731,6 +8731,6 @@
     "confidence_score": 45.7,
     "quality_score": 52.0,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   }
 ]
