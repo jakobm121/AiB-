@@ -8732,5 +8732,27 @@
     "quality_score": 52.0,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
     "result": "win"
+  },
+  {
+    "pick_id": "a45ddb9414c7a481185a779364b4f497",
+    "fixture_id": 1477235,
+    "bucket": "under_2_5",
+    "date": "2026-05-26",
+    "time": "15:15",
+    "league": "Ligi kuu Bara",
+    "match": "Singida Black Stars - Mbeya City",
+    "bet": "Under 2.5",
+    "odds": 1.94,
+    "market_odds_median": 1.94,
+    "model_prob": 0.6382,
+    "implied_prob": 0.5168,
+    "edge": 0.1214,
+    "bookmakers_used": 10,
+    "line": 2.5,
+    "stake": 1,
+    "confidence_score": 63.1,
+    "quality_score": 64.4,
+    "reasoning": "Singida Black Stars vs Mbeya City projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
+    "result": "pending"
   }
 ]
