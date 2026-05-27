@@ -8203,7 +8203,7 @@
     "confidence_score": 65.5,
     "quality_score": 74.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "9e31f5fae489427d3ebcebcfc533ed57",
@@ -8225,7 +8225,7 @@
     "confidence_score": 67.6,
     "quality_score": 73.8,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "dd89d0ff39553fb37344d97d61085550",
@@ -8291,7 +8291,7 @@
     "confidence_score": 78.2,
     "quality_score": 73.6,
     "reasoning": "Eidsvold vs Rana projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "4c0bc114745f951a7e4b9cac815d9392",
@@ -8313,7 +8313,7 @@
     "confidence_score": 72.5,
     "quality_score": 76.5,
     "reasoning": "Strindheim vs Nardo projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "5a55a347b61c3ba96921bab93802eedd",
@@ -8335,7 +8335,7 @@
     "confidence_score": 72.6,
     "quality_score": 76.2,
     "reasoning": "Gjøvik-Lyn vs Elverum projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "4e7577764a41ad28cef2892566a71347",
@@ -8379,7 +8379,7 @@
     "confidence_score": 76.5,
     "quality_score": 78.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "0fd23b38c8f29214e42ecf38ba96e025",
@@ -8511,7 +8511,7 @@
     "confidence_score": 71.2,
     "quality_score": 83.9,
     "reasoning": "Sandnes ULF vs Sogndal projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "ab17c197739d5462ab644bff2a8ccf84",
@@ -8533,7 +8533,7 @@
     "confidence_score": 83.0,
     "quality_score": 77.7,
     "reasoning": "Stabaek vs Kongsvinger projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "24ce883740179edf2e8dad4bf08a9b0e",
@@ -8709,7 +8709,7 @@
     "confidence_score": 48.7,
     "quality_score": 54.8,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "d5e46efc309f43d51af40e117a2c93ef",
@@ -8753,7 +8753,7 @@
     "confidence_score": 63.1,
     "quality_score": 64.4,
     "reasoning": "Singida Black Stars vs Mbeya City projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "6905bb60dbc312ce06d610ae0a4c295e",
@@ -8775,7 +8775,7 @@
     "confidence_score": 67.0,
     "quality_score": 80.4,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "61d7551b6ce6dc8c1231cb08645b4744",
@@ -8797,7 +8797,7 @@
     "confidence_score": 48.3,
     "quality_score": 62.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "80ffe518cda7c65601e3076998af721c",
@@ -8885,7 +8885,7 @@
     "confidence_score": 76.4,
     "quality_score": 84.3,
     "reasoning": "Brann W vs Lyn W projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "e39ad3c0deb0203ba160626661c59ddf",
