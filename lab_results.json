@@ -8951,7 +8951,7 @@
     "confidence_score": 57.9,
     "quality_score": 71.9,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "97d80b29f8488bc0020c98a42cf8aafe",
@@ -9237,7 +9237,7 @@
     "confidence_score": 63.3,
     "quality_score": 71.4,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "1246f5a1d23741f4c47e43f182698972",
@@ -9347,7 +9347,7 @@
     "confidence_score": 50.0,
     "quality_score": 54.4,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f5fb5754344123e764b2a942bd1a3952",
@@ -9369,7 +9369,7 @@
     "confidence_score": 52.9,
     "quality_score": 54.1,
     "reasoning": "Okzhetpes vs Aktobe projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3450b29d0a1d7a54aac1629f97d913dc",
@@ -9391,7 +9391,7 @@
     "confidence_score": 44.0,
     "quality_score": 48.6,
     "reasoning": "The matchup does not rate strong enough for reliable two-sided scoring after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "2dfbcdf8418a9b0297a4368df8102d2d",
@@ -9413,7 +9413,7 @@
     "confidence_score": 71.8,
     "quality_score": 75.2,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "ac395bb30708317dab4b0411cee6c1ba",
@@ -9435,7 +9435,7 @@
     "confidence_score": 66.7,
     "quality_score": 74.5,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "ab840840bef2dd36661201f75b20c87c",
@@ -9457,7 +9457,7 @@
     "confidence_score": 75.9,
     "quality_score": 74.9,
     "reasoning": "FC jazz vs SalPa projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c8a01461441d21946e3f421e8e7d6285",
@@ -9501,7 +9501,7 @@
     "confidence_score": 60.4,
     "quality_score": 61.8,
     "reasoning": "Torpedo Kutaisi vs Gagra projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "f28a23802d3d3dd2211a56b562a6e2be",
@@ -9523,7 +9523,7 @@
     "confidence_score": 72.7,
     "quality_score": 82.5,
     "reasoning": "JJK vs OLS projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "473f9d6455b6b66e966e66a5699d9b4c",
@@ -9545,7 +9545,7 @@
     "confidence_score": 76.6,
     "quality_score": 80.0,
     "reasoning": "FCI Levadia II vs Elva projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3bf56b124d578a36164710fbf42c6af3",
@@ -9567,7 +9567,7 @@
     "confidence_score": 77.9,
     "quality_score": 70.0,
     "reasoning": "FC Tallinn vs Maardu projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "77ce76e51bcefd6974eae1373eb04a79",
@@ -9589,7 +9589,7 @@
     "confidence_score": 79.5,
     "quality_score": 66.4,
     "reasoning": "Traiskirchen vs Neusiedl projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "c3f3ee44c3c740dccdf7a37d9600bedd",
@@ -9677,7 +9677,7 @@
     "confidence_score": 61.1,
     "quality_score": 70.3,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "e7b27242deee704c76ac8e3fe16cd815",
@@ -9699,7 +9699,7 @@
     "confidence_score": 52.5,
     "quality_score": 66.0,
     "reasoning": "This matchup projects fairly balanced, which is why the draw price becomes interesting. The selection is still variance-heavy, but the market median leaves enough value after conservative shrinkage.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "3d6b6ff343b431903cea4f9f9ed8f9f7",
@@ -9721,7 +9721,7 @@
     "confidence_score": 78.0,
     "quality_score": 76.8,
     "reasoning": "Palmeiras vs Junior projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "1123405658cb60222f0af1123c60f4f8",
@@ -9743,7 +9743,7 @@
     "confidence_score": 55.5,
     "quality_score": 56.8,
     "reasoning": "Llaneros W vs Santa Fe W projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "loss"
   },
   {
     "pick_id": "7355571c3d06a4f2d1b72f2b8dfdb55f",
@@ -9765,7 +9765,7 @@
     "confidence_score": 55.0,
     "quality_score": 56.2,
     "reasoning": "River Plate Res. vs San Lorenzo Res. projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "60c03bb6265c2eb1e7ed7a82a851c713",
@@ -9787,7 +9787,7 @@
     "confidence_score": 43.6,
     "quality_score": 58.7,
     "reasoning": "Paradise vs Kick Start projects as a controlled scoring environment after market-blended modelling. The pick passed conservative edge, bookmaker-count, and probability-shrinkage filters.",
-    "result": "pending"
+    "result": "win"
   },
   {
     "pick_id": "f861dcbb3c5d0bb6d542223098484a83",
