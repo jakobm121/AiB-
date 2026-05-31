@@ -14409,7 +14409,7 @@
     "id": "12132248|under|20.5",
     "tier": "Premium",
     "stake": 1.0,
-    "result": "pending",
+    "result": "loss",
     "pick": {
       "pick_id": "8ad3adb2cbdcafa0aeea5d297102936d",
       "event_key": 12132248,
@@ -14541,9 +14541,15 @@
       "first_strength_score": 70.28,
       "second_strength_score": 33.5,
       "h2h_matches": 0,
-      "result": "pending",
+      "result": "loss",
       "created_at": "2026-05-31T10:12:11.015019+02:00",
-      "reasoning": "UNDER 20.5 games selected in M. Sawangkaew - A. Ito at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 5. Confidence: 89.3."
+      "reasoning": "UNDER 20.5 games selected in M. Sawangkaew - A. Ito at line 20.5. Model expected total games: 16.50; market line: 20.5. Model probability 57.0% versus implied 48.8% from best odds 2.05. Edge: +8.2%. Bookmakers used: 5. Confidence: 89.3.",
+      "profit": -0.75,
+      "settled_at": "2026-06-01T01:50:26.469247+02:00",
+      "settled_status": "Finished",
+      "event_winner": "First Player",
+      "final_score": "7-6, 6-3",
+      "total_games": 22
     }
   }
 ]
