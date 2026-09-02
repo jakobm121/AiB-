@@ -1,5 +1,5 @@
 {
-  "settled_at_utc": "2026-09-01T23:47:53.723093+00:00",
+  "settled_at_utc": "2026-09-02T23:51:26.069693+00:00",
   "strategy": "tennis_totals_premium",
   "source_results_url": "https://raw.githubusercontent.com/jakobm121/Ai/main/data/tennis_totals_results.json",
   "known_total": 99,
